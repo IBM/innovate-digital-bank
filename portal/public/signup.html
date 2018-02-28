@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="vendors/css/normalize.css">
+		<link rel="stylesheet" href="vendors/css/grid.css">
+ 		<link rel="stylesheet" href="res/css/styles.css">
+		<link rel="stylesheet" href="res/css/queries.css">
+		<link rel="stylesheet" href="vendors/css/ionicons.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
+		<title>Innovate: Digital Bank</title>
+	</head>
+
+	<body>
+		<header>
+			<div class="col span-1-of-3 cutout">
+				<img src="res/img/logo-outline.png" alt="Innovate logo" class="logo">
+			</div>
+			<div class="col span-2-of-3 sign-up-box">
+						<section>
+			<div class="row">
+				<h2>You're 60 seconds away from kick-ass banking</h2>
+			</div>
+			<div class="row">
+				<form method="post" action="endpoints/signup" class="sign-up-form">
+					<div class="row">
+						<div class="col span-1-of-3">
+							<label for="name">Name</label>
+						</div>
+						<div class="col span-2-of-3">
+							<input type="text" name="name" id="name" placeholder="Your name" required>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col span-1-of-3">
+							<label for="email">Email</label>
+						</div>
+						<div class="col span-2-of-3">
+							<input type="email" name="email" id="email" placeholder="Your email" required>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col span-1-of-3">
+							<label for="phone">Phone number</label>
+						</div>
+						<div class="col span-2-of-3">
+							<input type="number" name="phone" id="phone" placeholder="Your mobile phone number" required>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col span-1-of-3">
+							<label>Gender</label>
+						</div>
+						<div class="col span-2-of-3">
+							<select name="gender" id="gender">
+								<option value="male" selected>Male</option>
+								<option value="female">Female</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col span-1-of-3">
+							<label for="dob">Date of birth</label>
+						</div>
+						<div class="col span-2-of-3">
+							<input type="date" name="dob" id="dob" placeholder="Your date of birth" required>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col span-1-of-3">
+							<label for="eid">Emirates Id number</label>
+						</div>
+						<div class="col span-2-of-3">
+							<input type="number" name="eid" id="eid" placeholder="Your EID" required>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col span-1-of-3">
+							<label for="password">Password</label>
+						</div>
+						<div class="col span-2-of-3">
+							<input type="password" name="password" id="password" placeholder="Your password" required>
+						</div>
+					</div>
+					<div class="row center">
+						<input type="checkbox" name="tnc" id="tnc" required>
+							<label for="tnc">I agree to Terms and Conditions</label>
+					</div>
+					<div class="row">
+
+						<div class="col span-3-of-3">
+							<input type="submit" value="Sign up!">
+						</div>
+					</div>
+					<div class="row center">
+						<div class="col span-3-of-3">
+							Already have and account? <a href="login.html">Log In</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</section>
+			</div>
+		</header>
+
+		<div id="unauthorized" class="overlay">
+			<div class="popup">
+				<h2>Something went wrong</h2>
+				<a class="close" href="#">&times;</a>
+				<div class="content">
+					Your username & password are incorrect. Try again, or contact support to recover lost login details.
+				</div>
+				<i class="ion-ios-close icon-big"></i>
+			</div>
+		</div>
+
+		<footer>
+			<div class="row">
+				<div class="col span-1-of-2">
+					<ul class="footer-nav">
+						<li><a href"#">About us</a></li>
+						<li><a href"#">Blog</a></li>
+						<li><a href"#">Press</a></li>
+						<li><a href"#">iOS App</a></li>
+						<li><a href"#">Android App</a></li>
+					</ul>
+				</div>
+				<div class="col span-1-of-2">
+					<ul class="social-links">
+						<li><a href="#"><i class="ion-social-facebook"></i></a></li>
+						<li><a href="#"><i class="ion-social-twitter"></i></a></li>
+						<li><a href="#"><i class="ion-social-googleplus"></i></a></li>
+						<li><a href="#"><i class="ion-social-instagram"></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<p>
+					Innovate is a dummy digital bank created for demo purposes.
+				</p>
+			</div>
+		</footer>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+		<script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="//cdn.jsdelivr.net/selectivizr/1.0.3b/selectivizr.min.js"></script>
+		<script src="vendors/js/noframework.waypoints.min.js"></script>
+
+	</body>
+
+</html>

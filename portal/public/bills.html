@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="vendors/css/normalize.css">
+		<link rel="stylesheet" href="vendors/css/grid.css">
+ 		<link rel="stylesheet" href="res/css/styles.css">
+		<link rel="stylesheet" href="res/css/queries.css">
+		<link rel="stylesheet" href="vendors/css/ionicons.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
+		<title>Innovate: Digital Bank</title>
+	</head>
+
+	<body>
+
+		<header class="bar">
+			<nav>
+				<div class="row">
+					<img src="res/img/logo-outline.png" alt="Innovate logo" class="logo">
+					<img src="res/img/logo.png" alt="Innovatee logo" class="logo-black">
+					<ul class="main-nav">
+						<li><a href="overview.html">Spending</a></li>
+						<li><a href="bills.html">Bills</a></li>
+						<li><a href="accounts.html">Accounts</a></li>
+						<li><a href="chat.html">Support</a></li>
+						<li><a href="/endpoints/logout">Logout</a></li>
+					</ul>
+					<a class="mobile-nav-icon"><i class="js-mobile-nav-icon ion-navicon-round"></i></a>
+				</div>
+			</nav>
+		</header>
+
+		<section class="section-spending">
+			<div class="row">
+				<h2>Bills</h2>
+			</div>
+			<div class="row">
+				<h3><span id="js-total"></span></h3>
+				<p>Due this month</p>
+			</div>
+		</section>
+
+		<section class="section-bill-list">
+			<div class="row bill">
+				<div class="col span-1-of-5">
+					<img src="res/img/sp/dewa.png" alt="logo" class="service-provider-logo">
+				</div>
+				<div class="col span-2-of-5">
+					<h3>Water and Electricity</h3>
+					<p><span id="utilities_entity"></span><span id="utilities_account"></span></p>
+				</div>
+				<div class="col span-1-of-5">
+					<h3><span id="utilities_amount"></span></h3>
+				</div>
+				<div class="col span-1-of-5">
+					<a id="utilities_pay_button" class="btn btn-ghost" href="#confirm-popup-utiltities">Pay</a>
+				</div>
+			</div>
+			<div class="row bill">
+				<div class="col span-1-of-5">
+					<img src="res/img/sp/etisalat.png" alt="logo" class="service-provider-logo">
+				</div>
+				<div class="col span-2-of-5">
+					<h3>Home Entertainment</h3>
+					<p><span id="home_entertainment_entity"></span><span id="home_entertainment_account"></span></p>
+				</div>
+				<div class="col span-1-of-5">
+					<h3><span id="home_entertainment_amount"></span></h3>
+				</div>
+				<div class="col span-1-of-5">
+					<a id="home_entertainment_pay_button" class="btn btn-ghost" href="#confirm-popup-home-entertainment">Pay</a>
+				</div>
+			</div>
+			<div class="row bill">
+				<div class="col span-1-of-5">
+					<img src="res/img/sp/du.png" alt="Innovatee logo" class="service-provider-logo">
+				</div>
+				<div class="col span-2-of-5">
+					<h3>Mobile Phone</h3>
+					<p><span id="mobile_phone_entity"></span><span id="mobile_phone_account"></span></p>
+				</div>
+				<div class="col span-1-of-5">
+					<h3><span id="mobile_phone_amount"></span></h3>
+				</div>
+				<div class="col span-1-of-5">
+					<a id="mobile_phone_pay_button" class="btn btn-ghost" href="#confirm-popup-mobile-phone">Pay</a>
+				</div>
+			</div>
+			<div class="row bill">
+				<div class="col span-1-of-5">
+					<img src="res/img/sp/innovate.png" alt="Innovatee logo" class="service-provider-logo">
+				</div>
+				<div class="col span-2-of-5">
+					<h3>Credit Card</h3>
+					<p><span id="credit_card_entity"></span><span id="credit_card_account"></span></p>
+				</div>
+				<div class="col span-1-of-5">
+					<h3><span id="credit_card_amount"></span></h3>
+				</div>
+				<div class="col span-1-of-5">
+					<a id="credit_card_pay_button" class="btn btn-ghost" href="#confirm-popup-credit-card">Pay</a>
+				</div>
+			</div>
+		</section>
+
+		<!---
+		Confirmation popups
+		--->
+
+		<div id="confirm-popup-utiltities" class="overlay">
+			<div class="popup">
+				<h2>Proceed with payment?</h2>
+				<a class="close" href="#">&times;</a>
+				<div class="content">
+					You're about to pay <span id="utilities_bill_amount"></span> towards your <span id="utilities_bill_entity"></span><span id="utilities_bill_account"></span>.
+				</div>
+				<a id="utilities_confirm_button" class="btn btn-full" href="">Go ahead</a>
+			</div>
+		</div>
+
+		<div id="confirm-popup-home-entertainment" class="overlay">
+			<div class="popup">
+				<h2>Proceed with payment?</h2>
+				<a class="close" href="#">&times;</a>
+				<div class="content">
+					You're about to pay <span id="home_entertainment_bill_amount"></span> towards your <span id="home_entertainment_bill_entity"></span><span id="home_entertainment_bill_account"></span>.
+				</div>
+				<a id="home_entertainment_confirm_button" class="btn btn-full" href="t">Go ahead</a>
+			</div>
+		</div>
+
+		<div id="confirm-popup-mobile-phone" class="overlay">
+			<div class="popup">
+				<h2>Proceed with payment?</h2>
+				<a class="close" href="#">&times;</a>
+				<div class="content">
+					You're about to pay <span id="mobile_phone_bill_amount"></span> towards your <span id="mobile_phone_bill_entity"></span><span id="mobile_phone_bill_account"></span>.
+				</div>
+				<a id="mobile_phone_confirm_button" class="btn btn-full" href="/endpoints/bills/pay?category=mobile_phone">Go ahead</a>
+			</div>
+		</div>
+
+		<div id="confirm-popup-credit-card" class="overlay">
+			<div class="popup">
+				<h2>Proceed with payment?</h2>
+				<a class="close" href="#">&times;</a>
+				<div class="content">
+					You're about to pay <span id="credit_card_bill_amount"></span> towards your <span id="credit_crd_bill_entity"></span><span id="credit_card_bill_account"></span>.
+				</div>
+				<a id="credit_card_confirm_button" class="btn btn-full" href="">Go ahead</a>
+			</div>
+		</div>
+
+		<!---
+		Payment popups
+		--->
+
+		<div id="success" class="overlay">
+			<div class="popup">
+				<h2>Done!</h2>
+				<a class="close" href="#">&times;</a>
+				<div class="content">
+					Bill, down. Your payment was successfully completed.
+				</div>
+				<i class="ion-android-checkmark-circle icon-big"></i>
+			</div>
+		</div>
+
+		<div id="failure" class="overlay">
+			<div class="popup">
+				<h2>Something went wrong</h2>
+				<a class="close" href="#">&times;</a>
+				<div class="content">
+					Your payment could not be completed. Please try again or contact support.
+				</div>
+				<i class="ion-ios-close icon-big"></i>
+			</div>
+		</div>
+
+		<footer>
+			<div class="row">
+				<div class="col span-1-of-2">
+					<ul class="footer-nav">
+						<li><a href"#">About us</a></li>
+						<li><a href"#">Blog</a></li>
+						<li><a href"#">Press</a></li>
+						<li><a href"#">iOS App</a></li>
+						<li><a href"#">Android App</a></li>
+					</ul>
+				</div>
+				<div class="col span-1-of-2">
+					<ul class="social-links">
+						<li><a href="#"><i class="ion-social-facebook"></i></a></li>
+						<li><a href="#"><i class="ion-social-twitter"></i></a></li>
+						<li><a href="#"><i class="ion-social-googleplus"></i></a></li>
+						<li><a href="#"><i class="ion-social-instagram"></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<p>
+					Innovate is a dummy digital bank created for demo purposes.
+				</p>
+			</div>
+		</footer>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+		<script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="//cdn.jsdelivr.net/selectivizr/1.0.3b/selectivizr.min.js"></script>
+		<script src="vendors/js/noframework.waypoints.min.js"></script>
+		<script src="res/js/navbar.js"></script>
+		<script src="res/js/bills.js"></script>
+
+	</body>
+
+</html>

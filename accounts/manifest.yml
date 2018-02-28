@@ -1,0 +1,8 @@
+---
+applications:
+- instances: 1
+  timeout: 180
+  name: innovate-accounts
+  buildpack: sdk-for-nodejs
+  command: npm start
+  memory: 512M

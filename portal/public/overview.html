@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="vendors/css/normalize.css">
+		<link rel="stylesheet" href="vendors/css/grid.css">
+ 		<link rel="stylesheet" href="res/css/styles.css">
+		<link rel="stylesheet" href="res/css/queries.css">
+		<link rel="stylesheet" href="vendors/css/ionicons.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400" rel="stylesheet">
+		<title>Innovate: Digital Bank</title>
+	</head>
+
+	<body>
+
+		<header class="bar">
+			<nav>
+				<div class="row">
+					<img src="res/img/logo-outline.png" alt="Innovate logo" class="logo">
+					<img src="res/img/logo.png" alt="Innovatee logo" class="logo-black">
+					<ul class="main-nav">
+						<li><a href="overview.html">Spending</a></li>
+						<li><a href="bills.html">Bills</a></li>
+						<li><a href="accounts.html">Accounts</a></li>
+						<li><a href="chat.html">Support</a></li>
+						<li><a href="/endpoints/logout">Logout</a></li>
+					</ul>
+					<a class="mobile-nav-icon"><i class="js-mobile-nav-icon ion-navicon-round"></i></a>
+				</div>
+			</nav>
+		</header>
+
+		<section class="section-spending">
+			<div class="row">
+				<h2>Spending</h2>
+			</div>
+			<div class="row">
+				<h3><span class="small">AED</span><span id='js-total'></span></h3>
+				<p>Spent this month</p>
+			</div>
+		</section>
+
+		<section class="section-category-list">
+			<a id="groceries_link" href="/transactions.html#groceries">
+			<div id="groceries_row" class="row category">
+				<div class="col span-1-of-5">
+					<i class="ion-ios-cart icon-big"></i>
+				</div>
+				<div class="col span-3-of-5">
+					<h3>Groceries</h3>
+					<p id="groceries_transaction_count"></p>
+				</div>
+				<div class="col span-1-of-5">
+					<h3 id="groceries_transaction_total"></h3>
+				</div>
+			</div>
+		</a>
+		<a id="eating_out_link" href="/transactions.html#eating_out">
+			<div id="eating_out_row" class="row category">
+				<div class="col span-1-of-5">
+					<i class="ion-android-restaurant icon-big"></i>
+				</div>
+				<div class="col span-3-of-5">
+					<h3>Eating Out</h3>
+					<p id="eating_out_transaction_count"></p>
+				</div>
+				<div class="col span-1-of-5">
+					<h3 id="eating_out_transaction_total"></h3>
+				</div>
+			</div>
+		</a>
+		<a id="transport_link" href="/transactions.html#transport">
+			<div id="transport_row" class="row category">
+				<div class="col span-1-of-5">
+					<i class="ion-model-s icon-big"></i>
+				</div>
+				<div class="col span-3-of-5">
+					<h3>Transport</h3>
+					<p id="transport_transaction_count"></p>
+				</div>
+				<div class="col span-1-of-5">
+					<h3 id="transport_transaction_total"></h3>
+				</div>
+			</div>
+		</a>
+		<a id="bills_link" href="/transactions.html#bills">
+			<div id="bills_row" class="row category">
+				<div class="col span-1-of-5">
+					<i class="ion-lightbulb icon-big"></i>
+				</div>
+				<div class="col span-3-of-5">
+					<h3>Bills</h3>
+					<p id="bills_transaction_count"></p>
+				</div>
+				<div class="col span-1-of-5">
+					<h3 id="bills_transaction_total"></h3>
+				</div>
+			</div>
+		</a>
+		<a id="expenses_link" href="/transactions.html#expenses">
+			<div id="expenses_row" class="row category">
+				<div class="col span-1-of-5">
+					<i class="ion-ios-nutrition icon-big"></i>
+				</div>
+				<div class="col span-3-of-5">
+					<h3>Expenses</h3>
+					<p id="expenses_transaction_count"></p>
+				</div>
+				<div class="col span-1-of-5">
+					<h3 id="expenses_transaction_total"></h3>
+				</div>
+			</div>
+		</a>
+		<a id="cash_link" href="/transactions.html#cash">
+			<div id="cash_row" class="row category">
+				<div class="col span-1-of-5">
+					<i class="ion-cash icon-big"></i>
+				</div>
+				<div class="col span-3-of-5">
+					<h3>Cash</h3>
+					<p id="cash_transaction_count"></p>
+				</div>
+				<div class="col span-1-of-5">
+					<h3 id="cash_transaction_total"></h3>
+				</div>
+			</div>
+		</a>
+		<a id="holidays_link" href="/transactions.html#holidays">
+			<div id="holidays_row" class="row category">
+				<div class="col span-1-of-5">
+					<i class="ion-plane icon-big"></i>
+				</div>
+				<div class="col span-3-of-5">
+					<h3>Holidays</h3>
+					<p id="holidays_transaction_count"></p>
+				</div>
+				<div class="col span-1-of-5">
+					<h3 id="holidays_transaction_total"></h3>
+				</div>
+			</div>
+		</a>
+		</section>
+
+		<footer>
+			<div class="row">
+				<div class="col span-1-of-2">
+					<ul class="footer-nav">
+						<li><a href"#">About us</a></li>
+						<li><a href"#">Blog</a></li>
+						<li><a href"#">Press</a></li>
+						<li><a href"#">iOS App</a></li>
+						<li><a href"#">Android App</a></li>
+					</ul>
+				</div>
+				<div class="col span-1-of-2">
+					<ul class="social-links">
+						<li><a href="#"><i class="ion-social-facebook"></i></a></li>
+						<li><a href="#"><i class="ion-social-twitter"></i></a></li>
+						<li><a href="#"><i class="ion-social-googleplus"></i></a></li>
+						<li><a href="#"><i class="ion-social-instagram"></i></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<p>
+					Innovate is a dummy digital bank created for demo purposes.
+				</p>
+			</div>
+		</footer>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+		<script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="//cdn.jsdelivr.net/selectivizr/1.0.3b/selectivizr.min.js"></script>
+		<script src="vendors/js/noframework.waypoints.min.js"></script>
+		<script src="res/js/navbar.js"></script>
+		<script src="res/js/spending.js"></script>
+
+	</body>
+
+</html>

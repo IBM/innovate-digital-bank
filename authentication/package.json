@@ -1,0 +1,40 @@
+{
+  "name": "innovate-authentication",
+  "version": "1.0.0",
+  "description": "Innovate: Digital Bank",
+  "private": true,
+  "engines": {
+    "node": "^6.9.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "start:cluster": "sl-run server/server.js",
+    "debug": "node --debug server/server.js",
+    "build": "npm run build:idt",
+    "idt:build": "node idt.js build",
+    "idt:test": "node idt.js test",
+    "idt:debug": "node idt.js debug",
+    "idt:run": "node idt.js run",
+    "idt:deploy": "node idt.js deploy",
+    "idt:install": "node idt.js install"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "dotenv": "^2.0.0",
+    "express": "^4.15.3",
+    "mongoose": "^5.0.0-rc1",
+    "request": "^2.83.0",
+    "strong-supervisor": "^6.2.0",
+    "uuid": "^3.1.0",
+    "watson-developer-cloud": "^2.40.0"
+  },
+  "devDependencies": {
+    "chai": "^4.0.0",
+    "chalk": "^1.1.3",
+    "mocha": "^3.4.2",
+    "nyc": "^10.3.2",
+    "prompt-confirm": "^1.2.0",
+    "proxyquire": "^1.8.0",
+    "request": "^2.82.0"
+  }
+}

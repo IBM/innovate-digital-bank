@@ -1,0 +1,76 @@
+/* LARGE TABLETS TO DESKTOP BROWSERS */
+
+@media only screen and (max-width: 1200px) {
+	.hero-text-box { width: 100%; padding: 0 3%; }
+	.row { padding: 0 3%; }
+}
+
+/* TABLETS & PORTRAIT MODE */
+
+@media only screen and (max-width: 1023px) {
+	body { font-size: 80%; }
+	section { padding 60px 0; }
+	.long-copy { width: 80%; margin-left: 10% }
+}
+
+/* LARGE PHONES TO SMALL TABLETS */
+
+@media only screen and (max-width: 767px) {
+	.steps-box { margin-top: 10px; }
+	.steps-box:first-child { margin-top: 10px; margin-left: -60px; }
+	.steps-box:last-child { margin-top: 10px; }
+	.steps-box { margin-top: 10px; }
+	.works-step { margin-bottom: 20px; }
+	.works-step:last-of-type { margin-bottom: 30px; }
+	.app-screen { width: 40%; }
+	.works-step div { height: 35px; width: 35px; font-size: 135%; margin-right: 15px;}
+	.btn-app img { height: 30px; }
+	.plan-box ul li .icon-small { width: 2%}
+	.plan-price { font-size: 200%}
+	.plan-box .btn { padding: 10%;}
+	.section-cities .icon-small { width: 2%}
+	.contact-form { width: 90%; }
+	.mobile-nav-icon { display: inline-block; }
+	.main-nav { float: left; margin-top: 2px; display: none; }
+	.main-nav li { display: block; }
+	.main-nav li a:link, .main-nav li a:visited { display: block; border: 0; }
+	.sticky-nav .main-nav { margin-top: 0px; }
+	.sticky-nav .mobile-nav-icon i { color: #555; }
+}
+
+/* SMALL PHONES */
+
+@media only screen and (max-width: 480px) {
+	.logo { height: 80px; }
+	.hero-text-box .btn { margin-bottom: 10px; }
+	.section-features h3, .section-features p { text-align: center; }
+	.app-screen { width: 30%; float: left; margin: 0 0 20px 50%; }
+	.works-step div { height: 20px; width: 20px; font-size: 80%; padding: 0.5%; font-weight: 500;}
+	.btn-app img { height: 35px; padding-left: 3%}
+	.plan-box { font-size: 120% }
+	.plan-box ul li .icon-small { width: 5%}
+	.plan-price { font-size: 300%}
+	.plan-box .btn { padding: 5%;}
+	.contact-form .row { padding: 5px; }
+	footer { padding-left: 15px; }
+	.footer-nav { float: none; padding-bottom: 10px; width: 120%; }
+	.social-links { padding-bottom: 10px; float: none; }
+	.section-spending { padding: 12px; }
+	.section-spending h2 { margin-bottom: 15px }
+	.section-spending h3 { font-size: 200%; }
+	.section-spending .small { font-size: 50%; }
+	.section-spending p { font-weight: 200; }
+	.section-category-list { padding-top: 0px; }
+	.section-category-list .row { margin-bottom: 5px; }
+	.section-category-list .icon-big { padding: 0px; margin: 0px; }
+	.section-category-list h3 { text-align: center; font-size: 120%; padding-bottom: 10px;}
+	.section-category-list p { text-align: center; font-size: 90%; padding-bottom: 5px; }
+	.section-bill-list { padding-top: 0px; }
+	.section-bill-list h3 { font-size: 120%; text-align: center; }
+	.section-bill-list p { font-size: 80%; text-align: center; padding-bottom: 5px;}
+	.service-provider-logo { width: 40px; height: auto; margin-left: 45%; }
+	.section-bill-list .btn {margin-left: calc(47.5% - 20px); padding: 3px 20px; margin-bottom: 10px; margin-top: 5px;}
+	.section-transaction-list .category { margin-bottom: 10px; margin-top: 10px; }
+	.section-transaction-list .row { border-bottom: 0.2px solid #ccc;}
+	.section-transaction-list .transaction {display: inline-flex; width: 100%; padding-bottom: 10px;}
+}

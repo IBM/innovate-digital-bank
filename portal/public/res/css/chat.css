@@ -1,0 +1,266 @@
+
+/* ----------------------------------------------------- */
+/* CHAT */
+/* ----------------------------------------------------- */
+
+#contentParent {
+  height: 80%;
+	margin-bottom: 20px;
+}
+
+.responsive-columns-wrapper {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  -ms-display: flex;
+  -ms-flex-direction: row;
+}
+
+.responsive-column {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: auto;
+}
+
+#chat-column-holder {
+  text-align: center;
+}
+
+.chat-column {
+  height: 100%;
+  padding: 0.9375rem 0 0.625rem 0;
+  margin: auto;
+  text-align: left;
+  max-width: 50rem;
+  min-width: 9.375rem;
+}
+
+#scrollingChat {
+  margin: 0.75rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100% - 4rem);
+}
+
+
+.message-inner {
+  opacity: 0;
+  margin-top: 0.9375rem;
+  -webkit-transition-property: opacity, margin-top;
+  -webkit-transition-duration: 0.75s;
+  -webkit-transition-timing-function: ease-in;
+  -moz-transition-property: opacity, margin-top;
+  -moz-transition-duration: 0.75s;
+  -moz-transition-timing-function: ease-in;
+  -o-transition-property: opacity, margin-top;
+  -o-transition-duration: 0.75s;
+  -o-transition-timing-function: ease-in;
+  -ms-transition-property: opacity, margin-top;
+  -ms-transition-duration: 0.75s;
+  -ms-transition-timing-function: ease-in;
+  transition-property: opacity, margin-top;
+  transition-duration: 0.75s;
+  transition-timing-function: ease-in;
+}
+
+.load .message-inner {
+  opacity: 1;
+  margin-top: 0.3125rem;
+}
+
+.from-user {
+  text-align: right;
+}
+
+.from-user .message-inner {
+  position: relative;
+  font-size: 1rem;
+  color: #fff;
+  letter-spacing: 0.015rem;
+  line-height: 1.3125rem;
+  background: #00B4A0;
+  border-radius: 1.25rem;
+  border-bottom-right-radius: 0;
+  text-align: left;
+  display: inline-block;
+  margin-left: 2.5rem;
+  min-width: 2.5rem;
+}
+
+.from-user .message-inner p {
+  margin: 0.3125rem;
+  padding: 0 0.9375rem;
+}
+
+.from-user .message-inner:before, .from-user .message-inner:after {
+  content: "";
+  position: absolute;
+}
+
+.from-user .message-inner:before {
+  z-index: -2;
+  bottom: -0.375rem;
+  right: 0;
+  height: 0.375rem;
+  width: 0.5rem;
+  background: #1cb3a0;
+}
+
+.from-user .message-inner:after {
+  z-index: -1;
+  bottom: -0.5rem;
+  right: 0;
+  height: 0.5rem;
+  width: 0.5rem;
+  background: #fff;
+  border-top-right-radius: 1.25rem;
+}
+
+.from-watson .message-inner {
+  position: relative;
+  border-radius: 1.5625rem;
+  font-size: 1rem;
+  color: #B5B5B5;
+  letter-spacing: 0.015rem;
+  line-height: 1.3125rem;
+}
+
+.from-watson.latest .message-inner {
+  color: #323232;
+}
+
+.from-watson p {
+  margin: 0.3125rem;
+  padding: 0 1.25rem;
+}
+
+.from-watson.latest.top p:before {
+  content: ".";
+  color: #d24142;
+  background-image: url("images/marker.png");
+  background-size: 0.3125rem 1.3125rem;
+  position: absolute;
+  z-index: 2;
+  left: 0.4375rem;
+  width: 0.3125rem;
+  height: 1.3125rem;
+  line-height: 1.3125rem;
+}
+
+
+#textInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #323232;
+  letter-spacing: 0.015rem;
+  line-height: 1.3125rem;
+  height: 2.5rem;
+  max-width: 100%;
+  padding-left: 0.125rem;
+  margin-bottom: -0.125rem;
+  font-family: Helvetica Neue for IBM, Helvetica Neue, Helvetica, Arial, sans-serif;
+
+}
+
+
+#textInput.underline {
+  border-bottom: 2px solid #00B4A0;
+}
+
+::-webkit-input-placeholder {
+  color: #B5B5B5;
+}
+
+::-moz-placeholder {
+  color: #B5B5B5;
+  opacity:  1;
+}
+
+input:-moz-placeholder {
+  color: #B5B5B5;
+  opacity:  1;
+}
+
+:-ms-input-placeholder {
+  color: #B5B5B5;
+}
+
+::-ms-clear {
+  display: none;
+}
+
+.inputOutline {
+  display: block;
+  border-bottom: 0.0625rem solid #aeaeae;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+#textInputDummy {
+  position:absolute;
+  white-space:pre;
+  top: 0;
+  left: -1000%;
+  opacity: 0;
+}
+
+#payload-column {
+	display: none;
+  font-family: Monaco, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0;
+  line-height: 1.125rem;
+  background-color: #23292A;
+  color: #fff;
+  overflow-x: auto;
+
+  width: 45%;
+  max-width: 32.0625rem;
+  min-width: 29.6875rem;
+}
+
+#payload-column.full {
+  width: 100%;
+  max-width: none;
+  min-width: initial;
+}
+
+#payload-column .header-text, #payload-column #payload-initial-message {
+  font-family: Helvetica Neue for IBM, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 1.125rem;
+  color: #9E9E9E;
+  letter-spacing: 0.01875rem;
+  padding: 0.5rem;
+  padding-left: 2.5rem;
+  background: #383D3E;
+}
+.payload .line-numbers, .payload .payload-text {
+  padding: 0.5rem;
+}
+
+.line-numbers {
+  width: 2rem;
+  color: #898989;
+  text-align: right;
+}
+
+pre {
+  margin: 0;
+  word-wrap: normal;
+}
+
+.string {
+  color: #54EED0;
+}
+
+.boolean, .null, .number {
+  color: #CE8EFF;
+}
+
+.key {
+  color: #66B7FF;
+}
