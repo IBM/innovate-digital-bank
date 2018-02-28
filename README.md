@@ -239,9 +239,9 @@ Handles communication with Watson Conversation on IBM Cloud to enable a dummy su
 Simulates a fake userbase for the app. Periodically loops through all user accounts and adds randomized bills and transactions for them.
 
 
-## Deploying Innovate on IBM Cloud Private
+# Deploying on IBM Cloud Private
 
-### Create an instance of MongoDB
+## Creating an instance MongoDB
 This demo heavily depends on mongo as a session & data store.
 
 #### 1. Create a persistent volume
@@ -252,15 +252,11 @@ Give it a name and a capacity, choose storage type _*Hostpath*_, and add a _*pat
 Give it a name and a storage request value
 ![Persistent Volume Claim](docs/2.png)
 
-#### 3. Create a persistent volume claim
-Give it a name and a storage request value
-![Persistent Volume Claim](docs/2.png)
+#### 3. Create and configure mongo
+From the catalog, choose MongoDb. Give it a *_name_*, specify the *_existing volume claim name_*, and give it a *_password_*
+![Mongo](docs/3.png)
+![Mongo](docs/4.png)
 
-
-### Portal
-### Authentication
-### Accounts
-### Transactions
-### Bills
-### Support
-### Userbase
+#### 4. Get your mongo connection string
+Your mongo connection string will be in the following format: mongodb://<USERNAME>:<PASSWORD>@<HOST>:<PORT>/<DATABASE>
+Almost all microservices need it; keep it safe!
