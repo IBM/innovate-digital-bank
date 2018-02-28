@@ -1,0 +1,4 @@
+apiVersion: v1
+description: A Helm chart for innovate bank portal
+name: innovate-support
+version: 1.0.0

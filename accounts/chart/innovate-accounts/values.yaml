@@ -1,0 +1,30 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+revisionHistoryLimit: 3
+image:
+  repository: mycluster.icp:8500/default/innovate-accounts
+  tag: v1.0.0
+  pullPolicy: Always
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+livenessProbe:
+  initialDelaySeconds: 3000
+  periodSeconds: 1000
+service:
+  name: Node
+  type: NodePort
+  servicePort: 3400
+  serviceNodePort: 30120
+hpa:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 3
+  metrics:
+    cpu:
+      targetAverageUtilization: 80
+    memory:
+      targetAverageUtilization: 80
+services:
