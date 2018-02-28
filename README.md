@@ -2,6 +2,8 @@
 Innovate is a dummy digital bank composed of a set of microservices that communicate with each other; created to demonstrate cloud-native web apps.
 <!-- A live version deployed on a kubernetes cluster in IBM Cloud is available here: -->
 
+# Architecture
+
 ## Flow
 ![Demo architecture](docs/flow.png)
 
@@ -183,28 +185,58 @@ Description: Drops the transactions collection
 
 Method: GET
 
-### Authentication 3200:30100
+### Bills [3800:30160]
 
-Handles user account creation, as well as login & logout.
+Handles creation, payment, and retrieval of bills
 
-### Authentication 3200:30100
-Handles user account creation, as well as login & logout.
+#### Endpoints:
 
-### Authentication 3200:30100
-Handles user account creation, as well as login & logout.
+##### /api/bills/create
 
-- [x] Portal 3000:30060
-- [x] Authentication 3200:30100
-- [x] Accounts 3400:30120
-- [x] Transactions 3600:30200
-- [x] Bills 3800:30160
-- [x] Support 4000:30180
-- [x] Userbase 4200:30080
+Description: Creates a new bill
 
-## Data stores
+Method: POST
 
-- [x] MongoDB
+Example input:
 
+```
+{
+  uuid: String,
+  category: String,
+  entity: String,
+  account_no: String,
+  amount: String,
+  date: String
+}
+```
+
+##### /api/bills/get
+
+Description: Retrieves a user's bills
+
+Method: POST
+
+Example input:
+
+```
+{
+  uuid: String
+}
+```
+
+##### /api/bills/drop
+
+Description: Drops the bills collection
+
+Method: GET
+
+### Support [4000:30180]
+
+Handles communication with Watson Conversation on IBM Cloud to enable a dummy support chat feature.
+
+### Userbase [3600:30140]
+
+Simulates a fake userbase for the app. Periodically loops through all user accounts and adds randomized bills and transactions for them.
 
 
 ## Deploying Innovate on IBM Cloud Private
