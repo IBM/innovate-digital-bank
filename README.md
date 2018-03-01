@@ -2,6 +2,53 @@
 Innovate is a dummy digital bank composed of a set of microservices that communicate with each other; created to demonstrate cloud-native web apps.
 <!-- A live version deployed on a kubernetes cluster in IBM Cloud is available here: -->
 
+Table of Contents
+=================
+
+   * [Innovate: Digital Bank](#innovate-digital-bank)
+   * [Architecture](#architecture)
+      * [Flow](#flow)
+      * [Microservices](#microservices)
+         * [Portal [3000:30060]](#portal-300030060)
+         * [Authentication [3200:30100]](#authentication-320030100)
+            * [Endpoints:](#endpoints)
+               * [/api/user/create](#apiusercreate)
+               * [/api/user/authenticate](#apiuserauthenticate)
+               * [/api/user/get](#apiuserget)
+         * [Accounts [3400:30120]](#accounts-340030120)
+            * [Endpoints:](#endpoints-1)
+               * [/api/accounts/create](#apiaccountscreate)
+               * [/api/accounts/get](#apiaccountsget)
+               * [/api/accounts/deposit](#apiaccountsdeposit)
+               * [/api/accounts/withdraw](#apiaccountswithdraw)
+               * [/api/accounts/drop](#apiaccountsdrop)
+         * [Transactions [3600:30140]](#transactions-360030140)
+            * [Endpoints:](#endpoints-2)
+               * [/api/transactions/create](#apitransactionscreate)
+               * [/api/transactions/get](#apitransactionsget)
+               * [/api/transactions/drop](#apitransactionsdrop)
+         * [Bills [3800:30160]](#bills-380030160)
+            * [Endpoints:](#endpoints-3)
+               * [/api/bills/create](#apibillscreate)
+               * [/api/bills/get](#apibillsget)
+               * [/api/bills/drop](#apibillsdrop)
+         * [Support [4000:30180]](#support-400030180)
+         * [Userbase [3600:30140]](#userbase-360030140)
+   * [Deploying on IBM Cloud Private](#deploying-on-ibm-cloud-private)
+      * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
+            * [1. Create a persistent volume](#1-create-a-persistent-volume)
+            * [2. Create a persistent volume claim](#2-create-a-persistent-volume-claim)
+            * [3. Create and configure mongo](#3-create-and-configure-mongo)
+            * [4. Get your mongo connection string](#4-get-your-mongo-connection-string)
+      * [Configuring your Environment Variables](#configuring-your-environment-variables)
+      * [Deploying all Components](#deploying-all-components)
+            * [1. /etc](#1-etc)
+            * [2. docker login](#2-docker-login)
+            * [3. kubectl config](#3-kubectl-config)
+            * [4. bx dev deploy](#4-bx-dev-deploy)
+
+=================
+
 # Architecture
 
 ## Flow
@@ -289,3 +336,9 @@ cp .env.example .env
 Finally, edit your .env folder and add your Mongodb connection string
 
 #### Repeat those steps for all microservices. In addition to your mongo url, the portal microservice will need the address of your ICP.
+
+## Deploying all Components
+#### 1. /etc
+#### 2. docker login
+#### 3. kubectl config
+#### 4. bx dev deploy
