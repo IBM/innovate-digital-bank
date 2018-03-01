@@ -241,11 +241,11 @@ Simulates a fake userbase for the app. Periodically loops through all user accou
 
 # Deploying on IBM Cloud Private
 
-## Creating an instance MongoDB
+## Creating an instance of MongoDB
 This demo heavily depends on mongo as a session & data store.
 
 #### 1. Create a persistent volume
-Give it a name and a capacity, choose storage type _*Hostpath*_, and add a _*path parameter*_
+Give it a name and a capacity, choose storage type _**Hostpath**_, and add a _**path parameter**_
 
 ![Persistent Volume](docs/1.png)
 
@@ -255,12 +255,37 @@ Give it a name and a storage request value
 ![Persistent Volume Claim](docs/2.jpg)
 
 #### 3. Create and configure mongo
-From the catalog, choose MongoDb. Give it a *_name_*, specify the *_existing volume claim name_*, and give it a *_password_*
+From the catalog, choose MongoDb. Give it a **_name_**, specify the **_existing volume claim name_**, and give it a *_password_*
 
 ![Mongo](docs/3.jpg)
 
 ![Mongo](docs/4.jpg)
 
 #### 4. Get your mongo connection string
-Your mongo connection string will be in the following format: mongodb://<USERNAME>:<PASSWORD>@<HOST>:<PORT>/<DATABASE>
-Almost all microservices need it; keep it safe!
+Your mongo connection string will be in the following format:
+```
+mongodb://_USERNAME_:_PASSWORD_@_HOST_:_PORT_/_DATABASE_
+```
+
+Almost all your microservices need it; keep it safe!
+
+## Configuring your Environment Variables
+Each of the 8 microservices must have a _**.env**_ file.
+
+An example is already provided within each folder. From the directory of each microservice, copy the example file, rename it to _**.env**_, and fill it with the appropriate values.
+
+For example, from within the /innovate folder, navigate into the accounts folder
+
+```
+cd accounts
+```
+
+Next, copy and rename the _**.env.example**_ folder
+
+```
+cp .env.example .env
+```
+
+Finally, edit your .env folder and add your Mongodb connection string
+
+#### Repeat those steps for all microservices. In addition to your mongo url, the portal microservice will need the address of your ICP.
