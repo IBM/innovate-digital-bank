@@ -145,7 +145,7 @@ From within the support folder, edit your .env to include your newly acquired cr
 Redeploy the microservice, the support feature should now be accessible through the portal.
 
 ```
-bx dev deployed
+bx dev deploy
 ```
 
 # Docs
