@@ -246,15 +246,19 @@ This demo heavily depends on mongo as a session & data store.
 
 #### 1. Create a persistent volume
 Give it a name and a capacity, choose storage type _*Hostpath*_, and add a _*path parameter*_
+
 ![Persistent Volume](docs/1.png)
 
 #### 2. Create a persistent volume claim
 Give it a name and a storage request value
+
 ![Persistent Volume Claim](docs/2.png)
 
 #### 3. Create and configure mongo
 From the catalog, choose MongoDb. Give it a *_name_*, specify the *_existing volume claim name_*, and give it a *_password_*
+
 ![Mongo](docs/3.png)
+
 ![Mongo](docs/4.png)
 
 #### 4. Get your mongo connection string
