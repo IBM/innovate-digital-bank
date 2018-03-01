@@ -6,6 +6,7 @@ Table of Contents
 =================
 
    * [Architecture](#architecture)
+
       * [Flow](#flow)
       * [Microservices](#microservices)
          * [Portal [3000:30060]](#portal-300030060)
@@ -34,11 +35,11 @@ Table of Contents
          * [Support [4000:30180]](#support-400030180)
          * [Userbase [3600:30140]](#userbase-360030140)
    * [Deploying on IBM Cloud Private](#deploying-on-ibm-cloud-private)
-      * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
-      * [Configuring your Environment Variables](#configuring-your-environment-variables)
-      * [Deploying all Components](#deploying-all-components)
+         * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
+         * [Configuring your Environment Variables](#configuring-your-environment-variables)
+         * [Deploying all Components](#deploying-all-components)
+   * [(Optional) Adding Support with Watson Conversation](#architecture)
 
-=================
 
 # Architecture
 
@@ -329,7 +330,29 @@ Finally, edit your .env folder and add your Mongodb connection string
 #### Repeat those steps for all microservices. In addition to your mongo url, the portal microservice will need the address of your ICP.
 
 ## Deploying all Components
-#### 1. /etc
-#### 2. docker login
-#### 3. kubectl config
-#### 4. bx dev deploy
+#### 1. Add your ICP's address to your hosts file
+Add an entry to your /etc/hosts file as follows
+
+```
+<YOUR_ICP_IP_ADDRESS> mycluster.icp
+```
+
+#### 2. Login to docker
+
+```
+docker login mycluster.icp:8500
+```
+
+#### 3. Configure kubectl
+From your ICP's dashboard, copy the kubectl commands under ***REMOVED*** > configure client
+
+![kubectl config](docs/5.png)
+
+#### 4. Deploy
+Finally, navigate to each microservice, and run the following command
+```
+bx dev deploy
+```
+_If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) first_
+
+## (Optional) Adding Support with Watson Conversation
