@@ -5,8 +5,14 @@ Innovate is a dummy digital bank composed of a set of microservices that communi
 Table of Contents
 =================
 
-   * [Architecture](#architecture)
+   * [Innovate: Digital Bank](#innovate-digital-bank)
       * [Flow](#flow)
+   * [Guide: Deploying on IBM Cloud Private](#guide-deploying-on-ibm-cloud-private)
+      * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
+      * [Configuring your Environment Variables](#configuring-your-environment-variables)
+      * [Deploying all Components](#deploying-all-components)
+      * [(Optional) Adding Support with Watson Conversation](#optional-adding-support-with-watson-conversation)
+   * [Docs](#docs)
       * [Microservices](#microservices)
          * [Portal [3000:30060]](#portal-300030060)
          * [Authentication [3200:30100]](#authentication-320030100)
@@ -33,17 +39,91 @@ Table of Contents
                * [/api/bills/drop](#apibillsdrop)
          * [Support [4000:30180]](#support-400030180)
          * [Userbase [3600:30140]](#userbase-360030140)
-   * [Deploying on IBM Cloud Private](#deploying-on-ibm-cloud-private)
-      * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
-      * [Configuring your Environment Variables](#configuring-your-environment-variables)
-      * [Deploying all Components](#deploying-all-components)
-      * [(Optional) Adding Support with Watson Conversation](#optional-adding-support-with-watson-conversation)
-
-
-# Architecture
 
 ## Flow
 ![Demo architecture](docs/flow.png)
+
+# Guide: Deploying on IBM Cloud Private
+
+## Creating an instance of MongoDB
+This demo heavily depends on mongo as a session & data store.
+
+#### 1. Create a persistent volume
+Give it a name and a capacity, choose storage type _**Hostpath**_, and add a _**path parameter**_
+
+![Persistent Volume](docs/1.png)
+
+#### 2. Create a persistent volume claim
+Give it a name and a storage request value
+
+![Persistent Volume Claim](docs/2.jpg)
+
+#### 3. Create and configure mongo
+From the catalog, choose MongoDb. Give it a **_name_**, specify the **_existing volume claim name_**, and give it a *_password_*
+
+![Mongo](docs/3.jpg)
+
+![Mongo](docs/4.jpg)
+
+#### 4. Get your mongo connection string
+Your mongo connection string will be in the following format:
+```
+mongodb://<USERNAME>:<PASSWORD>@<HOST>:<PORT>/<DATABASE_NAME>
+```
+
+Almost all your microservices need it; keep it safe!
+
+## Configuring your Environment Variables
+Each of the 8 microservices must have a _**.env**_ file.
+
+An example is already provided within each folder. From the directory of each microservice, copy the example file, rename it to _**.env**_, and fill it with the appropriate values.
+
+For example, from within the /innovate folder, navigate into the accounts folder
+
+```
+cd accounts
+```
+
+Next, copy and rename the _**.env.example**_ folder
+
+```
+cp .env.example .env
+```
+
+Finally, edit your .env folder and add your Mongodb connection string
+
+#### Repeat those steps for all microservices. In addition to your mongo url, the portal microservice will need the address of your ICP.
+
+## Deploying all Components
+#### 1. Add your ICP's address to your hosts file
+Add an entry to your /etc/hosts file as follows
+
+```
+<YOUR_ICP_IP_ADDRESS> mycluster.icp
+```
+
+#### 2. Login to docker
+
+```
+docker login mycluster.icp:8500
+```
+
+#### 3. Configure kubectl
+From your ICP's dashboard, copy the kubectl commands under admin > configure client
+
+![kubectl config](docs/5.png)
+
+#### 4. Deploy
+Finally, navigate to each microservice, and run the following command
+```
+bx dev deploy
+```
+_If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) first_
+
+## (Optional) Adding Support with Watson Conversation
+
+
+# Docs
 
 ## Microservices
 
@@ -275,83 +355,3 @@ Handles communication with Watson Conversation on IBM Cloud to enable a dummy su
 ### Userbase [3600:30140]
 
 Simulates a fake userbase for the app. Periodically loops through all user accounts and adds randomized bills and transactions for them.
-
-
-# Deploying on IBM Cloud Private
-
-## Creating an instance of MongoDB
-This demo heavily depends on mongo as a session & data store.
-
-#### 1. Create a persistent volume
-Give it a name and a capacity, choose storage type _**Hostpath**_, and add a _**path parameter**_
-
-![Persistent Volume](docs/1.png)
-
-#### 2. Create a persistent volume claim
-Give it a name and a storage request value
-
-![Persistent Volume Claim](docs/2.jpg)
-
-#### 3. Create and configure mongo
-From the catalog, choose MongoDb. Give it a **_name_**, specify the **_existing volume claim name_**, and give it a *_password_*
-
-![Mongo](docs/3.jpg)
-
-![Mongo](docs/4.jpg)
-
-#### 4. Get your mongo connection string
-Your mongo connection string will be in the following format:
-```
-mongodb://<USERNAME>:<PASSWORD>@<HOST>:<PORT>/<DATABASE_NAME>
-```
-
-Almost all your microservices need it; keep it safe!
-
-## Configuring your Environment Variables
-Each of the 8 microservices must have a _**.env**_ file.
-
-An example is already provided within each folder. From the directory of each microservice, copy the example file, rename it to _**.env**_, and fill it with the appropriate values.
-
-For example, from within the /innovate folder, navigate into the accounts folder
-
-```
-cd accounts
-```
-
-Next, copy and rename the _**.env.example**_ folder
-
-```
-cp .env.example .env
-```
-
-Finally, edit your .env folder and add your Mongodb connection string
-
-#### Repeat those steps for all microservices. In addition to your mongo url, the portal microservice will need the address of your ICP.
-
-## Deploying all Components
-#### 1. Add your ICP's address to your hosts file
-Add an entry to your /etc/hosts file as follows
-
-```
-<YOUR_ICP_IP_ADDRESS> mycluster.icp
-```
-
-#### 2. Login to docker
-
-```
-docker login mycluster.icp:8500
-```
-
-#### 3. Configure kubectl
-From your ICP's dashboard, copy the kubectl commands under admin > configure client
-
-![kubectl config](docs/5.png)
-
-#### 4. Deploy
-Finally, navigate to each microservice, and run the following command
-```
-bx dev deploy
-```
-_If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) first_
-
-## (Optional) Adding Support with Watson Conversation
