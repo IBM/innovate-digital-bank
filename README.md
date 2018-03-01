@@ -5,7 +5,7 @@ Innovate is a dummy digital bank composed of a set of microservices that communi
 Table of Contents
 =================
 
-   * [Innovate: Digital Bank](#innovate-digital-bank)
+   * [About](#innovate-digital-bank)
       * [Flow](#flow)
    * [Guide: Deploying on IBM Cloud Private](#guide-deploying-on-ibm-cloud-private)
       * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
@@ -121,7 +121,32 @@ bx dev deploy
 _If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) first_
 
 ## (Optional) Adding Support with Watson Conversation
+The support microservice connects to an instance of Watson Conversation on IBM Cloud to simulate a chat with a virtual support agent.
 
+#### 1. Create an instance of Watson Conversation
+From the [IBM Cloud Catalog](bluemix.net), choose Watson Conversation, and click create.
+
+![Watson Conversation](docs/6.png)
+
+#### 2. Import the support workspace
+Import the [support workspace](/support/conversation-workspace.json) into your newly created Watson Conversation instance
+
+![Watson Conversation](docs/7.png)
+
+#### 3. Get your credentials
+Navigate to the deploy tab and copy your username, password, and workspace ID
+
+![Watson Conversation](docs/8.png)
+
+#### 4. Edit your .env file
+From within the support folder, edit your .env to include your newly acquired credentials
+
+#### 5. Deploy
+Redeploy the microservice, the support feature should now be accessible through the portal.
+
+```
+bx dev deployed
+```
 
 # Docs
 
