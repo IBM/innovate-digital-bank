@@ -264,7 +264,7 @@ From the catalog, choose MongoDb. Give it a **_name_**, specify the **_existing 
 #### 4. Get your mongo connection string
 Your mongo connection string will be in the following format:
 ```
-mongodb://_USERNAME_:_PASSWORD_@_HOST_:_PORT_/_DATABASE_
+mongodb://<USERNAME>:<PASSWORD>@<HOST>:<PORT>/<DATABASE_NAME>
 ```
 
 Almost all your microservices need it; keep it safe!
