@@ -38,7 +38,7 @@ Table of Contents
          * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
          * [Configuring your Environment Variables](#configuring-your-environment-variables)
          * [Deploying all Components](#deploying-all-components)
-   * [(Optional) Adding Support with Watson Conversation](#architecture)
+   * [(Optional) Adding Support with Watson Conversation](#optional-adding-support-with-watson-conversation)
 
 
 # Architecture
