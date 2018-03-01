@@ -6,7 +6,6 @@ Table of Contents
 =================
 
    * [Architecture](#architecture)
-
       * [Flow](#flow)
       * [Microservices](#microservices)
          * [Portal [3000:30060]](#portal-300030060)
@@ -35,10 +34,10 @@ Table of Contents
          * [Support [4000:30180]](#support-400030180)
          * [Userbase [3600:30140]](#userbase-360030140)
    * [Deploying on IBM Cloud Private](#deploying-on-ibm-cloud-private)
-         * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
-         * [Configuring your Environment Variables](#configuring-your-environment-variables)
-         * [Deploying all Components](#deploying-all-components)
-   * [(Optional) Adding Support with Watson Conversation](#optional-adding-support-with-watson-conversation)
+      * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
+      * [Configuring your Environment Variables](#configuring-your-environment-variables)
+      * [Deploying all Components](#deploying-all-components)
+      * [(Optional) Adding Support with Watson Conversation](#optional-adding-support-with-watson-conversation)
 
 
 # Architecture
