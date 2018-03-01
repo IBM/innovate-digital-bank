@@ -252,14 +252,14 @@ Give it a name and a capacity, choose storage type _*Hostpath*_, and add a _*pat
 #### 2. Create a persistent volume claim
 Give it a name and a storage request value
 
-![Persistent Volume Claim](docs/2.png)
+![Persistent Volume Claim](docs/2.jpg)
 
 #### 3. Create and configure mongo
 From the catalog, choose MongoDb. Give it a *_name_*, specify the *_existing volume claim name_*, and give it a *_password_*
 
-![Mongo](docs/3.png)
+![Mongo](docs/3.jpg)
 
-![Mongo](docs/4.png)
+![Mongo](docs/4.jpg)
 
 #### 4. Get your mongo connection string
 Your mongo connection string will be in the following format: mongodb://<USERNAME>:<PASSWORD>@<HOST>:<PORT>/<DATABASE>
