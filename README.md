@@ -5,7 +5,6 @@ Innovate is a dummy digital bank composed of a set of microservices that communi
 Table of Contents
 =================
 
-   * [Innovate: Digital Bank](#innovate-digital-bank)
    * [Architecture](#architecture)
       * [Flow](#flow)
       * [Microservices](#microservices)
@@ -36,16 +35,8 @@ Table of Contents
          * [Userbase [3600:30140]](#userbase-360030140)
    * [Deploying on IBM Cloud Private](#deploying-on-ibm-cloud-private)
       * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
-            * [1. Create a persistent volume](#1-create-a-persistent-volume)
-            * [2. Create a persistent volume claim](#2-create-a-persistent-volume-claim)
-            * [3. Create and configure mongo](#3-create-and-configure-mongo)
-            * [4. Get your mongo connection string](#4-get-your-mongo-connection-string)
       * [Configuring your Environment Variables](#configuring-your-environment-variables)
       * [Deploying all Components](#deploying-all-components)
-            * [1. /etc](#1-etc)
-            * [2. docker login](#2-docker-login)
-            * [3. kubectl config](#3-kubectl-config)
-            * [4. bx dev deploy](#4-bx-dev-deploy)
 
 =================
 
