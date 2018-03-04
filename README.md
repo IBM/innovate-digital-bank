@@ -41,7 +41,7 @@ Table of Contents
 Innovate is a dummy digital bank composed of a set of microservices that communicate with each other; created to demonstrate cloud-native web apps.
 
 A live version deployed on a kubernetes cluster in IBM Cloud is available here: http://184.173.1.59:30060/
-To test it out, sign up for an account. A process runs periodically to dump randomized transactions and bills for user accounts, so give it a couple of minutes and login again to see your populated profile. Otherwise, you can insert, modify & delete your own transactions, bills or accounts by directly invoking the APIs described in the [docs](#docs).
+To test it out, sign up for an account. A process runs periodically to dump randomized transactions and bills for user accounts, so give it a couple of minutes and refresh to see your populated profile. Otherwise, you can insert, modify & delete your own transactions, bills or accounts by directly invoking the APIs described in the [docs](#docs).
 
 ## Flow
 ![Demo architecture](docs/flow.png)
