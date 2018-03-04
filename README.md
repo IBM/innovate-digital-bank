@@ -1,11 +1,7 @@
-# Innovate: Digital Bank
-Innovate is a dummy digital bank composed of a set of microservices that communicate with each other; created to demonstrate cloud-native web apps.
-<!-- A live version deployed on a kubernetes cluster in IBM Cloud is available here: -->
-
 Table of Contents
 =================
 
-   * [About](#innovate-digital-bank)
+   * [About](#about)
       * [Flow](#flow)
    * [Guide: Deploying on IBM Cloud Private](#guide-deploying-on-ibm-cloud-private)
       * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
@@ -39,6 +35,11 @@ Table of Contents
                * [/api/bills/drop](#apibillsdrop)
          * [Support [4000:30180]](#support-400030180)
          * [Userbase [3600:30140]](#userbase-360030140)
+
+
+# About
+Innovate is a dummy digital bank composed of a set of microservices that communicate with each other; created to demonstrate cloud-native web apps.
+<!-- A live version deployed on a kubernetes cluster in IBM Cloud is available here: -->
 
 ## Flow
 ![Demo architecture](docs/flow.png)
