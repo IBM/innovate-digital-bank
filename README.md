@@ -123,6 +123,74 @@ bx dev deploy
 ```
 _If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) first_
 
+# Guide: Deploying on IBM Cloud Platform
+_This guide requires a paid/upgraded account on IBM Cloud. You **cannot** complete the steps with a free or lite account_
+
+## Creating a cluster
+
+#### 1. Login to [IBM Cloud](https://console.bluemix.net).
+#### 2. From the catalog, find **Containers in Kubernetes Clusters** and click create
+#### 3. Choose a region and a cluster type, and create your cluster.
+#### 4. Allow your cluster some time to deploy.
+
+## Creating an instance of MongoDB
+This demo heavily depends on mongo as a session & data store.
+
+#### 1. From the [catalog](https://console.bluemix.net/catalog/), find **Compose for MongoDB** and click create
+#### 3. Give it a name, choose a region, pick the standard pricing plan and click create.
+#### 4. Get your mongo connection string
+
+Almost all your microservices need it; keep it safe!
+
+## Configuring your Application
+
+## Configuring your Environment Variables
+Each of the 8 microservices must have a _**.env**_ file.
+
+An example is already provided within each folder. From the directory of each microservice, copy the example file, rename it to _**.env**_, and fill it with the appropriate values.
+
+For example, from within the /innovate folder, navigate into the accounts folder
+
+```
+cd accounts
+```
+
+Next, copy and rename the _**.env.example**_ folder
+
+```
+cp .env.example .env
+```
+
+Finally, edit your .env folder and add your Mongodb connection string
+
+#### Repeat those steps for all microservices. In addition to your mongo url, the portal microservice will need the address of your ICP.
+
+## Deploying all Components
+#### 1. Add your ICP's address to your hosts file
+Add an entry to your /etc/hosts file as follows
+
+```
+<YOUR_ICP_IP_ADDRESS> mycluster.icp
+```
+
+#### 2. Login to docker
+
+```
+docker login mycluster.icp:8500
+```
+
+#### 3. Configure kubectl
+From your ICP's dashboard, copy the kubectl commands under ***REMOVED*** > configure client
+
+![kubectl config](docs/5.png)
+
+#### 4. Deploy
+Finally, navigate to each microservice, and run the following command
+```
+bx dev deploy
+```
+_If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) first_
+
 ## (Optional) Adding Support with Watson Conversation
 The support microservice connects to an instance of Watson Conversation on IBM Cloud to simulate a chat with a virtual support agent.
 
