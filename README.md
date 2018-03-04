@@ -124,9 +124,13 @@ bx dev deploy
 _If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) first_
 
 # Guide: Deploying on IBM Cloud Platform
+
 _This guide requires a paid/upgraded account on IBM Cloud. You **cannot** complete the steps with a free or lite account_
+
 #### Download the [IBM Cloud Developer Tools CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+
 #### Download the [Kubernetes CLI](https://kubernetes.io/docs/user-guide/prereqs/)
+
 #### Install the container service plugin
 
 ```
@@ -140,12 +144,19 @@ bx plugin install container-service -r Bluemix
 #### 3. Choose a region and a cluster type, and create your cluster.
 #### 4. Allow your cluster some time to deploy.
 
+![kubectl config](docs/9.png)
+
 ## Creating an instance of MongoDB
 This demo heavily depends on mongo as a session & data store.
 
 #### 1. From the [catalog](https://console.bluemix.net/catalog/), find **Compose for MongoDB** and click create
+
+![kubectl config](docs/10.png)
+
 #### 3. Give it a name, choose a region, pick the standard pricing plan and click create.
 #### 4. Get your mongo connection string
+
+![kubectl config](docs/11.png)
 
 Almost all your microservices need it; keep it safe!
 
@@ -162,10 +173,10 @@ Your url will be in the following format
 registry.<REGION_ABBREVIATION>.bluemix.net/<YOUR_NAMESPACE>/<YOUR_IMAGE_NAME>
 ```
 
-For example, to deploy the portal microservice to my docker image registry in the US-South region, my deploy_target will be:
+For example, to deploy the accounts microservice to my docker image registry in the US-South region, my deploy_target will be:
 
 ```
-registry.ng.bluemix.net/amalamine/innovate-portal
+registry.ng.bluemix.net/amalamine/innovate-accounts
 ```
 #### to get your namespace, run:
 
@@ -181,11 +192,23 @@ For example, from within the /innovate folder, navigate into the accounts folder
 cd accounts
 ```
 
-Next, edit line 58 of [cli-config.yaml]() file. Replace the ***deploy-image-target*** with the correct value.
+Next, edit line 58 of [cli-config.yaml](https://github.com/aamine0/innovate-digital-bank/blob/master/accounts/cli-config.yml) file. Replace the ***deploy-image-target*** with the correct value.
 
 ```
-deploy-image-target: "registry.ng.bluemix.net/amalamine/innovate-portal"
+deploy-image-target: "registry.ng.bluemix.net/amalamine/innovate-accounts"
 ```
+
+![kubectl config](docs/12.png)
+
+Edit line 6 of the [values.yaml](https://github.com/aamine0/innovate-digital-bank/blob/master/accounts/chart/innovate-accounts/values.yaml) file. Replace the ***repository*** with the correct value.
+
+```
+repository: registry.ng.bluemix.net/amalamine/innovate-accounts
+```
+
+![kubectl config](docs/13.png)
+
+#### Repeat these steps for all microservices.
 
 ### Setting your environment variables
 Each of the 8 microservices must have a _**.env**_ file.
@@ -206,33 +229,35 @@ cp .env.example .env
 
 Finally, edit your .env folder and add your Mongodb connection string
 
-#### Repeat those steps for all microservices. In addition to your mongo url, the portal microservice will need the address of your ICP.
+#### Repeat these steps for all microservices. In addition to your mongo url, most will need the public IP address of your kubernetes cluster, _You can find that under the overview of your cluster on IBM Cloud_.
 
 ## Deploying all Components
-#### 1. Add your ICP's address to your hosts file
-Add an entry to your /etc/hosts file as follows
-
+#### 1. Login to IBM Cloud
+Specify the region you've deployed your cluster in
 ```
-<YOUR_ICP_IP_ADDRESS> mycluster.icp
-```
-
-#### 2. Login to docker
-
-```
-docker login mycluster.icp:8500
+bx login -a https://api.<REGION_ABBREVIATION>.bluemix.net
 ```
 
-#### 3. Configure kubectl
-From your ICP's dashboard, copy the kubectl commands under ***REMOVED*** > configure client
+#### 2. Configure kubectl
+Run the following command:
 
-![kubectl config](docs/5.png)
+```
+bx cs cluster-config <YOUR_CLUSTER_NAME>
+```
+
+Then copy the output and paste it in your terminal
+
+#### 3. Initialize helm
+
+```
+helm init
+```
 
 #### 4. Deploy
 Finally, navigate to each microservice, and run the following command
 ```
 bx dev deploy
 ```
-_If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) first_
 
 ## (Optional) Adding Support with Watson Conversation
 The support microservice connects to an instance of Watson Conversation on IBM Cloud to simulate a chat with a virtual support agent.
