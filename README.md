@@ -7,6 +7,13 @@ Table of Contents
       * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb)
       * [Configuring your Environment Variables](#configuring-your-environment-variables)
       * [Deploying all Components](#deploying-all-components)
+   * [Guide: Deploying on IBM Cloud Platform](#guide-deploying-on-ibm-cloud-platform)
+      * [Creating a cluster](#creating-a-cluster)
+      * [Creating an instance of MongoDB](#creating-an-instance-of-mongodb-1)
+      * [Configuring your Application](#configuring-your-application)
+         * [Setting your deploy target](#setting-your-deploy-target)
+         * [Setting your environment variables](#setting-your-environment-variables)
+      * [Deploying all Components](#deploying-all-components-1)
       * [(Optional) Adding Support with Watson Conversation](#optional-adding-support-with-watson-conversation)
    * [Docs](#docs)
       * [Microservices](#microservices)
@@ -35,7 +42,6 @@ Table of Contents
                * [/api/bills/drop](#apibillsdrop)
          * [Support [4000:30180]](#support-400030180)
          * [Userbase [3600:30140]](#userbase-360030140)
-
 
 # About
 Innovate is a dummy digital bank composed of a set of microservices that communicate with each other; created to demonstrate cloud-native web apps.
@@ -159,9 +165,6 @@ This demo heavily depends on mongo as a session & data store.
 ![kubectl config](docs/11.png)
 
 Almost all your microservices need it; keep it safe!
-
-## Configuring your Application
-
 
 ## Configuring your Application
 
