@@ -125,6 +125,13 @@ _If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](ht
 
 # Guide: Deploying on IBM Cloud Platform
 _This guide requires a paid/upgraded account on IBM Cloud. You **cannot** complete the steps with a free or lite account_
+#### Download the [IBM Cloud Developer Tools CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+#### Download the [Kubernetes CLI](https://kubernetes.io/docs/user-guide/prereqs/)
+#### Install the container service plugin
+
+```
+bx plugin install container-service -r Bluemix
+```
 
 ## Creating a cluster
 
@@ -144,7 +151,43 @@ Almost all your microservices need it; keep it safe!
 
 ## Configuring your Application
 
-## Configuring your Environment Variables
+
+## Configuring your Application
+
+### Setting your deploy target
+Each of the 8 docker images needs to be pushed to your docker image registry on IBM Cloud. You need to set the correct _**deploy target**_.
+Your url will be in the following format
+
+```
+registry.<REGION_ABBREVIATION>.bluemix.net/<YOUR_NAMESPACE>/<YOUR_IMAGE_NAME>
+```
+
+For example, to deploy the portal microservice to my docker image registry in the US-South region, my deploy_target will be:
+
+```
+registry.ng.bluemix.net/amalamine/innovate-portal
+```
+#### to get your namespace, run:
+
+```
+bx cr namespace-list
+```
+
+From the directory of each microservice, replace the deploy target in ***cli-config.yml*** & in ***/chart/innovate-<MICROSERVICE_NAME>/values.yaml*** with the correct one
+
+For example, from within the /innovate folder, navigate into the accounts folder
+
+```
+cd accounts
+```
+
+Next, edit line 58 of [cli-config.yaml]() file. Replace the ***deploy-image-target*** with the correct value.
+
+```
+deploy-image-target: "registry.ng.bluemix.net/amalamine/innovate-portal"
+```
+
+### Setting your environment variables
 Each of the 8 microservices must have a _**.env**_ file.
 
 An example is already provided within each folder. From the directory of each microservice, copy the example file, rename it to _**.env**_, and fill it with the appropriate values.
