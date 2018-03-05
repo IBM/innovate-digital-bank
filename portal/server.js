@@ -24,7 +24,7 @@ app.use(session(
       resave: true,
       saveUninitialized: true,
       cookie: {
-        cookieName: 'innovate',
+        cookieName: 'connect.sid',
         secret: process.env.SESSION_SECRET,
         httpOnly: false,
         secure: false,
