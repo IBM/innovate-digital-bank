@@ -10,7 +10,7 @@ var app = express();
 app.use(bodyParser.json());
 
 app.all('/', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", process.env.PORTAL_URL + " || " + process.env.USERBASE_URL);
   res.header("Access-Control-Allow-Headers", "*");
   next();
  });
