@@ -147,6 +147,12 @@ _This guide requires a paid/upgraded account on IBM Cloud. You **cannot** comple
 bx plugin install container-service -r Bluemix
 ```
 
+#### Install the container registry plugin
+
+```
+bx plugin install container-registry -r Bluemix
+```
+
 ## Creating a cluster
 
 #### 1. Login to [IBM Cloud](https://console.bluemix.net).
