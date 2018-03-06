@@ -197,6 +197,12 @@ registry.ng.bluemix.net/amalamine/innovate-accounts
 bx cr namespace-list
 ```
 
+You can also add a namespace, run:
+
+```
+bx cr namespace-add <NAME>
+```
+
 From the directory of each microservice, replace the deploy target in ***cli-config.yml*** & in ***/chart/innovate-<MICROSERVICE_NAME>/values.yaml*** with the correct one
 
 For example, from within the /innovate folder, navigate into the accounts folder
