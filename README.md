@@ -197,7 +197,7 @@ registry.ng.bluemix.net/amalamine/innovate-accounts
 bx cr namespace-list
 ```
 
-You can also add a namespace, run:
+You can also add a namespace by running:
 
 ```
 bx cr namespace-add <NAME>
