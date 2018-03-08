@@ -37,8 +37,10 @@ $(document).ready(function() {
   http.open('GET', '/endpoints/auth', true);
   http.setRequestHeader('Content-type', 'application/json');
   http.onreadystatechange = function() {
-    if (http.readyState === 4 && http.status === 200 && http.responseText) {
-      if (http.responseText.err) window.location.replace('/index.html')
+    if (http.readyState === 4 && http.status === 500) {
+      window.location.replace('/index.html')
+    }
+    else if (http.readyState === 4 && http.status === 200 && http.responseText) {
       var response = JSON.parse(http.responseText)
       uuid = response.uuid
       http.open('POST', AccountsEndpoint, true);
