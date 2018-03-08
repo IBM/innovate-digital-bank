@@ -45,7 +45,7 @@ app.post('/api/user/create', function(req, res) {
          return;
        }
        console.log("User created")
-       res.status(200).send({'message': 'Done!'})
+       res.status(200).send(newUser)
      })
     })
 

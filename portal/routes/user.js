@@ -32,6 +32,7 @@ module.exports = function (app, request) {
         res.redirect('/signup.html#failed')
         return;
       }
+      req.session.user = body;
       res.redirect('/overview.html')
       return;
     });
