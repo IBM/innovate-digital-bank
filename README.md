@@ -351,9 +351,6 @@ $ bx dev deploy
 * **Data Science Experience**: Master the art of data science with IBM's [Data Science Experience](https://datascience.ibm.com/)
 * **Kubernetes on IBM Cloud**: Deliver your apps with the combined the power of [Kubernetes and Docker on IBM Cloud](https://www.ibm.com/cloud-computing/bluemix/containers)
 
-# License
-[Apache 2.0](LICENSE)
-
 # Docs
 
 ## Microservices
@@ -586,3 +583,6 @@ Handles communication with Watson Conversation on IBM Cloud to enable a dummy su
 ### Userbase [3600:30140]
 
 Simulates a fake userbase for the app. Periodically loops through all user accounts and adds randomized bills and transactions for them.
+
+# License
+[Apache 2.0](LICENSE)
