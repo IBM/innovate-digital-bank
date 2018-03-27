@@ -13,9 +13,9 @@ We’ll take a use-case that has a bit of real-world familiarity to it — A
 [A live version deployed on a kubernetes cluster in IBM Cloud is available for you try here](http://ibm.biz/digibank).
 To test it out, sign up for an account. A process runs periodically to dump randomized transactions and bills for user accounts, so give it a couple of minutes and refresh to see your populated profile.
 
-![Screens](docs/screens-1.png)
+![Screens](doc/source/images/screens-1.png)
 
-![Screens](docs/screens-2.png)
+![Screens](doc/source/images/screens-2.png)
 
 When you've completed this Code Pattern, you will understand how to:
 
@@ -35,12 +35,12 @@ When thinking of business capabilities, our imaginary bank will need the followi
 5. *Bills:* Handles creation, payment, and retrieval of bills.
 6. *Support:* Handles communication with Watson Conversation to enable a support chat feature.
 
-![Demo architecture](docs/flow.png)
+![Demo architecture](doc/source/images/architecture.png)
 
 ## Included components
 
-* [IBM Cloud Container Service](https://console.bluemix.net/docs/containers/container_index.html): IBM Bluemix Container Service manages highly available apps inside Docker containers and Kubernetes clusters on the IBM Cloud.
-* [Kubernetes Cluster](https://console.bluemix.net/docs/containers/container_index.html): Create and manage your own cloud infrastructure and use Kubernetes as your container orchestration engine.
+* [IBM Cloud Container Service](https://console.bluemix.net/doc/source/images/containers/container_index.html): IBM Bluemix Container Service manages highly available apps inside Docker containers and Kubernetes clusters on the IBM Cloud.
+* [Kubernetes Cluster](https://console.bluemix.net/doc/source/images/containers/container_index.html): Create and manage your own cloud infrastructure and use Kubernetes as your container orchestration engine.
 * [Microservice Builder](https://developer.ibm.com/microservice-builder): Learn, build, run, and manage applications in a microservices framework.
 * [Watson Conversation](https://www.ibm.com/watson/developercloud/conversation.html): Create a chatbot with a program that conducts a conversation via auditory or textual methods.
 
@@ -72,9 +72,9 @@ If you want a quick walkthrough of the end result, a video is available [here](h
 
 ### 1. Get the tools
 You'll need each of the following pre-requisits:
-* [IBM Cloud Developer Tools CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html#getting-started)
+* [IBM Cloud Developer Tools CLI](https://console.bluemix.net/doc/source/images/cli/reference/bluemix_cli/get_started.html#getting-started)
 
-* the [Kubernetes CLI](https://kubernetes.io/docs/user-guide/prereqs/)
+* the [Kubernetes CLI](https://kubernetes.io/doc/source/images/user-guide/prereqs/)
 
 * the container service plugin
 
@@ -109,7 +109,7 @@ $ bx login
 
 From the catalog, find **Containers in Kubernetes Clusters** and click create. Choose a region and a cluster type, and create your cluster. Allow it some time to deploy.
 
-![kubectl config](docs/9.png)
+![kubectl config](doc/source/images/9.png)
 
 ### 5. Create an instance of MongoDB
 
@@ -119,7 +119,7 @@ From the [catalog](https://console.bluemix.net/catalog/), find **Compose for Mon
 
 **Get your mongo connection string. Almost all your microservices need it; keep it safe!**
 
-![kubectl config](docs/11.png)
+![kubectl config](doc/source/images/11.png)
 
 
 ### 6. Configure your deploy target
@@ -163,7 +163,7 @@ Next, edit line 58 of [cli-config.yaml](https://github.com/aamine0/innovate-digi
 deploy-image-target: "registry.ng.bluemix.net/amalamine/innovate-accounts"
 ```
 
-![kubectl config](docs/12.png)
+![kubectl config](doc/source/images/12.png)
 
 Edit line 6 of the [values.yaml](https://github.com/aamine0/innovate-digital-bank/blob/master/accounts/chart/innovate-accounts/values.yaml) file. Replace the ***repository*** with the correct value.
 
@@ -171,7 +171,7 @@ Edit line 6 of the [values.yaml](https://github.com/aamine0/innovate-digital-ban
 repository: registry.ng.bluemix.net/amalamine/innovate-accounts
 ```
 
-![kubectl config](docs/13.png)
+![kubectl config](doc/source/images/13.png)
 
 **Repeat these steps for all 7 microservices.**
 
@@ -238,19 +238,19 @@ If you have an instance of IBM Cloud Private running, you can follow the steps t
 This demo heavily depends on mongo as a session & data store.
 Give it a name and a capacity, choose storage type _**Hostpath**_, and add a _**path parameter**_
 
-![Persistent Volume](docs/1.png)
+![Persistent Volume](doc/source/images/1.png)
 
 ### 2. Create a persistent volume claim
 Give it a name and a storage request value
 
-![Persistent Volume Claim](docs/2.jpg)
+![Persistent Volume Claim](doc/source/images/2.jpg)
 
 ### 3. Create an instance of MongoDB
 From the catalog, choose MongoDb. Give it a **_name_**, specify the **_existing volume claim name_**, and give it a *_password_*
 
-![Mongo](docs/3.jpg)
+![Mongo](doc/source/images/3.jpg)
 
-![Mongo](docs/4.jpg)
+![Mongo](doc/source/images/4.jpg)
 
 ***Get your mongo connection string; Almost all your microservices need it; keep it safe!***
 
@@ -297,7 +297,7 @@ $ docker login mycluster.icp:8500
 ### 7. Configure kubectl
 From your ICP's dashboard, copy the kubectl commands under ***REMOVED*** > configure client
 
-![kubectl config](docs/5.png)
+![kubectl config](doc/source/images/5.png)
 
 ### 8. Deploy
 Finally, navigate to each microservice, and run the following command
@@ -306,7 +306,7 @@ Finally, navigate to each microservice, and run the following command
 $ bx dev deploy
 ```
 
-_If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) first_
+_If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/doc/source/images/cli/reference/bluemix_cli/download_cli.html) first_
 
 # (Optional) Adding Support with Watson Conversation
 The support microservice connects to an instance of Watson Conversation on IBM Cloud to simulate a chat with a virtual support agent.
@@ -325,12 +325,12 @@ From the [IBM Cloud Catalog](bluemix.net), choose Watson Conversation, and click
 ### 2. Import the support workspace
 Import the [support workspace](/support/conversation-workspace.json) into your newly created Watson Conversation instance
 
-![Watson Conversation](docs/7.png)
+![Watson Conversation](doc/source/images/7.png)
 
 ### 3. Get your credentials
 Navigate to the deploy tab and copy your username, password, and workspace ID
 
-![Watson Conversation](docs/8.png)
+![Watson Conversation](doc/source/images/8.png)
 
 ### 4. Configure your environment variables
 From within the support folder, edit your .env to include your newly acquired credentials
