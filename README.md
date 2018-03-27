@@ -11,7 +11,7 @@ So here's our attempt:
 We’ll take a use-case that has a bit of real-world familiarity to it — A digital bank. Naturally inspired by [Monzo](http://monzo.com/). Let’s call it Innovate.
 
 [A live version deployed on a kubernetes cluster in IBM Cloud is available for you try here](http://ibm.biz/digibank).
-To test it out, sign up for an account. A process runs periodically to dump randomized transactions and bills for user accounts, so give it a couple of minutes and refresh to see your populated profile. Otherwise, you can insert, modify & delete your own transactions, bills or accounts by directly invoking the APIs described in the [docs](#docs).
+To test it out, sign up for an account. A process runs periodically to dump randomized transactions and bills for user accounts, so give it a couple of minutes and refresh to see your populated profile.
 
 ![Screens](docs/screens-1.png)
 
@@ -59,16 +59,16 @@ If you want a quick walkthrough of the end result, a video is available [here](h
 # Deploy to IBM Cloud
 > NOTE: This guide requires a paid/upgraded account on IBM Cloud. You **cannot** complete the steps with a free or lite account
 
-1. Get the tools
-2. Clone the repo
-3. Login to IBM Cloud
-4. Create a cluster
-5. Create an instance of MongoDB
-6. Configure your deploy target
-7. Configure your environment variables
-8. Configure kubectl
-9. Initialize helm
-10. Deploy
+1. [Get the tools](#1-get-the-tools)
+2. [Clone the repo](#2-clone-the-repo)
+3. [Login to IBM Cloud](#3-login-to-ibm-cloud)
+4. [Create a cluster](#4-create-a-cluster-)
+5. [Create an instance of MongoDB](#5-create-an-instance-of-mongodb)
+6. [Configure your deploy target](#6-configure-your-deploy-target)
+7. [Configure your environment variables](#7-configure-your-environment-variables)
+8. [Configure kubectl](#8-configure-kubectl)
+9. [Initialize helm](#9-initialize-helm)
+10. [Deploy](#10-deploy)
 
 ### 1. Get the tools
 You'll need each of the following pre-requisits:
@@ -122,11 +122,10 @@ From the [catalog](https://console.bluemix.net/catalog/), find **Compose for Mon
 ![kubectl config](docs/11.png)
 
 
-## Configuring your Application
+### 6. Configure your deploy target
 
-### Setting your deploy target
-Each of the 8 docker images needs to be pushed to your docker image registry on IBM Cloud. You need to set the correct _**deploy target**_.
-Your url will be in the following format
+Each of the 7 docker images needs to be pushed to your docker image registry on IBM Cloud. You need to set the correct _**deploy target**_.
+Depending on the region you've created your cluster in, your url will be in the following format
 
 ```
 registry.<REGION_ABBREVIATION>.bluemix.net/<YOUR_NAMESPACE>/<YOUR_IMAGE_NAME>
@@ -137,16 +136,17 @@ For example, to deploy the accounts microservice to my docker image registry in 
 ```
 registry.ng.bluemix.net/amalamine/innovate-accounts
 ```
-#### to get your namespace, run:
+
+If you need to get your namespace, run:
 
 ```
-bx cr namespace-list
+$ bx cr namespace-list
 ```
 
-You can also add a namespace by running:
+You can also add a new namespace by running:
 
 ```
-bx cr namespace-add <NAME>
+$ bx cr namespace-add <NAME>
 ```
 
 From the directory of each microservice, replace the deploy target in ***cli-config.yml*** & in ***/chart/innovate-<MICROSERVICE_NAME>/values.yaml*** with the correct one
@@ -154,7 +154,7 @@ From the directory of each microservice, replace the deploy target in ***cli-con
 For example, from within the /innovate folder, navigate into the accounts folder
 
 ```
-cd accounts
+$ cd accounts
 ```
 
 Next, edit line 58 of [cli-config.yaml](https://github.com/aamine0/innovate-digital-bank/blob/master/accounts/cli-config.yml) file. Replace the ***deploy-image-target*** with the correct value.
@@ -173,55 +173,51 @@ repository: registry.ng.bluemix.net/amalamine/innovate-accounts
 
 ![kubectl config](docs/13.png)
 
-#### Repeat these steps for all microservices.
+**Repeat these steps for all 7 microservices.**
 
-### Setting your environment variables
-Each of the 8 microservices must have a _**.env**_ file.
+### 7. Configure your environment variables
+
+Each of the 7 microservices must have a _**.env**_ file that stores all credentials.
 
 An example is already provided within each folder. From the directory of each microservice, copy the example file, rename it to _**.env**_, and fill it with the appropriate values.
 
 For example, from within the /innovate folder, navigate into the accounts folder
 
 ```
-cd accounts
+$ cd accounts
 ```
 
 Next, copy and rename the _**.env.example**_ folder
 
 ```
-cp .env.example .env
+$ cp .env.example .env
 ```
 
 Finally, edit your .env folder and add your Mongodb connection string
 
-#### Repeat these steps for all microservices. In addition to your mongo url, most will need the public IP address of your kubernetes cluster, _You can find that under the overview of your cluster on IBM Cloud_.
+***Repeat these steps for all microservices. In addition to your mongo url, most will need the public IP address of your kubernetes cluster, _You can find that under the overview of your cluster on IBM Cloud_.***
 
-## Deploying all Components
-#### 1. Login to IBM Cloud
-Specify the region you've deployed your cluster in
-```
-bx login -a https://api.<REGION_ABBREVIATION>.bluemix.net
-```
+### 8. Configure kubectl
 
-#### 2. Configure kubectl
 Run the following command:
 
 ```
-bx cs cluster-config <YOUR_CLUSTER_NAME>
+$ bx cs cluster-config <YOUR_CLUSTER_NAME>
 ```
 
 Then copy the output and paste it in your terminal
 
-#### 3. Initialize helm
+### 9. Initialize helm
 
 ```
-helm init
+$ helm init
 ```
 
-#### 4. Deploy
-Finally, navigate to each microservice, and run the following command
+### 10. Deploy
+Finally, navigate to each microservice folder, and run the following command
+
 ```
-bx dev deploy
+$ bx dev deploy
 ```
 
 # Guide: Deploying on IBM Cloud Private
