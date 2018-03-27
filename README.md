@@ -223,13 +223,13 @@ $ bx dev deploy
 # Deploy to IBM Cloud Private
 > NOTE: These steps are only needed when deploying to IBM Cloud Private instead of IBM Cloud Platform.
 
-1. [Create a persistent volume](#1-get-the-tools)
-2. [Create a persistent volume claim](#2-clone-the-repo)
-3. [Create an instance of MongoDB](#3-login-to-ibm-cloud)
-4. [Configure your Environment Variables](#5-create-an-instance-of-mongodb)
-5. [Add your ICP's address to your hosts file](#6-configure-your-deploy-target)
-6. [Login to docker](#7-configure-your-environment-variables)
-7. [Configure kubectl](#8-configure-kubectl)
+1. [Create a persistent volume](#1-create-a-persistent-volume)
+2. [Create a persistent volume claim](#2-create-a-persistent-volume-claim)
+3. [Create an instance of MongoDB](#3-create-an-instance-of-mongodb)
+4. [Configure your environment variables](#4-configure-your-environment-variables)
+5. [Add your ICP's address to your hosts file](#5-add-your-icps-address-to-your-hosts-file)
+6. [Login to docker](#6-login-to-docker)
+7. [Configure kubectl](#7-configure-kubectl)
 8. [Deploy](#9-initialize-helm)
 
 ### 1. Create a persistent volume
@@ -311,11 +311,11 @@ The support microservice connects to an instance of Watson Conversation on IBM C
 
 > NOTE: This is an optional step. You need it if you'd like to enable the support feature on the app.
 
-1. [Create an instance of Watson Conversation](#1-get-the-tools)
-2. [Import the support workspace](#2-clone-the-repo)
-3. [Get your credentials](#3-login-to-ibm-cloud)
-4. [Configure your environment variables](#5-create-an-instance-of-mongodb)
-5. [Deploy](#6-configure-your-deploy-target)
+1. [Create an instance of Watson Conversation](#1-create-an-instance-of-watson-conversation)
+2. [Import the support workspace](#2-import-the-support-workspace)
+3. [Get your credentials](#3-get-your-credentials)
+4. [Configure your environment variables](#4-configure-your-environment-variables)
+5. [Deploy](#5-deploy)
 
 ### 1. Create an instance of Watson Conversation
 From the [IBM Cloud Catalog](bluemix.net), choose Watson Conversation, and click create.
@@ -339,6 +339,18 @@ Redeploy the support microservice, the support feature should now be accessible 
 ```
 $ bx dev deploy
 ```
+
+# Learn more
+
+* **Artificial Intelligence Code Patterns**: Enjoyed this Code Pattern? Check out our other [AI Code Patterns](https://developer.ibm.com/code/technologies/artificial-intelligence/).
+* **Data Analytics Code Patterns**: Enjoyed this Code Pattern? Check out our other [Data Analytics Code Patterns](https://developer.ibm.com/code/technologies/data-science/)
+* **AI and Data Code Pattern Playlist**: Bookmark our [playlist](https://www.youtube.com/playlist?list=PLzUbsvIyrNfknNewObx5N7uGZ5FKH0Fde) with all of our Code Pattern videos
+* **With Watson**: Want to take your Watson app to the next level? Looking to utilize Watson Brand assets? [Join the With Watson program](https://www.ibm.com/watson/with-watson/) to leverage exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
+* **Data Science Experience**: Master the art of data science with IBM's [Data Science Experience](https://datascience.ibm.com/)
+* **Kubernetes on IBM Cloud**: Deliver your apps with the combined the power of [Kubernetes and Docker on IBM Cloud](https://www.ibm.com/cloud-computing/bluemix/containers)
+
+# License
+[Apache 2.0](LICENSE)
 
 # Docs
 
