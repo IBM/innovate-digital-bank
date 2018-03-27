@@ -1,4 +1,4 @@
-# Kubernetes on IBM Cloud: Building a Cloud Native Application
+# Building a Digital Bank with Node.js, Express, MongoDB, & Kubernetes
 
 In this Code Pattern, we will build a dummy digital bank composed of a set of microservices that communicate with each other. We'll be using Node.js, Express, MongoDB, and the IBM Cloud Container Service.
 
