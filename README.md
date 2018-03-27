@@ -91,7 +91,7 @@ in a terminal, run:
 ```
 $ bx plugin install container-registry -r Bluemix
 ```
-### 1. Clone the repo
+### 2. Clone the repo
 Clone the `innovate-digital-bank` repository locally. In a terminal, run:
 
 ```
@@ -220,110 +220,124 @@ Finally, navigate to each microservice folder, and run the following command
 $ bx dev deploy
 ```
 
-# Guide: Deploying on IBM Cloud Private
+# Deploy to IBM Cloud Private
 > NOTE: These steps are only needed when deploying to IBM Cloud Private instead of IBM Cloud Platform.
 
-## Creating an instance of MongoDB
-This demo heavily depends on mongo as a session & data store.
+1. [Create a persistent volume](#1-get-the-tools)
+2. [Create a persistent volume claim](#2-clone-the-repo)
+3. [Create an instance of MongoDB](#3-login-to-ibm-cloud)
+4. [Configure your Environment Variables](#5-create-an-instance-of-mongodb)
+5. [Add your ICP's address to your hosts file](#6-configure-your-deploy-target)
+6. [Login to docker](#7-configure-your-environment-variables)
+7. [Configure kubectl](#8-configure-kubectl)
+8. [Deploy](#9-initialize-helm)
 
-#### 1. Create a persistent volume
+### 1. Create a persistent volume
+This demo heavily depends on mongo as a session & data store.
 Give it a name and a capacity, choose storage type _**Hostpath**_, and add a _**path parameter**_
 
 ![Persistent Volume](docs/1.png)
 
-#### 2. Create a persistent volume claim
+### 2. Create a persistent volume claim
 Give it a name and a storage request value
 
 ![Persistent Volume Claim](docs/2.jpg)
 
-#### 3. Create and configure mongo
+### 3. Create an instance of MongoDB
 From the catalog, choose MongoDb. Give it a **_name_**, specify the **_existing volume claim name_**, and give it a *_password_*
 
 ![Mongo](docs/3.jpg)
 
 ![Mongo](docs/4.jpg)
 
-#### 4. Get your mongo connection string
-Your mongo connection string will be in the following format:
+***Get your mongo connection string; Almost all your microservices need it; keep it safe!***
+
+Your connection string will be in the following format:
 ```
 mongodb://<USERNAME>:<PASSWORD>@<HOST>:<PORT>/<DATABASE_NAME>
 ```
 
-Almost all your microservices need it; keep it safe!
+### 4. Configure your Environment Variables
 
-## Configuring your Environment Variables
-Each of the 8 microservices must have a _**.env**_ file.
+Each of the 7 microservices must have a _**.env**_ file.
 
 An example is already provided within each folder. From the directory of each microservice, copy the example file, rename it to _**.env**_, and fill it with the appropriate values.
 
 For example, from within the /innovate folder, navigate into the accounts folder
 
 ```
-cd accounts
+$ cd accounts
 ```
 
 Next, copy and rename the _**.env.example**_ folder
 
 ```
-cp .env.example .env
+$ cp .env.example .env
 ```
 
 Finally, edit your .env folder and add your Mongodb connection string
 
-#### Repeat those steps for all microservices. In addition to your mongo url, the portal microservice will need the address of your ICP.
+***Repeat those steps for all microservices. In addition to your mongo url, the portal microservice will need the address of your ICP.***
 
-## Deploying all Components
-#### 1. Add your ICP's address to your hosts file
+### 5. Add your ICP's address to your hosts file
 Add an entry to your /etc/hosts file as follows
 
 ```
 <YOUR_ICP_IP_ADDRESS> mycluster.icp
 ```
 
-#### 2. Login to docker
+### 6. Login to docker
 
 ```
-docker login mycluster.icp:8500
+$ docker login mycluster.icp:8500
 ```
 
-#### 3. Configure kubectl
+### 7. Configure kubectl
 From your ICP's dashboard, copy the kubectl commands under ***REMOVED*** > configure client
 
 ![kubectl config](docs/5.png)
 
-#### 4. Deploy
+### 8. Deploy
 Finally, navigate to each microservice, and run the following command
+
 ```
-bx dev deploy
+$ bx dev deploy
 ```
+
 _If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) first_
 
-## (Optional) Adding Support with Watson Conversation
+# (Optional) Adding Support with Watson Conversation
 The support microservice connects to an instance of Watson Conversation on IBM Cloud to simulate a chat with a virtual support agent.
 
-#### 1. Create an instance of Watson Conversation
+> NOTE: This is an optional step. You need it if you'd like to enable the support feature on the app.
+
+1. [Create an instance of Watson Conversation](#1-get-the-tools)
+2. [Import the support workspace](#2-clone-the-repo)
+3. [Get your credentials](#3-login-to-ibm-cloud)
+4. [Configure your environment variables](#5-create-an-instance-of-mongodb)
+5. [Deploy](#6-configure-your-deploy-target)
+
+### 1. Create an instance of Watson Conversation
 From the [IBM Cloud Catalog](bluemix.net), choose Watson Conversation, and click create.
 
-![Watson Conversation](docs/6.png)
-
-#### 2. Import the support workspace
+### 2. Import the support workspace
 Import the [support workspace](/support/conversation-workspace.json) into your newly created Watson Conversation instance
 
 ![Watson Conversation](docs/7.png)
 
-#### 3. Get your credentials
+### 3. Get your credentials
 Navigate to the deploy tab and copy your username, password, and workspace ID
 
 ![Watson Conversation](docs/8.png)
 
-#### 4. Edit your .env file
+### 4. Configure your environment variables
 From within the support folder, edit your .env to include your newly acquired credentials
 
-#### 5. Deploy
-Redeploy the microservice, the support feature should now be accessible through the portal.
+### 5. Deploy
+Redeploy the support microservice, the support feature should now be accessible through the portal.
 
 ```
-bx dev deploy
+$ bx dev deploy
 ```
 
 # Docs
