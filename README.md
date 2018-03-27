@@ -223,6 +223,8 @@ $ bx dev deploy
 # Deploy to IBM Cloud Private
 > NOTE: These steps are only needed when deploying to IBM Cloud Private instead of IBM Cloud Platform.
 
+If you have an instance of IBM Cloud Private running, you can follow the steps to deploy the app. If you'd like to deploy your own instance of ICP, [you can follow this great writeup](https://github.com/IBM/deploy-ibm-cloud-private)
+
 1. [Create a persistent volume](#1-create-a-persistent-volume)
 2. [Create a persistent volume claim](#2-create-a-persistent-volume-claim)
 3. [Create an instance of MongoDB](#3-create-an-instance-of-mongodb)
