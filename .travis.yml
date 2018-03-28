@@ -1,5 +1,9 @@
 language: node_js
 node_js: 7
+sudo: required
+group: stable
+dist: trusty
+os: linux
 
 services:
   - docker
@@ -12,5 +16,11 @@ addons:
       - shellcheck
 
 install:
+  - "npm -g install npm"
   - "./scripts/install_bx.sh"
   - "./scripts/bx_auth.sh"
+
+before_script:
+  - "npm run build --debug"
+
+script: "npm test"
