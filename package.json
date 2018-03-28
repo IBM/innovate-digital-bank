@@ -7,11 +7,11 @@
     "node": "^6.9.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node portal/server.js",
     "start:cluster": "sl-run server/server.js",
     "debug": "node --debug server/server.js",
-    "build": "npm run build:idt",
-    "test": "npm run test:idt",
+    "build": "npm run idt:build",
+    "test": "npm run idt:build",
     "idt:build": "node idt.js build",
     "idt:test": "node idt.js test",
     "idt:debug": "node idt.js debug",
