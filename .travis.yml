@@ -20,6 +20,6 @@ install:
   - "./scripts/install_bx.sh"
 
 before_script:
-  - "npm run build --debug"
+  - "npm run build"
 
 script: "npm test"
