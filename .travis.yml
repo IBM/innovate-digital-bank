@@ -1,2 +1,16 @@
 language: node_js
 node_js: 7
+
+services:
+  - docker
+
+addons:
+  apt:
+    sources:
+      - debian-sid
+    packages:
+      - shellcheck
+
+install:
+  - "./scripts/install_bx.sh"
+  - "./scripts/bx_auth.sh"
