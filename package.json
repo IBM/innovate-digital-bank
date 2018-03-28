@@ -10,8 +10,8 @@
     "start": "node portal/server.js",
     "start:cluster": "sl-run server/server.js",
     "debug": "node --debug server/server.js",
-    "build": "npm run idt:build",
-    "test": "npm run idt:build",
+    "build": "bx dev build",
+    "test": "bx dev test",
     "idt:build": "node idt.js build",
     "idt:test": "node idt.js test",
     "idt:debug": "node idt.js debug",
@@ -39,7 +39,6 @@
     "mocha": "^3.4.2",
     "nyc": "^10.3.2",
     "prompt-confirm": "^1.2.0",
-    "proxyquire": "^1.8.0",
-    "request": "^2.82.0"
+    "proxyquire": "^1.8.0"
   }
 }

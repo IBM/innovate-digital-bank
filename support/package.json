@@ -32,7 +32,6 @@
     "mocha": "^3.4.2",
     "nyc": "^10.3.2",
     "prompt-confirm": "^1.2.0",
-    "proxyquire": "^1.8.0",
-    "request": "^2.82.0"
+    "proxyquire": "^1.8.0"
   }
 }
