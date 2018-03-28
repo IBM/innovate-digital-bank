@@ -1,12 +1,9 @@
 FROM ibmcom/ibmnode:latest
 LABEL maintainer="***REMOVED***"
 
-ENV NPM_CONFIG_PREFIX=/.npm-global
 RUN apt-get install -y nodejs npm
-
-USER node
-RUN mkdir ~/.npm-global \
-    && mkdir ~/app
+RUN npm install -g npm
+RUN npm config set unsafe-perm=true
 
 WORKDIR /app
 COPY . /app
