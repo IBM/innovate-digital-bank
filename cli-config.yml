@@ -25,6 +25,7 @@ container-mounts-run:
    - "./node_modules_linux": "/app/transactions/node_modules"
    - "./node_modules_linux": "/app/userbase/node_modules"
    - "./node_modules_linux": "/app/portal/node_modules"
+   - "./node_modules_linux": "/app/node_modules"
 
 # The list of additional mounts between the host and the tools container in the form [host_path:container_path]
 container-mounts-tools:
@@ -35,6 +36,7 @@ container-mounts-tools:
    - "./node_modules_linux": "/app/transactions/node_modules"
    - "./node_modules_linux": "/app/userbase/node_modules"
    - "./node_modules_linux": "/app/portal/node_modules"
+   - "./node_modules_linux": "/app/node_modules"
 
 # The port mappings between the host and the container in the form [host:container]
 container-port-map : "3000:3000"
