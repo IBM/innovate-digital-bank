@@ -1,11 +1,16 @@
 FROM ibmcom/ibmnode:latest
 LABEL maintainer="***REMOVED***"
 
-#RUN apt-get install -y nodejs npm
+ENV NPM_CONFIG_PREFIX=/.npm-global
+RUN apt-get install -y nodejs npm
+
+USER node
+RUN mkdir ~/.npm-global \
+    && mkdir ~/app
 
 WORKDIR /app
 COPY . /app
-RUN cd /app; npm install; npm prune --production
+RUN npm install; npm prune --production
 
 # Accounts
 RUN cd /app/accounts; npm install; npm prune --production
