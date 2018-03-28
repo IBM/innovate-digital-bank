@@ -18,7 +18,6 @@ addons:
 install:
   - "npm -g install npm"
   - "./scripts/install_bx.sh"
-  - "./scripts/bx_auth.sh"
 
 before_script:
   - "npm run build --debug"
