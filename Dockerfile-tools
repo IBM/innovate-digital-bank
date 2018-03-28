@@ -1,60 +1,15 @@
 FROM ibmcom/ibmnode
 
-# Accounts
-ENV PORT 3400
-WORKDIR "/accounts"
-COPY . /accounts
-EXPOSE 3400
-CMD ["/bin/bash"]
-
-
-# Authentication
-ENV PORT 3200
-WORKDIR "/authentication"
-COPY . /authentication
-EXPOSE 3200
-CMD ["/bin/bash"]
-
-
-# Bills
-ENV PORT 3800
-WORKDIR "/bills"
-COPY . /bills
-EXPOSE 3800
-CMD ["/bin/bash"]
-
-
-# Support
-ENV PORT 4000
-WORKDIR "/support"
-COPY . /support
-EXPOSE 4000
-CMD ["/bin/bash"]
-
-
-# Transactions
-ENV PORT 3600
-WORKDIR "/transactions"
-COPY . /transactions
-EXPOSE 3600
-CMD ["/bin/bash"]
-
-
-# Userbase
-ENV PORT 4200
-WORKDIR "/userbase"
-COPY . /userbase
-EXPOSE 4200
-CMD ["/bin/bash"]
-
-
-# Portal
 ENV PORT 3000
-WORKDIR "/portal"
-COPY . /portal
-EXPOSE 3000
-CMD ["/bin/bash"]
 
+WORKDIR "/app"
+
+# Bundle app source
+COPY . /app
+
+EXPOSE 3000
+
+CMD ["/bin/bash"]
 
 ARG bx_dev_user=root
 ARG bx_dev_userid=1000
