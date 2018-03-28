@@ -17,10 +17,3 @@ echo "Configuring bx to disable version check"
 bx config --check-version=false
 echo "Checking bx version"
 bx --version
-echo "Installing Bluemix container-service plugin"
-bx plugin install container-service -r Bluemix
-
-echo "Installing kubectl"
-curl -LO https://storage.googleapis.com/kubernetes-release/release/"$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)"/bin/linux/amd64/kubectl
-chmod 0755 kubectl
-sudo mv kubectl /usr/local/bin
