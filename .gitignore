@@ -60,3 +60,6 @@ typings/
 # other
 .DS_Store
 license_accepted
+buildContext.tar
+.travis.yml
+package-lock.json

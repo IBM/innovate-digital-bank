@@ -2,9 +2,9 @@
 version : 0.0.3
 
 # The container name used for the run container
-container-name-run : "innovate-authentication-run"
+container-name-run : "innovate-digital-bank-run"
 # The container name used for the tools container
-container-name-tools : "innovate-authentication-tools"
+container-name-tools : "innovate-digital-bank-tools"
 
 # The project root on the host for the run container to mount to container-path-run
 host-path-run : .
@@ -18,15 +18,41 @@ container-path-tools : "/app"
 
 # The list of additional mounts between the host and the run container in the form [host_path:container_path]
 container-mounts-run:
-   - "./node_modules_linux": "/app/node_modules"
+   - "./node_modules_linux": "/app/accounts/node_modules"
+   - "./node_modules_linux": "/app/authentication/node_modules"
+   - "./node_modules_linux": "/app/bills/node_modules"
+   - "./node_modules_linux": "/app/support/node_modules"
+   - "./node_modules_linux": "/app/transactions/node_modules"
+   - "./node_modules_linux": "/app/userbase/node_modules"
+   - "./node_modules_linux": "/app/portal/node_modules"
+
 # The list of additional mounts between the host and the tools container in the form [host_path:container_path]
 container-mounts-tools:
-   - "./node_modules_linux": "/app/node_modules"
+   - "./node_modules_linux": "/app/accounts/node_modules"
+   - "./node_modules_linux": "/app/authentication/node_modules"
+   - "./node_modules_linux": "/app/bills/node_modules"
+   - "./node_modules_linux": "/app/support/node_modules"
+   - "./node_modules_linux": "/app/transactions/node_modules"
+   - "./node_modules_linux": "/app/userbase/node_modules"
+   - "./node_modules_linux": "/app/portal/node_modules"
 
 # The port mappings between the host and the container in the form [host:container]
+container-port-map : "3000:3000"
 container-port-map : "3200:3200"
+container-port-map : "3400:3400"
+container-port-map : "3600:3600"
+container-port-map : "3800:3800"
+container-port-map : "4000:4000"
+container-port-map : "4200:4200"
+
 # The port mappings between the host and the container for the debug port in the form [host:container]
+container-port-map-debug : "5858:5858"
 container-port-map-debug : "5860:5860"
+container-port-map-debug : "5862:5862"
+container-port-map-debug : "5864:5864"
+container-port-map-debug : "5866:5866"
+container-port-map-debug : "5868:5868"
+container-port-map-debug : "5870:5870"
 
 # The name for the dockerfile for the run container
 dockerfile-run : "Dockerfile"
@@ -34,9 +60,9 @@ dockerfile-run : "Dockerfile"
 dockerfile-tools : "Dockerfile-tools"
 
 # The name of image to create from dockerfile-run
-image-name-run : "innovate-authentication-run"
+image-name-run : "innovate-digital-bank-run"
 # The name of image to create from dockerfile-tools
-image-name-tools : "innovate-authentication-tools"
+image-name-tools : "innovate-digital-bank-tools"
 
 # The command to build the code and docker image for RUN
 build-cmd-run : "npm install"
@@ -53,6 +79,6 @@ debug-cmd : "npm run debug"
 stop-cmd : "npm stop"
 
 # The relative path to the helm chart used for Kubernetes deployment
-chart-path: "chart/innovate-authentication"
+chart-path: "chart/innovate-digital-bank"
 deploy-target: "container"
-deploy-image-target: "mycluster.icp:8500/default/innovate-authentication"
+deploy-image-target: "mycluster.icp:8500/default/innovate-digital-bank"
