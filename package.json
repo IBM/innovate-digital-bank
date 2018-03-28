@@ -11,7 +11,7 @@
     "start:cluster": "sl-run server/server.js",
     "debug": "node --debug server/server.js",
     "build": "sudo bx dev build --debug",
-    "test": "sudo bx dev test",
+    "test": "sudo bx dev build --debug",
     "idt:build": "node idt.js build",
     "idt:test": "node idt.js test",
     "idt:debug": "node idt.js debug",
