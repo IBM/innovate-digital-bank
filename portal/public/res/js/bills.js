@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   var http = new XMLHttpRequest();
   var getUrl = window.location;
-  var baseUrl = getUrl .protocol + "//" + getUrl.host;
+  var baseUrl = getUrl.protocol + "//" + getUrl.host;
   var billsEndpoint = baseUrl + '/endpoints/bills/get';
   console.log('Bills >>>> ', billsEndpoint)
   var uuid = 0;

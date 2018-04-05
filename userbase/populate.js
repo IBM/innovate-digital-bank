@@ -102,7 +102,7 @@ module.exports = function (request, dateFormat) {
         console.log(body);
         var options = {
             method: 'POST',
-            uri: process.env.CREATE_TRANSACTION_ENDPOINT,
+            uri: `${req.protocol}://${req.hostname}${process.env.CREATE_TRANSACTION_ENDPOINT}`,
             body: body,
             json: true
         };
@@ -128,7 +128,7 @@ module.exports = function (request, dateFormat) {
         console.log(body);
         var options = {
             method: 'POST',
-            uri: process.env.UPSERT_BILL_ENDPOINT,
+            uri: `${req.protocol}://${req.hostname}${process.env.UPSERT_BILL_ENDPOINT}`,
             body: body,
             json: true
         };
@@ -140,7 +140,7 @@ module.exports = function (request, dateFormat) {
     function dropBills() {
         var options = {
             method: 'GET',
-            uri: process.env.DROP_BILLS_ENDPOINT,
+            uri: `${req.protocol}://${req.hostname}${process.env.DROP_BILLS_ENDPOINT}`,
             json: true
         };
         request.get(options, function (err, response, body) {
@@ -151,7 +151,7 @@ module.exports = function (request, dateFormat) {
     function dropTransactions() {
         var options = {
             method: 'GET',
-            uri: process.env.DROP_TRANSACTIONS_ENDPOINT,
+            uri: `${req.protocol}://${req.hostname}${process.env.DROP_TRANSACTIONS_ENDPOINT}`,
             json: true
         };
         request.get(options, function (err, response, body) {
@@ -162,7 +162,7 @@ module.exports = function (request, dateFormat) {
     function dropAccounts() {
         var options = {
             method: 'GET',
-            uri: process.env.DROP_ACCOUNTS_ENDPOINT,
+            uri: `${req.protocol}://${req.hostname}${process.env.DROP_ACCOUNTS_ENDPOINT}`,
             json: true
         };
         request.get(options, function (err, response, body) {
@@ -175,7 +175,7 @@ module.exports = function (request, dateFormat) {
         return new Promise(function (resolve, reject) {
             var options = {
                 method: 'GET',
-                uri: process.env.GET_USERS_ENDPOINT,
+                uri: `${req.protocol}://${req.hostname}${process.env.GET_USERS_ENDPOINT}`,
                 json: true
             };
             request.get(options, function (err, response, body) {

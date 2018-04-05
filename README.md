@@ -19,6 +19,8 @@ To test it out, sign up for an account. A process runs periodically to dump rand
 
 ![Screens](doc/source/images/screens-2.png)
 
+## Learning objectives
+
 When you've completed this Code Pattern, you will understand how to:
 
 * Break an application down to a set of microservices
@@ -261,7 +263,7 @@ Your connection string will be in the following format:
 mongodb://<USERNAME>:<PASSWORD>@<HOST>:<PORT>/<DATABASE_NAME>
 ```
 
-### 4. Configure your Environment Variables
+### 4. Configure your environment variables
 
 Each of the 7 microservices must have a _**.env**_ file.
 

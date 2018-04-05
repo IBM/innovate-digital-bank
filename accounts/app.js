@@ -1,6 +1,6 @@
 'use strict';
 
-const express = require('express'); 
+const express = require('express');
 const bodyParser = require('body-parser');
 const accounts = require('./mongoose/account');
 
@@ -9,7 +9,7 @@ var app = express();
 app.use(bodyParser.json());
 
 app.all('*', function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", process.env.PORTAL_URL + " || " + process.env.USERBASE_URL);
+    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "*");
     next();
 });

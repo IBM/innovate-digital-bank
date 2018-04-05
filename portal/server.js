@@ -1,6 +1,5 @@
 'use strict';
-require('dotenv').config({silent: true});
-
+require('dotenv').config({silent: true, path: `${__dirname}/.env`});
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -11,7 +10,7 @@ const request = require('request');
 
 var app = express();
 
-app.use(express.static("./public"));
+app.use(express.static("./portal/public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -36,8 +35,7 @@ require('./routes/accounts')(app, request);
 require('./routes/transactions')(app, request);
 require('./routes/support')(app, request);
 
-var port = process.env.PORT || 3000;
-
+var port = 3100;
 
 mongoose.connect(process.env.MONGO_URL, function (ignore, connection) {
     connection.onOpen();
