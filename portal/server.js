@@ -8,9 +8,10 @@ const mongoose = require('mongoose');
 const mongostore = require('connect-mongo')(session);
 const request = require('request');
 
+const config = require(`${__dirname}/config`)[process.env.NODE_ENV];
 var app = express();
 
-app.use(express.static("./portal/public"));
+app.use(express.static(`${__dirname}/public`));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -29,11 +30,11 @@ app.use(session({
 }));
 
 require('./routes/auth')(app);
-require('./routes/user')(app, request);
-require('./routes/bills')(app, request);
-require('./routes/accounts')(app, request);
-require('./routes/transactions')(app, request);
-require('./routes/support')(app, request);
+require('./routes/user')(app, request, config.ports);
+require('./routes/bills')(app, request, config.ports);
+require('./routes/accounts')(app, request, config.ports);
+require('./routes/transactions')(app, request, config.ports);
+require('./routes/support')(app, request, config.ports);
 
 var port = 3100;
 

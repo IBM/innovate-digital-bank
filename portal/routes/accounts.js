@@ -1,5 +1,5 @@
 const dateFormat = require('dateformat');
-module.exports = function (app, request) {
+module.exports = function (app, request, ports) {
     app.post('/endpoints/accounts/transfer', function (req, res) {
         console.log('Transfer initiated ', req.body);
         var to = req.body.to.match(/\d+/);
@@ -14,7 +14,7 @@ module.exports = function (app, request) {
         };
         var options = {
             method: 'POST',
-            uri: `${req.protocol}://${req.hostname}${process.env.CREATE_TRANSACTION_ENDPOINT}`,
+            uri: `${req.protocol}://${req.hostname}:${ports.transactions}${process.env.CREATE_TRANSACTION_ENDPOINT}`,
             body: params,
             json: true
         };
@@ -25,7 +25,7 @@ module.exports = function (app, request) {
             }
             var options = {
                  method: 'POST',
-                 uri: `${req.protocol}://${req.hostname}${process.env.ACCOUNT_WITHDRAW_ENDPOINT}`,
+                 uri: `${req.protocol}://${req.hostname}:${ports.accounts}${process.env.ACCOUNT_WITHDRAW_ENDPOINT}`,
                  body: {
                    uuid: req.session.user.uuid,
                    amount: req.body.amount,
@@ -40,7 +40,7 @@ module.exports = function (app, request) {
               }
               var options = {
                 method: 'POST',
-                uri: `${req.protocol}://${req.hostname}${process.env.ACCOUNT_DEPOSIT_ENDPOINT}`,
+                uri: `${req.protocol}://${req.hostname}:${ports.accounts}${process.env.ACCOUNT_DEPOSIT_ENDPOINT}`,
                 body: {
                   uuid: req.session.user.uuid,
                   amount: req.body.amount,
@@ -68,7 +68,7 @@ module.exports = function (app, request) {
       }
       var options = {
         method: 'POST',
-        uri: `${req.protocol}://${req.hostname}${process.env.CREATE_ACCOUNT_ENDPOINT}`,
+        uri: `${req.protocol}://${req.hostname}:${ports.accounts}${process.env.CREATE_ACCOUNT_ENDPOINT}`,
         body: body,
         json: true
       };
@@ -85,7 +85,7 @@ module.exports = function (app, request) {
     app.post('/endpoints/accounts/get', function (req, res) {
       var options = {
         method: 'POST',
-        uri: `${req.protocol}://${req.hostname}${process.env.GET_ACCOUNTS_ENDPOINT}`,
+        uri: `${req.protocol}://${req.hostname}:${ports.accounts}${process.env.GET_ACCOUNTS_ENDPOINT}`,
         body: {
           uuid: req.session.user.uuid
         },

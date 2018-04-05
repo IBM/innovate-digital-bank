@@ -37,7 +37,7 @@ When thinking of business capabilities, our imaginary bank will need the followi
 3. *Accounts:* Handles creation, management, and retrieval of a user’s banking accounts.
 4. *Transactions:* Handles creation and retrieval of transactions made against users' bank accounts.
 5. *Bills:* Handles creation, payment, and retrieval of bills.
-6. *Support:* Handles communication with Watson Conversation to enable a support chat feature.
+6. *Support:* Handles communication with Watson Assistant to enable a support chat feature.
 
 ![Demo architecture](doc/source/images/architecture.png)
 
@@ -46,7 +46,7 @@ When thinking of business capabilities, our imaginary bank will need the followi
 * [IBM Cloud Container Service](https://console.bluemix.net/doc/source/images/containers/container_index.html): IBM Bluemix Container Service manages highly available apps inside Docker containers and Kubernetes clusters on the IBM Cloud.
 * [Kubernetes Cluster](https://console.bluemix.net/doc/source/images/containers/container_index.html): Create and manage your own cloud infrastructure and use Kubernetes as your container orchestration engine.
 * [Microservice Builder](https://developer.ibm.com/microservice-builder): Learn, build, run, and manage applications in a microservices framework.
-* [Watson Conversation](https://www.ibm.com/watson/developercloud/conversation.html): Create a chatbot with a program that conducts a conversation via auditory or textual methods.
+* [Watson Assistant](https://www.ibm.com/watson/developercloud/conversation.html): Create a chatbot with a program that conducts a conversation via auditory or textual methods.
 
 ## Featured technologies
 
@@ -117,13 +117,13 @@ When running the app locally without kubernetes, the microservices do not run on
 If you're running on macOS or any linux-based system, run the following in a terminal from the git repo's directory
 
 ```
-$ export NODE_ENV=local
+$ export NODE_ENV=development
 ```
 
 if you're running on Windows, edit the NODE_ENV attribute in your .env file from within the /portal folder and the /userbase folder to the following:
 
 ```
-NODE_ENV=local
+NODE_ENV=development
 ```
 
 ### 5. Run
@@ -384,22 +384,22 @@ $ bx dev deploy
 
 _If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/doc/source/images/cli/reference/bluemix_cli/download_cli.html) first_
 
-# (Optional) Adding Support with Watson Conversation
-The support microservice connects to an instance of Watson Conversation on IBM Cloud to simulate a chat with a virtual support agent.
+# (Optional) Adding Support with Watson Assistant
+The support microservice connects to an instance of Watson Assistant on IBM Cloud to simulate a chat with a virtual support agent.
 
 > NOTE: This is an optional step. You need it if you'd like to enable the support feature on the app.
 
-1. [Create an instance of Watson Conversation](#1-create-an-instance-of-watson-conversation)
+1. [Create an instance of Watson Assistant](#1-create-an-instance-of-watson-assistant)
 2. [Import the support workspace](#2-import-the-support-workspace)
 3. [Get your credentials](#3-get-your-credentials)
 4. [Configure your environment variables](#4-configure-your-environment-variables)
 5. [Deploy](#5-deploy)
 
-### 1. Create an instance of Watson Conversation
+### 1. Create an instance of Watson Assistant
 From the [IBM Cloud Catalog](bluemix.net), choose Watson Conversation, and click create.
 
 ### 2. Import the support workspace
-Import the [support workspace](/support/conversation-workspace.json) into your newly created Watson Conversation instance
+Import the [support workspace](/support/conversation-workspace.json) into your newly created Watson Assistant instance
 
 ![Watson Conversation](doc/source/images/7.png)
 
@@ -654,7 +654,7 @@ Method: GET
 
 ### Support [4000:30180]
 
-Handles communication with Watson Conversation on IBM Cloud to enable a dummy support chat feature.
+Handles communication with Watson Assistant on IBM Cloud to enable a dummy support chat feature.
 
 ### Userbase [3600:30140]
 

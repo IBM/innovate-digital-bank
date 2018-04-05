@@ -1,5 +1,4 @@
-module.exports = function (request, dateFormat) {
-
+module.exports = function (request, basePath, ports, dateFormat) {
     var randomEntries = {
         bills: [
             {
@@ -102,7 +101,7 @@ module.exports = function (request, dateFormat) {
         console.log(body);
         var options = {
             method: 'POST',
-            uri: `${req.protocol}://${req.hostname}${process.env.CREATE_TRANSACTION_ENDPOINT}`,
+            uri: `${basePath}:${ports.transactions}${process.env.CREATE_TRANSACTION_ENDPOINT}`,
             body: body,
             json: true
         };
@@ -128,7 +127,7 @@ module.exports = function (request, dateFormat) {
         console.log(body);
         var options = {
             method: 'POST',
-            uri: `${req.protocol}://${req.hostname}${process.env.UPSERT_BILL_ENDPOINT}`,
+            uri: `${basePath}:${ports.bills}${process.env.UPSERT_BILL_ENDPOINT}`,
             body: body,
             json: true
         };
@@ -140,7 +139,7 @@ module.exports = function (request, dateFormat) {
     function dropBills() {
         var options = {
             method: 'GET',
-            uri: `${req.protocol}://${req.hostname}${process.env.DROP_BILLS_ENDPOINT}`,
+            uri: `${basePath}:${ports.bills}${process.env.DROP_BILLS_ENDPOINT}`,
             json: true
         };
         request.get(options, function (err, response, body) {
@@ -151,7 +150,7 @@ module.exports = function (request, dateFormat) {
     function dropTransactions() {
         var options = {
             method: 'GET',
-            uri: `${req.protocol}://${req.hostname}${process.env.DROP_TRANSACTIONS_ENDPOINT}`,
+            uri: `${basePath}:${ports.transactions}${process.env.DROP_TRANSACTIONS_ENDPOINT}`,
             json: true
         };
         request.get(options, function (err, response, body) {
@@ -162,7 +161,7 @@ module.exports = function (request, dateFormat) {
     function dropAccounts() {
         var options = {
             method: 'GET',
-            uri: `${req.protocol}://${req.hostname}${process.env.DROP_ACCOUNTS_ENDPOINT}`,
+            uri: `${basePath}:${ports.accounts}${process.env.DROP_ACCOUNTS_ENDPOINT}`,
             json: true
         };
         request.get(options, function (err, response, body) {
@@ -175,7 +174,7 @@ module.exports = function (request, dateFormat) {
         return new Promise(function (resolve, reject) {
             var options = {
                 method: 'GET',
-                uri: `${req.protocol}://${req.hostname}${process.env.GET_USERS_ENDPOINT}`,
+                uri: `${basePath}:${ports.authentication}${process.env.GET_USERS_ENDPOINT}`,
                 json: true
             };
             request.get(options, function (err, response, body) {
