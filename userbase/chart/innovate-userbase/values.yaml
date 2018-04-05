@@ -17,7 +17,7 @@ service:
   name: Node
   type: NodePort
   servicePort: 4200
-  serviceNodePort: 30080
+  serviceNodePort: 30050
 hpa:
   enabled: false
   minReplicas: 2

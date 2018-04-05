@@ -1,59 +1,19 @@
 FROM ibmcom/ibmnode:latest
 LABEL maintainer="amalamine@ae.ibm.com"
 
-RUN apt-get install -y nodejs npm
-RUN npm install -g npm
+# Upgrade npm to latest version
+
+RUN npm install -g yarnpkg
+RUN yarn global add npm
+RUN npm -v
 RUN npm config set unsafe-perm=true
 
+# Copy app & set working directory
 WORKDIR /app
 COPY . /app
 RUN npm install; npm prune --production
 
-# Accounts
-RUN cd /app/accounts; npm install; npm prune --production
 ENV NODE_ENV production
-ENV PORT 3400
-EXPOSE 3400
-CMD [ "npm","start" ]
+EXPOSE 3100 3200 3400 3600 3800 4000 4100
 
-# Authentication
-RUN cd /app/authentication; npm install; npm prune --production
-ENV NODE_ENV production
-ENV PORT 3200
-EXPOSE 3200
-CMD [ "npm","start" ]
-
-# Bills
-RUN cd /app/bills; npm install; npm prune --production
-ENV NODE_ENV production
-ENV PORT 3800
-EXPOSE 3800
-CMD [ "npm","start" ]
-
-# Support
-RUN cd /app/support; npm install; npm prune --production
-ENV NODE_ENV production
-ENV PORT 4000
-EXPOSE 4000
-CMD [ "npm","start" ]
-
-# Transactions
-RUN cd /app/transactions; npm install; npm prune --production
-ENV NODE_ENV production
-ENV PORT 3600
-EXPOSE 3600
-CMD [ "npm","start" ]
-
-# Userbase
-RUN cd /app/userbase; npm install; npm prune --production
-ENV NODE_ENV production
-ENV PORT 4200
-EXPOSE 4200
-CMD [ "npm","start" ]
-
-# Portal
-RUN cd /app/portal; npm install; npm prune --production
-ENV NODE_ENV production
-ENV PORT 3000
-EXPOSE 3000
 CMD [ "npm","start" ]

@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   var http = new XMLHttpRequest();
   var getUrl = window.location;
-  var baseUrl = getUrl .protocol + "//" + getUrl.host;
+  var baseUrl = getUrl.protocol + "//" + getUrl.host;
   var transactionsEndpoint = baseUrl + '/endpoints/transactions/get';
   console.log('Transactions >>>> ', transactionsEndpoint)
   var uuid, total = 0;
@@ -66,6 +66,7 @@ $(document).ready(function() {
       http.setRequestHeader('Content-type', 'application/json');
       http.onreadystatechange = function() {
         if (http.readyState === 4 && http.status === 200 && http.responseText) {
+          console.log(http.responseText)
           var transactions = JSON.parse(http.responseText).group(item => item.category);
           console.log(transactions)
           for (var selector in selectors) {

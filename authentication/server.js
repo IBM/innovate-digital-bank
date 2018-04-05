@@ -1,10 +1,10 @@
 'use strict';
 
 const mongoose = require('mongoose');
-require('dotenv').config({silent: true});
+require('dotenv').config({silent: true, path: `${__dirname}/.env`});
 
 var server = require('./app');
-var port = process.env.PORT || 3200;
+var port = 3200;
 
 mongoose.connect(process.env.MONGO_URL, function (ignore, connection) {
     connection.onOpen();

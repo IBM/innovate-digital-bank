@@ -4,7 +4,7 @@ var Api = (function() {
   var requestPayload;
   var responsePayload;
   var getUrl = window.location;
-  var baseUrl = getUrl .protocol + "//" + getUrl.host;
+  var baseUrl = getUrl.protocol + "//" + getUrl.host;
   var messageEndpoint = baseUrl + '/endpoints/support/chat';
   console.log('Support >>>> ', messageEndpoint)
 

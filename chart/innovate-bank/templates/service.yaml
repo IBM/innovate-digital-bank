@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/scrape: 'true'
+  name: "{{  .Chart.Name }}"
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - name: portal
+    port: {{ .Values.service.servicePort }}
+    nodePort: {{ .Values.service.serviceNodePort }}
+  - name: authentication
+    port: {{ .Values.authentication.servicePort }}
+    nodePort: {{ .Values.authentication.serviceNodePort }}
+  - name: accounts
+    port: {{ .Values.accounts.servicePort }}
+    nodePort: {{ .Values.accounts.serviceNodePort }}
+  - name: transactions
+    port: {{ .Values.transactions.servicePort }}
+    nodePort: {{ .Values.transactions.serviceNodePort }}
+  - name: bills
+    port: {{ .Values.bills.servicePort }}
+    nodePort: {{ .Values.bills.serviceNodePort }}
+  - name: support
+    port: {{ .Values.support.servicePort }}
+    nodePort: {{ .Values.support.serviceNodePort }}
+  selector:
+    app: "{{  .Chart.Name }}-selector"

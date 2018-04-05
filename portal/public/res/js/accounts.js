@@ -1,7 +1,7 @@
 $(document).ready(function() {
   var http = new XMLHttpRequest();
   var getUrl = window.location;
-  var baseUrl = getUrl .protocol + "//" + getUrl.host;
+  var baseUrl = getUrl.protocol + "//" + getUrl.host;
   var AccountsEndpoint = baseUrl + '/endpoints/accounts/get';
   console.log('Accounts >>>> ', AccountsEndpoint)
   var uuid = 0;
