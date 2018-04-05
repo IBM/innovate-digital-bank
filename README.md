@@ -60,7 +60,80 @@ When thinking of business capabilities, our imaginary bank will need the followi
 
 If you want a quick walkthrough of the end result, a video is available [here](https://ibm.box.com/s/fgpqiacn9ewaorgp8l97bnrk760s8rx3)
 
+# Setup
+Being a cloud-native app, you have multiple options to setup your own instance:
+* [One-click deployment to IBM Cloud with toolchain](#deploy-to-ibm-cloud)
+* [Run it locally](#run-locally)
+* [Manual multi-stage deployment to IBM Cloud](#deploy-to-ibm-cloud-the-hard-way)
+* [Manual multi-stage deployment to IBM Cloud Private](#deploy-to-ibm-cloud-private)
+
 # Deploy to IBM Cloud
+> NOTE: This is an automated setup & deployment to your own kubernetes cluster hosted on IBM Cloud; it packages all 7 microservice as one docker image, one deployment, and one multi-port service. To get a better grasp of the concept, you should follow the steps to configure your cluster and deploy each microservice independently as 7 containers, deployments, and services.
+
+# Run Locally
+
+### 1. Clone the repo
+Clone the `innovate-digital-bank` repository locally. In a terminal, run:
+
+```
+$ git clone https://github.com/amalamine/innovate-digital-bank.git
+```
+
+### 2. Create an Instance of MongoDB
+
+This demo heavily depends on mongo as a session & data store.
+
+From the [IBM Cloud catalog](https://console.bluemix.net/catalog/), find **Compose for MongoDB** and click create. Give it a name, choose a region, pick the standard pricing plan and click create.
+
+**Get your mongo connection string. Almost all your microservices need it; keep it safe!**
+
+![kubectl config](doc/source/images/11.png)
+
+### 3. Configure your environment variables
+
+Each of the 7 microservices must have a _**.env**_ file that stores all credentials.
+
+An example is already provided within each folder. From the directory of each microservice, copy the example file, rename it to _**.env**_, and fill it with the appropriate values.
+
+For example, from within the /innovate folder, navigate into the accounts folder
+
+```
+$ cd accounts
+```
+
+Next, copy and rename the _**.env.example**_ folder
+
+```
+$ cp .env.example .env
+```
+
+Finally, edit your .env folder and add your Mongodb connection string
+
+***Repeat these steps for all microservices. In addition to your mongo url, most will need the public IP address of your kubernetes cluster, _You can find that under the overview of your cluster on IBM Cloud_.***
+
+### 4. Configure your environment mode
+When running the app locally without kubernetes, the microservices do not run on the NodePorts specified in our helm chart, so we need to point our portal and userbase microservices to the correct ports.
+
+If you're running on macOS or any linux-based system, run the following in a terminal from the git repo's directory
+
+```
+$ export NODE_ENV=local
+```
+
+if you're running on Windows, edit the NODE_ENV attribute in your .env file from within the /portal folder and the /userbase folder to the following:
+
+```
+NODE_ENV=local
+```
+
+### 5. Run
+Finally, navigate to each microservice folder, and start it. Make sure you run the 7 microservice in 7 separate terminals.
+
+```
+$ npm start
+```
+
+# Deploy to IBM Cloud the Hard Way
 > NOTE: This guide requires a paid/upgraded account on IBM Cloud. You **cannot** complete the steps with a free or lite account
 
 1. [Get the tools](#1-get-the-tools)
@@ -225,7 +298,6 @@ $ bx dev deploy
 ```
 
 # Deploy to IBM Cloud Private
-> NOTE: These steps are only needed when deploying to IBM Cloud Private instead of IBM Cloud Platform.
 
 If you have an instance of IBM Cloud Private running, you can follow the steps to deploy the app. If you'd like to deploy your own instance of ICP, [you can follow this great writeup](https://github.com/IBM/deploy-ibm-cloud-private)
 
