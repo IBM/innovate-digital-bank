@@ -1,5 +1,5 @@
 const dateFormat = require('dateformat');
-module.exports = function (app, request) {
+module.exports = function (app, request, ports) {
     app.get('/endpoints/bills/pay', function (req, res) {
         var params = {
             "uuid": req.session.user.uuid,
@@ -11,7 +11,7 @@ module.exports = function (app, request) {
         };
         var options = {
             method: 'POST',
-            uri: `${req.protocol}://${req.hostname}${process.env.CREATE_TRANSACTION_ENDPOINT}`,
+            uri: `${req.protocol}://${req.hostname}:${ports.transactions}${process.env.CREATE_TRANSACTION_ENDPOINT}`,
             body: params,
             json: true
         };
@@ -30,7 +30,7 @@ module.exports = function (app, request) {
             };
             var options = {
                 method: 'POST',
-                uri: `${req.protocol}://${req.hostname}${process.env.UPSERT_BILL_ENDPOINT}`,
+                uri: `${req.protocol}://${req.hostname}:${ports.bills}${process.env.UPSERT_BILL_ENDPOINT}`,
                 body: params,
                 json: true
             };
@@ -47,7 +47,7 @@ module.exports = function (app, request) {
     app.post('/endpoints/bills/get', function (req, res) {
         var options = {
             method: 'POST',
-            uri: `${req.protocol}://${req.hostname}${process.env.GET_BILLS_ENDPOINT}`,
+            uri: `${req.protocol}://${req.hostname}:${ports.bills}${process.env.GET_BILLS_ENDPOINT}`,
             body: req.body,
             json: true
         };

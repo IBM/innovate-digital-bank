@@ -23,6 +23,7 @@
     "dateformat": "^3.0.3",
     "dotenv": "^2.0.0",
     "express": "^4.15.3",
+    "ip": "^1.1.5",
     "mongoose": "^5.0.0-rc1",
     "request": "^2.83.0",
     "strong-supervisor": "^6.2.0",
