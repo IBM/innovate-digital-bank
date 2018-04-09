@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ template "mongodb.fullname" . }}
+spec:
+  capacity:
+    storage: {{ .Values.persistence.size }}
+  accessModes:
+  - {{ .Values.persistence.accessMode }}
+  hostPath:
+    path: {{ .Values.persistence.path }}
