@@ -45,7 +45,7 @@
           "pattern": "\\S"
         },
         "worker-node-public-ip": {
-             "description": "The public IP of your worker node. Retrieve it from the overview of your cluster, under the Worker Nodes tab.",
+             "description": "Public IP of worker node.",
              "type": "string",
              "pattern": "\\S"
         },
@@ -148,6 +148,10 @@
                   "readonly": false
                 },
                 {
+                  "type": "label",
+                  "title": "Worker Node Public IP"
+                },
+                {
                    "type": "text",
                    "readonly": false,
                    "key": "worker-node-public-ip"
@@ -158,9 +162,13 @@
           "columnCount": 1,
             "widths": ["100%"],
             "items": [
+              {
+                "type": "label",
+                "title": "Retrieve the Kubernetes cluster name with the CLI command 'bx cs clusters' or via the [console](https://console.bluemix.net/containers-kubernetes/home/clusters)."
+              },
                 {
                   "type": "label",
-                  "title": "Retrieve the Kubernetes cluster name with the CLI command 'bx cs clusters' or via the [console](https://console.bluemix.net/containers-kubernetes/home/clusters)."
+                  "title": "Retrieve the Public IP of your worker node via the console, under the Workder Nodes tab in the overview of your cluster."
                 }
             ]
         },{
