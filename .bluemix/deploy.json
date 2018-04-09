@@ -159,13 +159,13 @@
           "columnCount": 1,
             "widths": ["100%"],
             "items": [
-              {
-                "type": "label",
-                "title": "Retrieve the Kubernetes cluster name with the CLI command 'bx cs clusters' or via the [console](https://console.bluemix.net/containers-kubernetes/home/clusters)."
-              },
                 {
                   "type": "label",
                   "title": "Retrieve the Public IP of your worker node via the console, under the Workder Nodes tab in the overview of your cluster."
+                },
+                {
+                  "type": "label",
+                  "title": "Retrieve the Kubernetes cluster name with the CLI command 'bx cs clusters' or via the [console](https://console.bluemix.net/containers-kubernetes/home/clusters)."
                 }
             ]
         },{

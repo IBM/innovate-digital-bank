@@ -17,7 +17,7 @@ template:
     git branch: >-
       [master](https://github.com/open-toolchain/simple-helm-toolchain/tree/master)
 toolchain:
-  name: 'innovate-toolchain-{{timestamp}}'
+  name: 'innovate-toolchain'
   template:
     getting_started:
       $ref: "#/messages/template.gettingStarted"
@@ -25,7 +25,7 @@ services:
   repo:
     service_id: hostedgit
     parameters:
-      repo_name: 'innovate-bank-{{timestamp}}'
+      repo_name: 'innovate-bank'
       repo_url: 'https://github.com/amalamine/innovate-digital-bank'
       type: clone
       has_issues: true
@@ -35,7 +35,7 @@ services:
     parameters:
       services:
         - repo
-      name: 'innovate-bank-{{timestamp}}'
+      name: 'innovate-bank'
       ui-pipeline: true
       configuration:
         content:
