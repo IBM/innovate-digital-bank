@@ -1,0 +1,482 @@
+---
+stages:
+- name: BUILD
+  inputs:
+  - type: git
+    branch: master
+    service: ${GIT_REPO}    
+  triggers:
+  - type: commit
+  jobs:
+  - name: Pre-build check
+    type: builder
+    build_type: cr
+    artifact_dir: ''
+    target:
+      region_id: ${REGISTRY_REGION_ID}
+      api_key: ${API_KEY}
+    namespace: ${REGISTRY_NAMESPACE}
+    image_name: ${CF_APP_NAME}
+    script: |-
+      #********************************************
+      #!/bin/bash
+      # uncomment to debug the script
+      #set -x
+      # copy the script below into your app code repo (e.g. ./scripts/check_prebuild.sh) and 'source' it from your pipeline job
+      #    source ./scripts/check_prebuild.sh
+      # alternatively, you can source it from online script:
+      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_prebuild.sh")      
+      # ------------------ 
+      # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_prebuild.sh
+      echo "Build environment variables:"
+      echo "REGISTRY_URL=${REGISTRY_URL}"
+      echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
+      echo "IMAGE_NAME=${IMAGE_NAME}"
+      echo "BUILD_NUMBER=${BUILD_NUMBER}"
+      echo "ARCHIVE_DIR=${ARCHIVE_DIR}"
+      # also run 'env' command to find all available env variables
+      # or learn more about the available environment variables at:
+      # https://console.bluemix.net/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
+
+      echo "=========================================================="
+      echo "CHECKING DOCKERFILE"
+      echo "Checking Dockerfile at the repository root"
+      if [ -f Dockerfile ]; then 
+        echo "Dockerfile found"
+      else
+          echo "Dockerfile not found"
+          exit 1
+      fi
+      echo "Linting Dockerfile"
+      npm install -g dockerlint
+      dockerlint -f Dockerfile
+
+      echo "=========================================================="
+      echo "CHECKING HELM CHART"
+      echo "Looking for chart under /chart/<CHART_NAME>"
+      if [ -d ./chart ]; then
+        CHART_NAME=$(find chart/. -maxdepth 2 -type d -name '[^.]?*' -printf %f -quit)
+      fi
+      if [ -z "${CHART_NAME}" ]; then
+          echo -e "No Helm chart found for Kubernetes deployment under /chart/<CHART_NAME>."
+          exit 1
+      else
+          echo -e "Helm chart found for Kubernetes deployment : /chart/${CHART_NAME}"
+      fi
+      echo "Linting Helm Chart"
+      helm lint ./chart/${CHART_NAME}
+
+      echo "=========================================================="
+      echo "CHECKING REGISTRY current plan and quota"
+      bx cr plan
+      bx cr quota
+      echo "If needed, discard older images using: bx cr image-rm"
+
+      echo "Current content of image registry"
+      bx cr images
+
+      echo "Checking registry namespace: ${REGISTRY_NAMESPACE}"
+      NS=$( bx cr namespaces | grep ${REGISTRY_NAMESPACE} ||: )
+      if [ -z "${NS}" ]; then
+          echo "Registry namespace ${REGISTRY_NAMESPACE} not found, creating it."
+          bx cr namespace-add ${REGISTRY_NAMESPACE}
+          echo "Registry namespace ${REGISTRY_NAMESPACE} created."
+      else 
+          echo "Registry namespace ${REGISTRY_NAMESPACE} found."
+      fi
+  - name: Build Docker image
+    type: builder
+    build_type: cr
+    artifact_dir: output
+    target:
+      region_id: ${REGISTRY_REGION_ID}
+      api_key: ${API_KEY}
+    namespace: ${REGISTRY_NAMESPACE}
+    image_name: ${CF_APP_NAME}
+    script: |
+      #!/bin/bash
+      # uncomment to debug the script
+      #set -x
+      # copy the script below into your app code repo (e.g. ./scripts/build_image.sh) and 'source' it from your pipeline job
+      #    source ./scripts/build_image.sh
+      # alternatively, you can source it from online script:
+      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/build_image.sh")
+      # ------------------
+      # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/build_image.sh
+      echo "Build environment variables:"
+      echo "REGISTRY_URL=${REGISTRY_URL}"
+      echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
+      echo "IMAGE_NAME=${IMAGE_NAME}"
+      echo "BUILD_NUMBER=${BUILD_NUMBER}"
+      echo "ARCHIVE_DIR=${ARCHIVE_DIR}"
+      # also run 'env' command to find all available env variables
+      # or learn more about the available environment variables at:
+      # https://console.bluemix.net/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
+
+      # To review or change build options use:
+      # bx cr build --help
+
+      echo -e "Existing images in registry"
+      bx cr images
+
+      echo "=========================================================="
+      echo -e "BUILDING CONTAINER IMAGE: ${IMAGE_NAME}:${BUILD_NUMBER}"
+      set -x
+      bx cr build -t ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER} .
+      set +x
+      bx cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}
+
+      # When 'bx' commands are in the pipeline job config directly, the image URL will automatically be passed 
+      # along with the build result as env variable PIPELINE_IMAGE_URL to any subsequent job consuming this build result. 
+      # When the job is sourc'ing an external shell script, or to pass a different image URL than the one inferred by the pipeline,
+      # please uncomment and modify the environment variable the following line.
+      export PIPELINE_IMAGE_URL="$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER"
+      echo "TODO - remove once no longer needed to unlock VA job ^^^^"
+
+      bx cr images
+
+      echo "=========================================================="
+      echo "COPYING ARTIFACTS needed for deployment and testing (in particular build.properties)"
+
+      echo "Checking archive dir presence"
+      mkdir -p $ARCHIVE_DIR
+
+      # Persist env variables into a properties file (build.properties) so that all pipeline stages consuming this
+      # build as input and configured with an environment properties file valued 'build.properties'
+      # will be able to reuse the env variables in their job shell scripts.
+
+      # CHART information from build.properties is used in Helm Chart deployment to set the release name
+      CHART_NAME=$(find chart/. -maxdepth 2 -type d -name '[^.]?*' -printf %f -quit)
+      echo "CHART_NAME=${CHART_NAME}" >> $ARCHIVE_DIR/build.properties
+      # IMAGE information from build.properties is used in Helm Chart deployment to set the release name
+      echo "IMAGE_NAME=${IMAGE_NAME}" >> $ARCHIVE_DIR/build.properties
+      echo "BUILD_NUMBER=${BUILD_NUMBER}" >> $ARCHIVE_DIR/build.properties
+      # REGISTRY information from build.properties is used in Helm Chart deployment to generate cluster secret
+      echo "REGISTRY_URL=${REGISTRY_URL}" >> $ARCHIVE_DIR/build.properties
+      echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}" >> $ARCHIVE_DIR/build.properties
+      echo "File 'build.properties' created for passing env variables to subsequent pipeline jobs:"
+      cat $ARCHIVE_DIR/build.properties
+
+      echo "Copy pipeline scripts along with the build"
+      # Copy scripts (incl. deploy scripts)
+      if [ -d ./scripts/ ]; then
+        if [ ! -d $ARCHIVE_DIR/scripts/ ]; then # no need to copy if working in ./ already
+          cp -r ./scripts/ $ARCHIVE_DIR/
+        fi
+      fi
+
+      echo "Copy Helm chart along with the build"
+      if [ ! -d $ARCHIVE_DIR/chart/ ]; then # no need to copy if working in ./ already
+        cp -r ./chart/ $ARCHIVE_DIR/
+      fi
+- name: VALIDATE
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build Docker image
+  triggers:
+  - type: stage
+  properties:
+  - name: buildprops
+    value: build.properties
+    type: file
+  jobs:
+  - name: Vulnerability Advisor
+    type: tester
+    test_type: vulnerabilityadvisor
+    use_image_from_build_input: true
+    fail_stage: false
+    target:
+      region_id: ${REGISTRY_REGION_ID}
+      api_key: ${API_KEY}
+    script: |
+      #!/bin/bash
+      # uncomment to debug the script
+      # set -x
+      # copy the script below into your app code repo (e.g. ./scripts/check_vulnerabilities.sh) and 'source' it from your pipeline job
+      #    source ./scripts/check_vulnerabilities.sh
+      # alternatively, you can source it from online script:
+      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_vulnerabilities.sh")
+      # ------------------
+      # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_vulnerabilities.sh
+      # Input env variables (can be received via a pipeline environment properties.file.
+      echo "CHART_NAME=${CHART_NAME}"
+      echo "IMAGE_NAME=${IMAGE_NAME}"
+      echo "BUILD_NUMBER=${BUILD_NUMBER}"
+      echo "REGISTRY_URL=${REGISTRY_URL}"
+      echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
+      #View build properties
+      # cat build.properties
+      # also run 'env' command to find all available env variables
+      # or learn more about the available environment variables at:
+      # https://console.bluemix.net/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
+
+      bx cr images
+      PIPELINE_IMAGE_URL=$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER
+      echo -e "Checking vulnerabilities in image: ${PIPELINE_IMAGE_URL}"
+      for ITER in {1..30}
+      do
+        set +e
+        STATUS=$( bx cr va -e -o json ${PIPELINE_IMAGE_URL} | jq '.[0].status' )
+        set -e
+        if [[ ${STATUS} == *OK* ]]; then
+          break
+        fi
+        echo -e "${ITER} STATUS ${STATUS} : A vulnerability report was not found for the specified image."
+        echo "Either the image doesn't exist or the scan hasn't completed yet. "
+        echo "Waiting for scan to complete.."
+        sleep 10
+      done
+      set +e
+      bx cr va ${PIPELINE_IMAGE_URL}
+      set -e
+      [[ $(bx cr va -e -o json ${PIPELINE_IMAGE_URL} | jq '.[0].status') == *OK* ]] || { echo "ERROR: The vulnerability scan was not successful, check the OUTPUT of the command and try again."; exit 1; }
+- name: PROD
+  inputs:
+  - type: job
+    stage: BUILD
+    job: Build Docker image
+  triggers:
+  - type: stage
+  properties:
+  - name: buildprops
+    value: build.properties
+    type: file
+  - name: CLUSTER_NAMESPACE
+    value: ${PROD_CLUSTER_NAMESPACE}
+    type: text     
+  jobs:
+  - name: Pre-deploy check
+    type: deployer
+    target:
+      region_id: ${PROD_REGION_ID}
+      api_key: ${API_KEY}
+      kubernetes_cluster: ${PROD_CLUSTER_NAME}
+    script: |
+      #!/bin/bash
+      # uncomment to debug the script
+      #set -x
+      # copy the script below into your app code repo (e.g. ./scripts/check_predeploy.sh) and 'source' it from your pipeline job
+      #    source ./scripts/check_predeploy.sh
+      # alternatively, you can source it from online script:
+      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_predeploy.sh")
+      # ------------------
+      # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_predeploy.sh
+      # Input env variables (can be received via a pipeline environment properties.file.
+      echo "CHART_NAME=${CHART_NAME}"
+      echo "IMAGE_NAME=${IMAGE_NAME}"
+      echo "BUILD_NUMBER=${BUILD_NUMBER}"
+      echo "REGISTRY_URL=${REGISTRY_URL}"
+      echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
+            #View build properties
+      # cat build.properties
+      # also run 'env' command to find all available env variables
+      # or learn more about the available environment variables at:
+      # https://console.bluemix.net/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
+
+      # Input env variables from pipeline job
+      echo "PIPELINE_KUBERNETES_CLUSTER_NAME=${PIPELINE_KUBERNETES_CLUSTER_NAME}"
+      echo "CLUSTER_NAMESPACE=${CLUSTER_NAMESPACE}"
+
+      #Check cluster availability
+      echo "=========================================================="
+      echo "CHECKING CLUSTER readiness and namespace existence"
+      IP_ADDR=$(bx cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | awk '{ print $2 }')
+      if [ -z "${IP_ADDR}" ]; then
+        echo -e "${PIPELINE_KUBERNETES_CLUSTER_NAME} not created or workers not ready"
+        exit 1
+      fi
+      echo "Configuring cluster namespace"
+      if kubectl get namespace ${CLUSTER_NAMESPACE}; then
+        echo -e "Namespace ${CLUSTER_NAMESPACE} found."
+      else
+        kubectl create namespace ${CLUSTER_NAMESPACE}
+        echo -e "Namespace ${CLUSTER_NAMESPACE} created."
+      fi
+
+      # Grant access to private image registry from namespace $CLUSTER_NAMESPACE
+      # reference https://console.bluemix.net/docs/containers/cs_cluster.html#bx_registry_other
+      echo "=========================================================="
+      echo -e "CONFIGURING ACCESS to private image registry from namespace ${CLUSTER_NAMESPACE}"
+      IMAGE_PULL_SECRET_NAME="ibmcloud-toolchain-${PIPELINE_TOOLCHAIN_ID}-${REGISTRY_URL}"
+      echo -e "Checking for presence of ${IMAGE_PULL_SECRET_NAME} imagePullSecret for this toolchain"
+      if ! kubectl get secret ${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}; then
+        echo -e "${IMAGE_PULL_SECRET_NAME} not found in ${CLUSTER_NAMESPACE}, creating it"
+        # for Container Registry, docker username is 'token' and email does not matter
+        kubectl --namespace ${CLUSTER_NAMESPACE} create secret docker-registry ${IMAGE_PULL_SECRET_NAME} --docker-server=${REGISTRY_URL} --docker-password=${PIPELINE_BLUEMIX_API_KEY} --docker-username=iamapikey --docker-email=a@b.com
+      else
+        echo -e "Namespace ${CLUSTER_NAMESPACE} already has an imagePullSecret for this toolchain."
+      fi
+      echo "Checking ability to pass pull secret via Helm chart"
+      CHART_PULL_SECRET=$( grep 'pullSecret' ./chart/${CHART_NAME}/values.yaml || : )
+      if [ -z "$CHART_PULL_SECRET" ]; then
+        echo "WARNING: Chart is not expecting an explicit private registry imagePullSecret. Will patch the cluster default serviceAccount to pass it implicitly for now."
+        echo "Going forward, you should edit the chart to add in:"
+        echo -e "[./chart/${CHART_NAME}/templates/deployment.yaml] (under kind:Deployment)"
+        echo "    ..."
+        echo "    spec:"
+        echo "      imagePullSecrets:               #<<<<<<<<<<<<<<<<<<<<<<<<"
+        echo "        - name: {{ .Values.image.pullSecret }}   #<<<<<<<<<<<<<<<<<<<<<<<<"
+        echo "      containers:"
+        echo "        - name: {{ .Chart.Name }}"
+        echo "          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        echo "    ..."          
+        echo -e "[./chart/${CHART_NAME}/values.yaml]"
+        echo "or check out this chart example: https://github.com/open-toolchain/hello-helm/tree/master/chart/hello"
+        echo "or refer to: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret"
+        echo "    ..."
+        echo "    image:"
+        echo "repository: webapp"
+        echo "  tag: 1"
+        echo "  pullSecret: regsecret            #<<<<<<<<<<<<<<<<<<<<<<<<""
+        echo "  pullPolicy: IfNotPresent"
+        echo "    ..."
+        echo "Enabling default serviceaccount to use the pull secret"
+        kubectl patch -n ${CLUSTER_NAMESPACE} serviceaccount/default -p '{"imagePullSecrets":[{"name":"'"${IMAGE_PULL_SECRET_NAME}"'"}]}'
+        echo "default serviceAccount:"
+        kubectl get serviceAccount default -o yaml
+        echo -e "Namespace ${CLUSTER_NAMESPACE} authorizing with private image registry using patched default serviceAccount"
+      else
+        echo -e "Namespace ${CLUSTER_NAMESPACE} authorizing with private image registry using Helm chart imagePullSecret"
+      fi
+
+      echo "=========================================================="
+      echo "CONFIGURING TILLER enabled (Helm server-side component)"
+      helm init --upgrade
+      kubectl rollout status -w deployment/tiller-deploy --namespace=kube-system
+      helm version
+
+      echo "=========================================================="
+      echo -e "CHECKING HELM releases in this namespace: ${CLUSTER_NAMESPACE}"
+      helm list --namespace ${CLUSTER_NAMESPACE}
+  - name: Deploy Helm chart
+    type: deployer
+    target:
+      region_id: ${PROD_REGION_ID}
+      api_key: ${API_KEY}
+      kubernetes_cluster: ${PROD_CLUSTER_NAME}
+    script: |
+      #!/bin/bash
+      # uncomment to debug the script
+      #set -x
+      # copy the script below into your app code repo (e.g. ./scripts/deploy_helm.sh) and 'source' it from your pipeline job
+      #    source ./scripts/deploy_helm.sh
+      # alternatively, you can source it from online script:
+      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/deploy_helm.sh")
+      # ------------------
+      # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/deploy_helm.sh
+      # Input env variables (can be received via a pipeline environment properties.file.
+      echo "CHART_NAME=${CHART_NAME}"
+      echo "IMAGE_NAME=${IMAGE_NAME}"
+      echo "BUILD_NUMBER=${BUILD_NUMBER}"
+      echo "REGISTRY_URL=${REGISTRY_URL}"
+      echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
+
+      #View build properties
+      # cat build.properties
+      # also run 'env' command to find all available env variables
+      # or learn more about the available environment variables at:
+      # https://console.bluemix.net/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
+
+      # Input env variables from pipeline job
+      echo "PIPELINE_KUBERNETES_CLUSTER_NAME=${PIPELINE_KUBERNETES_CLUSTER_NAME}"
+      echo "CLUSTER_NAMESPACE=${CLUSTER_NAMESPACE}"
+
+      echo "=========================================================="
+      echo "DEFINE RELEASE by prefixing image (app) name with namespace if not 'default' as Helm needs unique release names across namespaces"
+      if [[ "${CLUSTER_NAMESPACE}" != "default" ]]; then
+        RELEASE_NAME="${CLUSTER_NAMESPACE}-${IMAGE_NAME}"
+      else
+        RELEASE_NAME=${IMAGE_NAME}
+      fi
+      echo -e "Release name: ${RELEASE_NAME}"
+
+      echo "=========================================================="
+      echo "DEPLOYING HELM chart"
+      IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
+      IMAGE_PULL_SECRET_NAME="ibmcloud-toolchain-${PIPELINE_TOOLCHAIN_ID}-${REGISTRY_URL}"
+
+      # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicit--namespace argument".
+      echo -e "Dry run into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
+      helm upgrade --install --debug --dry-run ${RELEASE_NAME} ./chart/${CHART_NAME} --set image.repository=${IMAGE_REPOSITORY},image.tag=${BUILD_NUMBER},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
+
+      echo -e "Deploying into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
+      helm upgrade  --install ${RELEASE_NAME} ./chart/${CHART_NAME} --set image.repository=${IMAGE_REPOSITORY},image.tag=${BUILD_NUMBER},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
+
+      echo "=========================================================="
+      echo -e "CHECKING deployment status of release ${RELEASE_NAME} with image tag: ${BUILD_NUMBER}"
+      echo ""
+      for ITERATION in {1..30}
+      do
+        DATA=$( kubectl get pods --namespace ${CLUSTER_NAMESPACE} -a -l release=${RELEASE_NAME} -o json )
+        NOT_READY=$( echo $DATA | jq '.items[].status.containerStatuses[] | select(.image=="'"${IMAGE_REPOSITORY}:${BUILD_NUMBER}"'") | select(.ready==false) ' )
+        if [[ -z "$NOT_READY" ]]; then
+          echo -e "All pods are ready:"
+          echo $DATA | jq '.items[].status.containerStatuses[] | select(.image=="'"${IMAGE_REPOSITORY}:${BUILD_NUMBER}"'") | select(.ready==true) '
+          break # deployment succeeded
+        fi
+        REASON=$(echo $DATA | jq '.items[].status.containerStatuses[] | select(.image=="'"${IMAGE_REPOSITORY}:${BUILD_NUMBER}"'") | .state.waiting.reason')
+        echo -e "${ITERATION} : Deployment still pending..."
+        echo -e "NOT_READY:${NOT_READY}"
+        echo -e "REASON: ${REASON}"
+        if [[ ${REASON} == *ErrImagePull* ]] || [[ ${REASON} == *ImagePullBackOff* ]]; then
+          echo "Detected ErrImagePull or ImagePullBackOff failure. "
+          echo "Please check proper authenticating to from cluster to image registry (e.g. image pull secret)"
+          break; # no need to wait longer, error is fatal
+        elif [[ ${REASON} == *CrashLoopBackOff* ]]; then
+          echo "Detected CrashLoopBackOff failure. "
+          echo "Application is unable to start, check the application startup logs"
+          break; # no need to wait longer, error is fatal
+        fi
+        sleep 5
+      done
+
+      if [[ ! -z "$NOT_READY" ]]; then
+        echo ""
+        echo "=========================================================="
+        echo "DEPLOYMENT FAILED"
+        echo "Deployed Services:"
+        kubectl describe services ${RELEASE_NAME}-${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
+        echo ""
+        echo "Deployed Pods:"
+        kubectl describe pods --selector app=${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
+        echo ""
+        echo "Application Logs"
+        kubectl logs --selector app=${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
+        echo "=========================================================="
+        PREVIOUS_RELEASE=$( helm history ${RELEASE_NAME} | grep SUPERSEDED | sort -r -n | awk '{print $1}' | head -n 1 )
+        echo -e "Could rollback to previous release: ${PREVIOUS_RELEASE} using command:"
+        echo -e "helm rollback ${RELEASE_NAME} ${PREVIOUS_RELEASE}"
+        # helm rollback ${RELEASE_NAME} ${PREVIOUS_RELEASE}
+        # echo -e "History for release:${RELEASE_NAME}"
+        # helm history ${RELEASE_NAME}
+        # echo "Deployed Services:"
+        # kubectl describe services ${RELEASE_NAME}-${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
+        # echo ""
+        # echo "Deployed Pods:"
+        # kubectl describe pods --selector app=${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
+        exit 1
+      fi
+
+      echo ""
+      echo "=========================================================="
+      echo "DEPLOYMENT SUCCEEDED"
+      echo ""
+      echo -e "Status for release:${RELEASE_NAME}"
+      helm status ${RELEASE_NAME}
+
+      echo ""
+      echo -e "History for release:${RELEASE_NAME}"
+      helm history ${RELEASE_NAME}
+
+      # echo ""
+      # echo "Deployed Services:"
+      # kubectl describe services ${RELEASE_NAME}-${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
+      # echo ""
+      # echo "Deployed Pods:"
+      # kubectl describe pods --selector app=${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
+
+      echo "=========================================================="
+      IP_ADDR=$(bx cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | head -n 1 | awk '{ print $2 }')
+      PORT=$(kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${RELEASE_NAME} | sed 's/.*:\([0-9]*\).*/\1/g')
+      echo -e "View the application at: http://${IP_ADDR}:${PORT}"
