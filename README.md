@@ -313,7 +313,7 @@ If you have an instance of IBM Cloud Private running, you can follow the steps t
 5. [Add your ICP's address to your hosts file](#5-add-your-icps-address-to-your-hosts-file)
 6. [Login to docker](#6-login-to-docker)
 7. [Configure kubectl](#7-configure-kubectl)
-8. [Deploy](#9-initialize-helm)
+8. [Deploy](#8-deploy)
 
 ### 1. Create a persistent volume
 This demo heavily depends on mongo as a session & data store.
