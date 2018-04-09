@@ -57,4 +57,4 @@ stop-cmd : "npm stop"
 # The relative path to the helm chart used for Kubernetes deployment
 chart-path: "chart/innovate-bank"
 deploy-target: "container"
-deploy-image-target: "registry.au-syd.bluemix.net/amalamine/innovate-bank"
+deploy-image-target: "registry.eu-de.bluemix.net/amalamine/innovate-bank"
