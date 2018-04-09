@@ -73,9 +73,7 @@ You have multiple options to setup your own instance:
 
 You can deploy this application using a [toolchain](https://www.ibm.com/cloud/garage/toolchains/) by clicking on the Deploy button below. Note that you should have a cluster ready before you start. To deploy a new one, find _Containers in Kubernetes Clusters_ under the [IBM Cloud catalog](bluemix.net/catalog) and click create. Allow it some time to deploy.
 
-![Deploy to IBM Cloud](https://console.bluemix.net/devops/setup/deploy/?repository=https://github.com/amalamine/innovate-digital-bank)
-
-<!-- [![Deploy to IBM Cloud](https://metrics-tracker.mybluemix.net/stats/5fd641e32af04e4adb16f26c46de3587/button.svg)](https://console.bluemix.net/devops/setup/deploy/?repository=https://github.com/amalamine/innovate-digital-bank) -->
+[![Deploy to IBM Cloud](https://bluemix.net/deploy/button.png)](https://console.bluemix.net/devops/setup/deploy/?repository=https://github.com/amalamine/innovate-digital-bank)
 
 # Run Locally
 
