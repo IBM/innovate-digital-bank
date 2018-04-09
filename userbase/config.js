@@ -18,7 +18,7 @@ module.exports = {
       transactions: 30140,
       bills: 30160,
       support: 30180,
-      userbase: 4100
+      userbase: 30050
     }
   }
 };
