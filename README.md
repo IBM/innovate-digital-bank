@@ -63,10 +63,10 @@ If you want a quick walkthrough of the end result, a video is available [here](h
 
 # Setup
 You have multiple options to setup your own instance:
-* [One-click deployment to IBM Cloud with toolchain](#deploy-to-ibm-cloud)
-* [Running it locally](#run-locally)
-* [Manual multi-stage deployment to IBM Cloud](#deploy-to-ibm-cloud-the-hard-way)
-* [Manual multi-stage deployment to IBM Cloud Private](#deploy-to-ibm-cloud-private)
+* [Deploy to IBM with one-click (automated via toolchain)](#deploy-to-ibm-cloud)
+* [Run it locally](#run-locally)
+* [Deploy to IBM Cloud the hard way (manual, multi-stage)](#deploy-to-ibm-cloud-the-hard-way)
+* [Deploy to IBM Cloud Private](#deploy-to-ibm-cloud-private)
 
 # Deploy to IBM Cloud
 > NOTE: This is an automated setup & deployment to your own kubernetes cluster hosted on IBM Cloud; it packages all 7 microservice as one docker image, one deployment, and one multi-port service. To get a better grasp of the concept, you should follow the steps to configure your cluster and deploy each microservice independently.
@@ -676,7 +676,7 @@ This data is collected from the Kubernetes Job in the sample application's yaml 
 
 ## Disabling Deployment Tracking
 
-Please delete the Metric Kubernetes Job portion from the [portal deployment Yaml file](/chart/innovate-bank/templates/deployment.yaml).
+Please delete the [Metric Kubernetes Job file](/chart/innovate-bank/templates/metricjob.yaml).
 
 # License
 [Apache 2.0](LICENSE)
