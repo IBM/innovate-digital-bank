@@ -7,7 +7,6 @@ const request = require('request');
 const ip = require('ip');
 
 const config = require(`${__dirname}/config`)[process.env.NODE_ENV];
-console.log(config.ports)
 var app = express();
 
 app.use(bodyParser.json());
@@ -19,7 +18,9 @@ app.all('*', function (req, res, next) {
 });
 
 let basePath = 'http://localhost';
-if (process.env.NODE_ENV!='development') basePath = `http://${ip.address()}`;
+if (process.env.NODE_ENV!='development') basePath = process.env.BASE_PATH;
+
+console.log('Base Path: ', basePath)
 
 require('./populate.js')(request, basePath, config.ports, dateFormat);
 
