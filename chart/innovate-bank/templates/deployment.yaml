@@ -36,25 +36,3 @@ spec:
         env:
           - name: PORT
             value : "{{ .Values.service.servicePort }}"
----
-apiVersion: batch/v1
-kind: Job
-metadata: {name: innovate-digital-bank-metrics}
-spec:
-  template:
-    metadata: {name: innovate-digital-bank-metrics}
-    spec:
-      containers:
-        - env:
-            - {name: config, value: '{"event_id": "web",
-                "repository_id": "https://github.com/amalamine/innovate-digital-bank",
-                "target_services": ["Compose for MongoDB",
-                "Conversation"], "target_runtimes":
-                ["Kubernetes Cluster"], "event_organizer":
-                "dev-journeys"}'}
-            - {name: language, value: nodejs}
-          image: journeycode/kubernetes:latest
-          name: innovate-digital-bank-metrics
-          resources:
-            limits: {cpu: 100m}
-      restartPolicy: Never
