@@ -9,6 +9,10 @@ const mongostore = require('connect-mongo')(session);
 const request = require('request');
 
 const config = require(`${__dirname}/config`)[process.env.NODE_ENV];
+const mongoUrl = `${process.env.MONGO_URL_HEAD}${process.env.WORKER_NODE_PUBLIC_IP}${process.env.MONGO_URL_TAIL}`
+
+console.log(mongoUrl)
+
 var app = express();
 
 app.use(express.static(`${__dirname}/public`));
@@ -17,7 +21,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    store: new mongostore({url: process.env.MONGO_URL}),
+    store: new mongostore({url: mongoUrl}),
     resave: true,
     saveUninitialized: true,
     cookie: {
@@ -38,7 +42,7 @@ require('./routes/support')(app, request, config.ports);
 
 var port = 3100;
 
-mongoose.connect(process.env.MONGO_URL, function (ignore, connection) {
+mongoose.connect(mongoUrl, function (ignore, connection) {
     connection.onOpen();
     app.listen(port, function () {
         console.log('Innovate portal running on port: %d', port);
