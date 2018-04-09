@@ -45,7 +45,7 @@
           "pattern": "\\S"
         },
         "worker-node-public-ip": {
-             "description": "Public IP of worker node.",
+             "description": "The public IP of your cluster's master/worker node. Retrieve it via the console, under the Workder Nodes tab in the overview of your cluster",
              "type": "string",
              "pattern": "\\S"
         },
