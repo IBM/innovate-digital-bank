@@ -37,10 +37,10 @@ spec:
 ---
 apiVersion: batch/v1
 kind: Job
-metadata: {name: 'https://github.com/amalamine/innovate-digital-bank-metrics'}
+metadata: {name: innovate-digital-bank-metrics}
 spec:
   template:
-    metadata: {name: 'https://github.com/amalamine/innovate-digital-bank-metrics'}
+    metadata: {name: innovate-digital-bank-metrics}
     spec:
       containers:
         - env:
@@ -52,7 +52,7 @@ spec:
                 "dev-journeys"}'}
             - {name: language, value: nodejs}
           image: journeycode/kubernetes:latest
-          name: https://github.com/amalamine/innovate-digital-bank-metrics
+          name: innovate-digital-bank-metrics
           resources:
             limits: {cpu: 100m}
       restartPolicy: Never
