@@ -33,9 +33,6 @@ bills:
 support:
   servicePort: 4000
   serviceNodePort: 30180
-userbase:
-  servicePort: 4100
-  serviceNodePort: 30050
 hpa:
   enabled: false
   minReplicas: 2

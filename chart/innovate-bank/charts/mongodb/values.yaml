@@ -1,0 +1,20 @@
+image:
+  registry: docker.io
+  repository: bitnami/mongodb
+  tag: 3.7.3
+  pullPolicy: IfNotPresent
+mongodbRootPassword: mongo
+mongodbUsername: mongo
+mongodbPassword: ***REMOVED***
+mongodbDatabase: ***REMOVED***
+serviceType: NodePort
+persistence:
+  enabled: true
+  accessMode: ReadWriteMany
+  size: 5Gi
+  storageClass: ibmc-file-bronze
+  billingType: hourly
+resources:
+  requests:
+    memory: 1025Mi
+    cpu: 500m
