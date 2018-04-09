@@ -1,0 +1,14 @@
+---
+#The format for creating a link with a URL and text is [link text](link url) with no spaces or characters between the two sets of brackets- []()
+template.name: "Develop a Kubernetes app with Helm"
+template.description: "With this toolchain, you can develop a Docker application and its Helm chart together in source control and have it built and deployed automatically to a Kubernetes cluster. The toolchain performs sanity checks prior to building or deploying and ensures privacy by using a private container registry and namespaces for the container registry and the Kubernetes cluster. This toolchain is also leveraging [Vulnerability Advisor](https://www.ibm.com/blogs/bluemix/2016/06/docker-container-security-with-vulnerability-advisor/), to ensure only secure images get deployed.\n\nBy default, the toolchain uses a sample Node.js \"Hello World\" app, but you can link to your own Git repository instead as long as it has a Dockerfile and a Helm chart.\n\n You can manage your IBM Cloud Container clusters in the [console](https://console.ng.bluemix.net/docs/containers/cs_cluster.html#cs_cluster).\n\n This toolchain uses tools that are part of the Continuous Delivery service. If an instance of that service isn't already in your organization, when you click **Create**, it is automatically added at no cost to you. For more information and terms, see the [IBM Cloud catalog](/catalog/services/continuous-delivery/).\n\nTo get started, click **Create**.\n\nFor step-by-step instructions, follow the [tutorial](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm)."
+template.gettingStarted: " **Your toolchain is ready!**\n**Quick start:** Commit a change to the Git repo to trigger a new Docker image build, which will be scanned for vulnerabilites and deployed with Helm to your Kubernetes cluster. For step-by-step instructions, see the [tutorial](https://www.ibm.com/cloud/garage/tutorials/tc-simple-kube-helm?task=2) for this toolchain."
+deploy.title: "Innovate Deploy Stage"
+deploy.description: "Innovate simple toolchain"
+deploy.longDescription: "The Delivery Pipeline automates continuous build, test and deploy of the Docker application."
+deploy.appDescription: "The name of your app"
+deploy.appName: "App name"
+region: "Cluster region"
+organization: "Organization"
+space: "Space"
+prodStage: "Production environment"

@@ -1,0 +1,178 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "messages": {
+       "$i18n": "locales.yml"
+    },
+     "title": {
+      "$ref": "#/messages/deploy.title"
+    },
+    "description": {
+      "$ref": "#/messages/deploy.description"
+    },
+    "longDescription": {
+      "$ref": "#/messages/deploy.longDescription"
+    },
+    "type": "object",
+    "properties": {
+       "api-key": {
+            "description": "The IBM Cloud API key is used to access the IBM Container Service API and interact with the cluster. You can obtain your API key with 'bx iam api-key-create' or via the console at https://console.ng.bluemix.net/iam/#/apikeys by clicking **Create API key** (Each API key only can be viewed once).",
+            "type": "string",
+            "pattern": "\\S"
+        },
+       "registry-region": {
+          "description": "The IBM Cloud region for image registry",
+          "type": "string",
+          "disabled": false
+        },
+       "registry-namespace": {
+          "description": "The namespace in the container image registry. You can set it up with {bx cr namespace-add]. Learn more at https://console.bluemix.net/docs/services/Registry/index.html .",
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_]{3,29}$"
+        },
+        "prod-region": {
+            "description": "The IBM Cloud region for prod deployment",
+            "type": "string",
+            "disabled": false
+        },
+       "prod-cluster-name": {
+            "description": "The name of prod cluster. Retrieve it with [bx cs clusters] or via the console at https://console.ng.bluemix.net/containers-kubernetes/home/clusters .",
+            "type": "string",
+            "pattern": "\\S"
+        },
+        "prod-cluster-namespace": {
+          "description": "Prod namespace",
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "worker-node-public-ip": {
+             "description": "The public IP of your worker node. Retrieve it from the overview of your cluster, under the Worker Nodes tab.",
+             "type": "string",
+             "pattern": "\\S"
+        },
+       "app-name": {
+            "description": {
+              "$ref": "#/messages/deploy.appDescription"
+            },
+            "type": "string",
+            "pattern": "\\S"
+        }
+    },
+    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "worker-node-public-ip"],
+    "form": [
+       {
+          "type": "validator",
+          "url": "/devops/setup/bm-helper/custom_helper.html"
+       },{
+          "type": "text",
+          "readonly": false,
+          "title": {
+            "$ref": "#/messages/deploy.appName"
+          },
+          "key": "app-name"
+        },{
+            "type": "password",
+            "readonly": false,
+            "title": "IBM Cloud API key",
+            "key": "api-key"
+          },
+        {
+          "type": "table",
+          "columnCount": 3,
+            "widths": ["50%", "3%", "47%"],
+            "items": [
+                {
+                  "type": "label",
+                  "title": "Container registry region"
+                },{
+                  "type": "label",
+                  "title": ""
+                },{
+                  "type": "label",
+                  "title": "Container registry namespace"
+                },{
+                  "type": "select",
+                  "title": "Container image registry region",
+                  "key": "registry-region"
+                },{
+                  "type": "label",
+                  "title": ""
+                },{
+                  "type": "select",
+                  "readonly": false,
+                  "title": "Container image registry namespace",
+                  "key": "registry-namespace"
+                }
+            ]
+        },{
+            "type": "table",
+            "columnCount": 5,
+            "widths": ["32%","2%","32%", "2%", "32%"],
+            "items": [
+                {
+                  "type": "label",
+                  "title": {
+                    "$ref": "#/messages/region"
+                  }
+                },{
+                  "type": "label",
+                  "title": ""
+                },
+                {
+                  "type": "label",
+                  "title": "Cluster name"
+                },{
+                  "type": "label",
+                  "title": ""
+                },
+                {
+                  "type": "label",
+                  "title": "Cluster namespace"
+                },{
+                  "type": "select",
+                  "key": "prod-region"
+                },{
+                  "type": "label",
+                  "title": ""
+                },
+                {
+                  "type": "select",
+                  "key": "prod-cluster-name",
+                  "readonly": false
+                },{
+                  "type": "label",
+                  "title": ""
+                },
+                {
+                  "type": "text",
+                  "key": "prod-cluster-namespace",
+                  "readonly": false
+                },
+                {
+                   "type": "text",
+                   "readonly": false,
+                   "key": "worker-node-public-ip"
+                 }
+            ]
+        },{
+          "type": "table",
+          "columnCount": 1,
+            "widths": ["100%"],
+            "items": [
+                {
+                  "type": "label",
+                  "title": "Retrieve the Kubernetes cluster name with the CLI command 'bx cs clusters' or via the [console](https://console.bluemix.net/containers-kubernetes/home/clusters)."
+                }
+            ]
+        },{
+          "type": "table",
+          "columnCount": 1,
+            "widths": ["100%"],
+            "items": [
+               {
+                  "type": "label",
+                  "title": "If the cluster namespace doesn't exist already, it will be automatically created and configured."
+                }
+            ]
+        }
+    ]
+}

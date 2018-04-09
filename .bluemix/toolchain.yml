@@ -1,0 +1,62 @@
+version: '2'
+messages:
+  $i18n: locales.yml
+template:
+  name:
+    $ref: "#/messages/template.name"
+  description:
+    $ref: "#/messages/template.description"
+  header: '![](toolchain.svg?localize)'
+  icon: secure-lock-helm.svg
+  required:
+    - build
+    - repo
+  info:
+    git url: >-
+      [https://github.com/open-toolchain/simple-helm-toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
+    git branch: >-
+      [master](https://github.com/open-toolchain/simple-helm-toolchain/tree/master)
+toolchain:
+  name: 'innovate-toolchain-{{timestamp}}'
+  template:
+    getting_started:
+      $ref: "#/messages/template.gettingStarted"
+services:
+  repo:
+    service_id: hostedgit
+    parameters:
+      repo_name: 'innovate-bank-{{timestamp}}'
+      repo_url: 'https://github.com/amalamine/innovate-digital-bank'
+      type: clone
+      has_issues: true
+      enable_traceability: true
+  build:
+    service_id: pipeline
+    parameters:
+      services:
+        - repo
+      name: 'innovate-bank-{{timestamp}}'
+      ui-pipeline: true
+      configuration:
+        content:
+          $text: pipeline.yml
+        env:
+          GIT_REPO: repo
+          CF_APP_NAME: '{{form.pipeline.parameters.app-name}}'
+          REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
+          REGISTRY_NAMESPACE: '{{form.pipeline.parameters.registry-namespace}}'
+          API_KEY: '{{form.pipeline.parameters.api-key}}'
+          PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
+          PROD_CLUSTER_NAME: '{{form.pipeline.parameters.prod-cluster-name}}'
+          PROD_CLUSTER_NAMESPACE: '{{form.pipeline.parameters.prod-cluster-namespace}}'
+          WORKER_NODE_PUBLIC_IP: '{{form.pipeline.parameters.worker-node-public-ip}}'
+        execute: true
+  webide:
+    service_id: orion
+form:
+  pipeline:
+    parameters:
+      app-name: '{{services.repo.parameters.repo_name}}'
+      prod-cluster-namespace: prod
+    schema:
+      $ref: deploy.json
