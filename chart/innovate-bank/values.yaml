@@ -3,8 +3,9 @@
 replicaCount: 1
 revisionHistoryLimit: 3
 image:
-  repository: registry.au-syd.bluemix.net/amalamine/innovate-bank
+  repository: innovate-bank
   tag: v1.0.0
+  pullSecret: regsecret
   pullPolicy: Always
   resources:
     requests:
@@ -33,6 +34,19 @@ bills:
 support:
   servicePort: 4000
   serviceNodePort: 30180
+ingress:
+  enabled: false
+  # Used to create an Ingress record.
+  hosts:
+    - chart-example.local
+  annotations:
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  tls:
+    # Secrets must be manually created in the namespace.
+    # - secretName: chart-example-tls
+    #   hosts:
+    #     - chart-example.local
 hpa:
   enabled: false
   minReplicas: 2
