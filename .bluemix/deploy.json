@@ -146,16 +146,23 @@
                   "type": "text",
                   "key": "prod-cluster-namespace",
                   "readonly": false
-                },
-                {
-                  "type": "label",
-                  "title": "Worker Node Public IP"
-                },
-                {
-                   "type": "text",
-                   "readonly": false,
-                   "key": "worker-node-public-ip"
-                 }
+                }
+            ]
+        },
+        {
+          "type": "table",
+          "columnCount": 1,
+            "widths": ["100%"],
+            "items": [
+              {
+                "type": "label",
+                "title": "Worker Node Public IP"
+              },
+              {
+                 "type": "text",
+                 "readonly": false,
+                 "key": "worker-node-public-ip"
+               }
             ]
         },{
           "type": "table",
