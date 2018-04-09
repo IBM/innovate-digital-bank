@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/amalamine/innovate-digital-bank.svg?branch=master)](https://travis-ci.org/amalamine/innovate-digital-bank)
+![IBM Cloud Deployments](https://metrics-tracker.mybluemix.net/stats/5fd641e32af04e4adb16f26c46de3587/badge.svg)
 
 # Building a Digital Bank with Node.js, Express, MongoDB, & Kubernetes
 
@@ -61,14 +62,16 @@ When thinking of business capabilities, our imaginary bank will need the followi
 If you want a quick walkthrough of the end result, a video is available [here](https://ibm.box.com/s/fgpqiacn9ewaorgp8l97bnrk760s8rx3)
 
 # Setup
-Being a cloud-native app, you have multiple options to setup your own instance:
+You have multiple options to setup your own instance:
 * [One-click deployment to IBM Cloud with toolchain](#deploy-to-ibm-cloud)
-* [Run it locally](#run-locally)
+* [Running it locally](#run-locally)
 * [Manual multi-stage deployment to IBM Cloud](#deploy-to-ibm-cloud-the-hard-way)
 * [Manual multi-stage deployment to IBM Cloud Private](#deploy-to-ibm-cloud-private)
 
 # Deploy to IBM Cloud
 > NOTE: This is an automated setup & deployment to your own kubernetes cluster hosted on IBM Cloud; it packages all 7 microservice as one docker image, one deployment, and one multi-port service. To get a better grasp of the concept, you should follow the steps to configure your cluster and deploy each microservice independently as 7 containers, deployments, and services.
+
+[![Deploy to IBM Cloud](https://metrics-tracker.mybluemix.net/stats/5fd641e32af04e4adb16f26c46de3587/button.svg)](https://bluemix.net/deploy?repository=https://github.com/amalamine/innovate-digital-bank)
 
 # Run Locally
 
@@ -431,7 +434,7 @@ $ bx dev deploy
 
 ## Microservices
 
-### Portal [3000:30060]
+### Portal [3100:30200]
 
 Loads the UI and takes care of user sessions. Communicates with all other microservices.
 
@@ -656,9 +659,22 @@ Method: GET
 
 Handles communication with Watson Assistant on IBM Cloud to enable a dummy support chat feature.
 
-### Userbase [3600:30140]
+### Userbase [4100:30050]
 
 Simulates a fake userbase for the app. Periodically loops through all user accounts and adds randomized bills and transactions for them.
+
+# Privacy Notice
+
+Sample Kubernetes Yaml file that includes this package may be configured to track deployments to [IBM Cloud](https://www.bluemix.net/) and other Kubernetes platforms. The following information is sent to a [Deployment Tracker](https://github.com/IBM/metrics-collector-service) service on each deployment:
+
+* Kubernetes Cluster Provider
+* Kubernetes Cluster ID (Only from IBM Cloud's cluster)
+
+This data is collected from the Kubernetes Job in the sample application's yaml file. This data is used by IBM to track metrics around deployments of sample applications to IBM Cloud to measure the usefulness of our examples so that we can continuously improve the content we offer to you. Only deployments of sample applications that include code to ping the Deployment Tracker service will be tracked.
+
+## Disabling Deployment Tracking
+
+Please delete the Metric Kubernetes Job portion from the [portal deployment Yaml file](/chart/innovate-bank/templates/deployment.yaml).
 
 # License
 [Apache 2.0](LICENSE)
