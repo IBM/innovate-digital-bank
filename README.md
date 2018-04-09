@@ -69,9 +69,11 @@ You have multiple options to setup your own instance:
 * [Manual multi-stage deployment to IBM Cloud Private](#deploy-to-ibm-cloud-private)
 
 # Deploy to IBM Cloud
-> NOTE: This is an automated setup & deployment to your own kubernetes cluster hosted on IBM Cloud; it packages all 7 microservice as one docker image, one deployment, and one multi-port service. To get a better grasp of the concept, you should follow the steps to configure your cluster and deploy each microservice independently as 7 containers, deployments, and services.
+> NOTE: This is an automated setup & deployment to your own kubernetes cluster hosted on IBM Cloud; it packages all 7 microservice as one docker image, one deployment, and one multi-port service. To get a better grasp of the concept, you should follow the steps to configure your cluster and deploy each microservice independently.
 
-[![Deploy to IBM Cloud](https://metrics-tracker.mybluemix.net/stats/5fd641e32af04e4adb16f26c46de3587/button.svg)](https://bluemix.net/deploy?repository=https://github.com/amalamine/innovate-digital-bank)
+You can deploy this application using a [toolchain](https://www.ibm.com/cloud/garage/toolchains/) by clicking on the Deploy button below. Note that you should have a cluster ready before you start. To deploy a new one, find _Containers in Kubernetes Clusters_ under the [IBM Cloud catalog](bluemix.net/catalog) and click create. Allow it some time to deploy.
+
+[![Deploy to IBM Cloud](https://metrics-tracker.mybluemix.net/stats/5fd641e32af04e4adb16f26c46de3587/button.svg)](https://console.bluemix.net/devops/setup/deploy/?repository=https://github.com/amalamine/innovate-digital-bank)
 
 # Run Locally
 
