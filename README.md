@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/amalamine/innovate-digital-bank.svg?branch=master)](https://travis-ci.org/amalamine/innovate-digital-bank)
-![IBM Cloud Deployments](https://metrics-tracker.mybluemix.net/stats/5fd641e32af04e4adb16f26c46de3587/badge.svg)
+<!-- ![IBM Cloud Deployments](https://metrics-tracker.mybluemix.net/stats/5fd641e32af04e4adb16f26c46de3587/badge.svg) -->
 
 # Building a Digital Bank with Node.js, Express, MongoDB, & Kubernetes
 
