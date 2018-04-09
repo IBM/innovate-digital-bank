@@ -150,21 +150,11 @@
             ]
         },
         {
-          "type": "table",
-          "columnCount": 1,
-            "widths": ["100%"],
-            "items": [
-              {
-                "type": "label",
-                "title": "Worker Node Public IP"
-              },
-              {
-                 "type": "text",
-                 "readonly": false,
-                 "key": "worker-node-public-ip"
-               }
-            ]
-        },{
+            "type": "text",
+            "readonly": false,
+            "title": "Worker Node Public IP",
+            "key": "worker-node-public-ip"
+          },{
           "type": "table",
           "columnCount": 1,
             "widths": ["100%"],
