@@ -41,6 +41,7 @@ services:
         content:
           $text: pipeline.yml
         env:
+          TOOLCHAIN_FLAG: active
           GIT_REPO: repo
           CF_APP_NAME: '{{form.pipeline.parameters.app-name}}'
           REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'

@@ -9,9 +9,11 @@ const mongostore = require('connect-mongo')(session);
 const request = require('request');
 
 const config = require(`${__dirname}/config`)[process.env.NODE_ENV];
-const mongoUrl = `${process.env.MONGO_URL_HEAD}${process.env.WORKER_NODE_PUBLIC_IP}${process.env.MONGO_URL_TAIL}`
 
-console.log(mongoUrl)
+let mongoUrl = process.env.NODE_ENV
+if (process.env.TOOLCHAIN_FLAG==="active") mongoUrl = `mongodb://${process.env.MONGO_USERNAME}:${MONGO_PASSWORD}@${process.env.CLUSTER_NAMESPACE}-innovate-bank-mongodb.${process.env.CLUSTER_NAMESPACE}.svc.cluster.local/${process.env.MONGO_PORT}`
+
+console.log('MONGO URL: ', mongoUrl)
 
 var app = express();
 
