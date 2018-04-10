@@ -17,6 +17,8 @@ spec:
       labels:
         app: "{{  .Chart.Name }}-selector"
     spec:
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecret }}
       containers:
       - name: "{{  .Chart.Name  }}"
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -34,3 +36,5 @@ spec:
         env:
           - name: PORT
             value : "{{ .Values.service.servicePort }}"
+          - name: SESSION_SECRET
+            value : "{{ .Values.service.SESSION_SECRET }}"

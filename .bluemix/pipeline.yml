@@ -4,7 +4,7 @@ stages:
   inputs:
   - type: git
     branch: master
-    service: ${GIT_REPO}    
+    service: ${GIT_REPO}
   triggers:
   - type: commit
   jobs:
@@ -25,15 +25,18 @@ stages:
       # copy the script below into your app code repo (e.g. ./scripts/check_prebuild.sh) and 'source' it from your pipeline job
       #    source ./scripts/check_prebuild.sh
       # alternatively, you can source it from online script:
-      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_prebuild.sh")      
-      # ------------------ 
+      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_prebuild.sh")
+      # ------------------
       # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_prebuild.sh
+      export TOOLCHAIN_FLAG=active
       echo "Build environment variables:"
       echo "REGISTRY_URL=${REGISTRY_URL}"
+      echo "TOOLCHAIN_FLAG=${TOOLCHAIN_FLAG}"
       echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
       echo "IMAGE_NAME=${IMAGE_NAME}"
       echo "BUILD_NUMBER=${BUILD_NUMBER}"
       echo "ARCHIVE_DIR=${ARCHIVE_DIR}"
+      echo "WORKER_NODE_PUBLIC_IP=${WORKER_NODE_PUBLIC_IP}"
       # also run 'env' command to find all available env variables
       # or learn more about the available environment variables at:
       # https://console.bluemix.net/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
@@ -41,7 +44,7 @@ stages:
       echo "=========================================================="
       echo "CHECKING DOCKERFILE"
       echo "Checking Dockerfile at the repository root"
-      if [ -f Dockerfile ]; then 
+      if [ -f Dockerfile ]; then
         echo "Dockerfile found"
       else
           echo "Dockerfile not found"
@@ -81,7 +84,7 @@ stages:
           echo "Registry namespace ${REGISTRY_NAMESPACE} not found, creating it."
           bx cr namespace-add ${REGISTRY_NAMESPACE}
           echo "Registry namespace ${REGISTRY_NAMESPACE} created."
-      else 
+      else
           echo "Registry namespace ${REGISTRY_NAMESPACE} found."
       fi
   - name: Build Docker image
@@ -104,6 +107,8 @@ stages:
       # ------------------
       # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/build_image.sh
       echo "Build environment variables:"
+      export TOOLCHAIN_FLAG=active
+      echo "TOOLCHAIN_FLAG=${TOOLCHAIN_FLAG}"
       echo "REGISTRY_URL=${REGISTRY_URL}"
       echo "REGISTRY_NAMESPACE=${REGISTRY_NAMESPACE}"
       echo "IMAGE_NAME=${IMAGE_NAME}"
@@ -126,8 +131,8 @@ stages:
       set +x
       bx cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}
 
-      # When 'bx' commands are in the pipeline job config directly, the image URL will automatically be passed 
-      # along with the build result as env variable PIPELINE_IMAGE_URL to any subsequent job consuming this build result. 
+      # When 'bx' commands are in the pipeline job config directly, the image URL will automatically be passed
+      # along with the build result as env variable PIPELINE_IMAGE_URL to any subsequent job consuming this build result.
       # When the job is sourc'ing an external shell script, or to pass a different image URL than the one inferred by the pipeline,
       # please uncomment and modify the environment variable the following line.
       export PIPELINE_IMAGE_URL="$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER"
@@ -244,7 +249,7 @@ stages:
     type: file
   - name: CLUSTER_NAMESPACE
     value: ${PROD_CLUSTER_NAMESPACE}
-    type: text     
+    type: text
   jobs:
   - name: Pre-deploy check
     type: deployer
@@ -320,7 +325,7 @@ stages:
         echo "      containers:"
         echo "        - name: {{ .Chart.Name }}"
         echo "          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        echo "    ..."          
+        echo "    ..."
         echo -e "[./chart/${CHART_NAME}/values.yaml]"
         echo "or check out this chart example: https://github.com/open-toolchain/hello-helm/tree/master/chart/hello"
         echo "or refer to: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret"
@@ -479,4 +484,5 @@ stages:
       echo "=========================================================="
       IP_ADDR=$(bx cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | head -n 1 | awk '{ print $2 }')
       PORT=$(kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${RELEASE_NAME} | sed 's/.*:\([0-9]*\).*/\1/g')
+      export TOOLCHAIN_FLAG=active
       echo -e "View the application at: http://${IP_ADDR}:${PORT}"
