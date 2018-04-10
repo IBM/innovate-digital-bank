@@ -12,11 +12,11 @@ persistence:
   enabled: true
   accessMode: ReadWriteMany
   size: 5Gi
-  claimSize: 2Gi
+  claimSize: 1Gi
   storageClass: ibmc-file-bronze
   billingType: hourly
   path: /innovate
 resources:
   requests:
-    memory: 1025Mi
-    cpu: 500m
+    memory: 512Mi
+    cpu: 200m

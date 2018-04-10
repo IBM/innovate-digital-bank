@@ -9,7 +9,7 @@ image:
   pullPolicy: Always
   resources:
     requests:
-      cpu: 500m
+      cpu: 300m
       memory: 512Mi
 livenessProbe:
   initialDelaySeconds: 3000
