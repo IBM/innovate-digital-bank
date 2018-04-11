@@ -37,12 +37,12 @@ spec:
           - name: MONGO_URL
             valueFrom:
               configMapKeyRef:
-                name: env-config
+                name: "{{  .Chart.Name }}-configmap"
                 key: mongoUrl
           - name: BASE_PATH
             valueFrom:
               configMapKeyRef:
-                name: env-config
+                name: "{{  .Chart.Name }}-configmap"
                 key: basePath
           - name: PORT
             value : "{{ .Values.service.servicePort }}"
