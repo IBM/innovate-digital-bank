@@ -7,3 +7,5 @@ metadata:
 data:
   mongoUrl: "{{ .Values.config.mongoUrl }}"
   basePath: "{{ .Values.config.basePath }}"
+  sessionSecret: "{{ .Values.config.sessionSecret }}"
+  nodeEnv: "{{ .Values.config.nodeEnv }}"
