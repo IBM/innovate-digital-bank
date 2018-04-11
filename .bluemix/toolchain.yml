@@ -41,7 +41,6 @@ services:
         content:
           $text: pipeline.yml
         env:
-          TOOLCHAIN_FLAG: active
           GIT_REPO: repo
           CF_APP_NAME: '{{form.pipeline.parameters.app-name}}'
           REGISTRY_REGION_ID: '{{form.pipeline.parameters.registry-region}}'
@@ -50,7 +49,6 @@ services:
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
           PROD_CLUSTER_NAME: '{{form.pipeline.parameters.prod-cluster-name}}'
           PROD_CLUSTER_NAMESPACE: '{{form.pipeline.parameters.prod-cluster-namespace}}'
-          WORKER_NODE_PUBLIC_IP: '{{form.pipeline.parameters.worker-node-public-ip}}'
         execute: true
   webide:
     service_id: orion

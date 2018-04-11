@@ -397,7 +397,10 @@ stages:
       echo -e "Release name: ${RELEASE_NAME}"
 
       echo "CREATING CONFIG MAP"
-      kubectl create configmap env-config --from-literal=mongoUrl=mongodb://mongo:mongo1234@${IP_ADDR}:30443/admin --from-literal=basePath=${IP_ADDR}
+      echo "kubectl --namespace=${CLUSTER_NAMESPACE} create configmap env-config --dry-run -o yaml --from-literal=mongoUrl=mongodb://mongo:mongo1234@${IP_ADDR}:30443/admin --from-literal=basePath=${IP_ADDR} env | kubectl apply -f -"
+      IP_ADDR=$(bx cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | awk '{ print $2 }')
+      kubectl config set-context $(kubectl config current-context) --namespace=${CLUSTER_NAMESPACE}
+      kubectl create configmap env-config --dry-run -o yaml --from-literal=mongoUrl=mongodb://mongo:mongo1234@${IP_ADDR}:30443/admin --from-literal=basePath=${IP_ADDR} env | kubectl apply -f -
 
       echo "=========================================================="
       echo "DEPLOYING HELM chart"

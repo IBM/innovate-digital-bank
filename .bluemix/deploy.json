@@ -44,11 +44,6 @@
           "type": "string",
           "pattern": "\\S"
         },
-        "worker-node-public-ip": {
-             "description": "The public IP of your cluster's master/worker node. Retrieve it via the console, under the Workder Nodes tab in the overview of your cluster",
-             "type": "string",
-             "pattern": "\\S"
-        },
        "app-name": {
             "description": {
               "$ref": "#/messages/deploy.appDescription"
@@ -57,7 +52,7 @@
             "pattern": "\\S"
         }
     },
-    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace", "worker-node-public-ip"],
+    "required": ["app-name", "api-key", "registry-region", "registry-namespace", "prod-region", "prod-cluster-name", "prod-cluster-namespace"],
     "form": [
        {
           "type": "validator",
@@ -148,21 +143,11 @@
                   "readonly": false
                 }
             ]
-        },
-        {
-            "type": "text",
-            "readonly": false,
-            "title": "Worker Node Public IP",
-            "key": "worker-node-public-ip"
-          },{
+        },{
           "type": "table",
           "columnCount": 1,
             "widths": ["100%"],
             "items": [
-                {
-                  "type": "label",
-                  "title": "Retrieve the Public IP of your worker node via the console, under the Workder Nodes tab in the overview of your cluster."
-                },
                 {
                   "type": "label",
                   "title": "Retrieve the Kubernetes cluster name with the CLI command 'bx cs clusters' or via the [console](https://console.bluemix.net/containers-kubernetes/home/clusters)."
