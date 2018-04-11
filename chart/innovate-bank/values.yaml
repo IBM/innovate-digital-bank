@@ -64,4 +64,7 @@ env:
   MONGO_PASSWORD: ***REMOVED***
   MONGO_PORT: 27017
   MONGO_DB: ***REMOVED***
+config:
+  mongoUrl: placeholder
+  basePath: placeholder 
 services:
