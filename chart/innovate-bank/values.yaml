@@ -64,4 +64,7 @@ env:
   MONGO_PASSWORD: mongo1234
   MONGO_PORT: 27017
   MONGO_DB: admin
+config:
+  mongoUrl: placeholder
+  basePath: placeholder 
 services:

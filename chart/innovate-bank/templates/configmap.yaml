@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  mongoUrl: "{{ .Values.config.mongoUrl }}"
+  basePath: "{{ .Values.config.basePath }}"
+kind: ConfigMap
+metadata:
+  name: env-config
