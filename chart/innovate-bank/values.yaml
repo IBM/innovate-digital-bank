@@ -66,5 +66,5 @@ env:
   MONGO_DB: admin
 config:
   mongoUrl: placeholder
-  basePath: placeholder 
+  basePath: placeholder
 services:
