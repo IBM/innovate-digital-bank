@@ -34,6 +34,16 @@ spec:
             cpu: "{{ .Values.image.resources.requests.cpu }}"
             memory: "{{ .Values.image.resources.requests.memory }}"
         env:
+          - name: MONGO_URL
+            valueFrom:
+              configMapKeyRef:
+                name: env-config
+                key: mongoUrl
+          - name: BASE_PATH
+            valueFrom:
+              configMapKeyRef:
+                name: env-config
+                key: basePath
           - name: PORT
             value : "{{ .Values.service.servicePort }}"
           - name: SESSION_SECRET
