@@ -47,4 +47,12 @@ spec:
           - name: PORT
             value : "{{ .Values.service.servicePort }}"
           - name: SESSION_SECRET
-            value : "{{ .Values.service.SESSION_SECRET }}"
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: sessionSecret
+          - name: NODE_ENV
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: nodeEnv

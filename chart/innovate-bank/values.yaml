@@ -56,15 +56,9 @@ hpa:
       targetAverageUtilization: 80
     memory:
       targetAverageUtilization: 80
-env:
-  NODE_ENV: production
-  TOOLCHAIN_FLAG: active
-  SESSION_SECRET: "***REMOVED***"
-  MONGO_USERNAME: mongo
-  MONGO_PASSWORD: ***REMOVED***
-  MONGO_PORT: 27017
-  MONGO_DB: ***REMOVED***
 config:
   mongoUrl: placeholder
   basePath: placeholder
+  sessionSecret: "***REMOVED***"
+  nodeEnv: production
 services:
