@@ -396,6 +396,9 @@ stages:
       fi
       echo -e "Release name: ${RELEASE_NAME}"
 
+      echo "CREATING CONFIG MAP"
+      kubectl create configmap env-config --from-literal=mongoUrl=mongodb://mongo:***REMOVED***@${IP_ADDR}:30443/***REMOVED*** --from-literal=basePath=${IP_ADDR}
+
       echo "=========================================================="
       echo "DEPLOYING HELM chart"
       IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
@@ -483,6 +486,7 @@ stages:
 
       echo "=========================================================="
       IP_ADDR=$(bx cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | head -n 1 | awk '{ print $2 }')
-      PORT=$(kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${RELEASE_NAME} | sed 's/.*:\([0-9]*\).*/\1/g')
-      export TOOLCHAIN_FLAG=active
+      PORT=30200
+      export MONGO_URL=mongodb://mongo:***REMOVED***@${IP_ADDR}:30443/***REMOVED***
+      echo "Mongo connection string: ${MONGO_URL}"
       echo -e "View the application at: http://${IP_ADDR}:${PORT}"
