@@ -434,7 +434,7 @@ $ bx dev deploy
 
 # Docs
 
-Documentation of all the backend endpoints is available [here](#DOCS.md)
+Documentation of all the backend endpoints is available [here](/DOCS.md)
 
 # Privacy Notice
 
