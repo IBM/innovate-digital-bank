@@ -75,7 +75,7 @@ You can deploy this application using a [toolchain](https://www.ibm.com/cloud/ga
 
 [![Deploy to IBM Cloud](https://metrics-tracker.mybluemix.net/stats/e665458a71cfb4801ac21609f5323e9d/button.svg)](https://bluemix.net/deploy?repository=https://github.com/IBM/innovate-digital-bank)
 
-### Analyze the results
+## Analyze the results
 
 From your IBM Cloud Dashboard, find your cluster, and click on the Kubernetes dashboard button
 
@@ -84,30 +84,30 @@ From your IBM Cloud Dashboard, find your cluster, and click on the Kubernetes da
 Once your kubernetes dashboard has launched, switch to the correct namespace and observe the resources deployed to your cluster. You should have the following provisioned:
 
 #### Persistent Volumes:
-* innovate-bank-mongodb: a hostPath volume which mounts a directory from the host node’s filesystem into our pod, in which we can store all the data our digital bank requires to operate.
+* *innovate-bank-mongodb:* a hostPath volume which mounts a directory from the host node’s filesystem into our pod, in which we can store all the data our digital bank requires to operate.
 _[Read more about Persistent Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)_
 
 #### Persistent Volume Claims:
-* innovate-bank-mongodb: requests persistent storage for our pods. Kubernetes uses the claim to look up its bound persistent volume. The volume is then exposed to the pod.
+* *innovate-bank-mongodb:* requests persistent storage for our pods. Kubernetes uses the claim to look up its bound persistent volume. The volume is then exposed to the pod.
 _[Read more about Persistent Volume Claims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)_
 
 #### ConfigMaps:
-* innovate-bank: allows us to decouple configuration artifacts from image content to keep containerized applications portable. We use it to store data our app will need to run, like MongoDB's connection string, and backend endpoint paths.
+* *innovate-bank:* allows us to decouple configuration artifacts from image content to keep containerized applications portable. We use it to store data our app will need to run, like MongoDB's connection string, and backend endpoint paths.
 _[Read more about ConfigMaps](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)_
 
 #### Deployments:
-* innovate-bank: describes the desired state of our app, creates and manages pods, used to take care of self-healing, restarts, updates, and rollbacks.
-* innovate-bank-mongodb: describes the desired state of the MongoDB instance running in our cluster.
+* *innovate-bank:* describes the desired state of our app, creates and manages pods, used to take care of self-healing, restarts, updates, and rollbacks.
+* *innovate-bank-mongodb:* describes the desired state of the MongoDB instance running in our cluster.
 _[Read more about Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)_
 
 #### Pods:
-* innovate-bank: created by our app's deployment, pulls the app's docker image from your private container registry on IBM Cloud, and starts all microservices. It's bound to environment variables read from our ConfigMap, some set dynamically before deployment.
-* innovate-bank-mongodb: created by MondoDB's deployment, pulls an official MongoDB image from a public repository, makes use of a persistent volume on your cluster.
+* *innovate-bank:* created by our app's deployment, pulls the app's docker image from your private container registry on IBM Cloud, and starts all microservices. It's bound to environment variables read from our ConfigMap, some set dynamically before deployment.
+* *innovate-bank-mongodb:* created by MondoDB's deployment, pulls an official MongoDB image from a public repository, makes use of a persistent volume on your cluster.
 _[Read more about Pods](https://kubernetes.io/docs/concepts/workloads/pods/pod/)_
 
 #### Services:
-* innovate-bank: exposes the app's deployment through multiple ports, one for each microservice.
-* innovate-bank-mongodb: exposes MongoDB's deployment through a set port, to be consumed be all microservices.
+* *innovate-bank:* exposes the app's deployment through multiple ports, one for each microservice.
+* *innovate-bank-mongodb:* exposes MongoDB's deployment through a set port, to be consumed be all microservices.
 _[Read more about Services](https://kubernetes.io/docs/concepts/services-networking/service/)_
 
 # Run Locally
