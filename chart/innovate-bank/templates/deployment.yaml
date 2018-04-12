@@ -56,3 +56,93 @@ spec:
               configMapKeyRef:
                 name: "{{  .Chart.Name }}-configmap"
                 key: nodeEnv
+          - name: SIGNUP_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: signupEndpoint
+          - name: LOGIN_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: loginEndpoint
+          - name: GET_USERS_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: getUsersEndpoint
+          - name: GET_BILLS_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: getBillsEndpoint
+          - name: UPSERT_BILL_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: upsertBillEndpoint
+          - name: DROP_BILLS_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: dropBillsEndpoint
+          - name: CREATE_ACCOUNT_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: createAccountEndpoint
+          - name: GET_ACCOUNTS_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: getAccountsEndpoint
+          - name: ACCOUNT_WITHDRAW_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: accountWithdrawEndpoint
+          - name: ACCOUNT_DEPOSIT_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: accountDepositEndpoint
+          - name: DROP_ACCOUNTS_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: dropAccountsEndpoint
+          - name: CREATE_TRANSACTION_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: createTransactionEndpoint
+          - name: GET_TRANSACTIONS_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: getTransactionsEndpoint
+          - name: DROP_TRANSACTIONS_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: dropTransactionsEndpoint
+          - name: CHAT_ENDPOINT
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: chartEndpoint
+          - name: WORKSPACE_ID
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: workspaceId
+          - name: CONVERSATION_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: conversationUsername
+          - name: CONVERSATION_PASSWORD
+            valueFrom:
+              configMapKeyRef:
+                name: "{{  .Chart.Name }}-configmap"
+                key: conversationPassword

@@ -61,4 +61,7 @@ config:
   basePath: placeholder
   sessionSecret: "5a4e0d2c6198976aaff66bc8"
   nodeEnv: production
+  workspaceId: placeholder
+  conversationUsername: placeholder
+  conversationPassword: placeholder
 services:
