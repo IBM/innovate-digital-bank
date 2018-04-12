@@ -10,8 +10,6 @@ const request = require('request');
 
 const config = require(`${__dirname}/config`)[process.env.NODE_ENV];
 
-console.log('MONGO URL: ', process.env.MONGO_URL)
-
 var app = express();
 
 app.use(express.static(`${__dirname}/public`));
@@ -40,6 +38,8 @@ require('./routes/transactions')(app, request, config.ports);
 require('./routes/support')(app, request, config.ports);
 
 var port = 3100;
+
+console.log(`Running on ${process.env.BASE_PATH}:${port}, connecting to ${process.env.MONGO_URL}`)
 
 mongoose.connect(process.env.MONGO_URL, function (ignore, connection) {
     connection.onOpen();
