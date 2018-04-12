@@ -36,7 +36,6 @@ stages:
       echo "IMAGE_NAME=${IMAGE_NAME}"
       echo "BUILD_NUMBER=${BUILD_NUMBER}"
       echo "ARCHIVE_DIR=${ARCHIVE_DIR}"
-      echo "WORKER_NODE_PUBLIC_IP=${WORKER_NODE_PUBLIC_IP}"
       # also run 'env' command to find all available env variables
       # or learn more about the available environment variables at:
       # https://console.bluemix.net/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
@@ -299,6 +298,19 @@ stages:
         echo -e "Namespace ${CLUSTER_NAMESPACE} created."
       fi
 
+      echo "=========================================================="
+
+      echo "Checking if conversation service exists"
+
+      echo "1" | echo "\n" | echo "1" | bx target --cf
+      export CONV_SERVICE_CHECK=$(bx service show innovate-conversation-service | grep "FAILED")
+      echo "Check: $CONV_SERVICE_CHECK"
+
+      if [ "$CONV_SERVICE_CHECK" == "FAILED" ]; then
+        echo "Conversation service does not exist, creating"
+        bx service create conversation free innovate-conversation-service
+      fi
+
       # Grant access to private image registry from namespace $CLUSTER_NAMESPACE
       # reference https://console.bluemix.net/docs/containers/cs_cluster.html#bx_registry_other
       echo "=========================================================="
@@ -398,7 +410,13 @@ stages:
 
       echo "=========================================================="
       echo "Binding conversation service to cluster"
-      bx cs cluster-service-bind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service
+
+      export CONV_BINDING_CHECK=$(bx cs cluster-service-bind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service | grep "FAILED" )
+      echo "Check: $CONV_BINDING_CHECK"
+
+      if [ "$CONV_BINDING_CHECK" != "FAILED" ]; then
+        bx cs cluster-service-bind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service
+      fi
 
       echo "=========================================================="
       echo "DEPLOYING HELM chart"
