@@ -27,5 +27,8 @@ spec:
   - name: support
     port: {{ .Values.support.servicePort }}
     nodePort: {{ .Values.support.serviceNodePort }}
+  - name: userbase
+    port: {{ .Values.userbase.servicePort }}
+    nodePort: {{ .Values.userbase.serviceNodePort }}
   selector:
     app: "{{  .Chart.Name }}-selector"

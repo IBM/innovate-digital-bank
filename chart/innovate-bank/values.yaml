@@ -34,6 +34,9 @@ bills:
 support:
   servicePort: 4000
   serviceNodePort: 30180
+userbase:
+  servicePort: 4100
+  serviceNodePort: 30050
 ingress:
   enabled: false
   # Used to create an Ingress record.
@@ -61,7 +64,4 @@ config:
   basePath: placeholder
   sessionSecret: "5a4e0d2c6198976aaff66bc8"
   nodeEnv: production
-  workspaceId: placeholder
-  conversationUsername: placeholder
-  conversationPassword: placeholder
 services:
