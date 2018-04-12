@@ -438,28 +438,22 @@ The support microservice connects to an instance of Watson Assistant on IBM Clou
 > NOTE: This is an optional step. You need it if you'd like to enable the support feature on the app.
 
 1. [Create an instance of Watson Assistant](#1-create-an-instance-of-watson-assistant)
-2. [Import the support workspace](#2-import-the-support-workspace)
-3. [Get your credentials](#3-get-your-credentials)
-4. [Configure your environment variables](#4-configure-your-environment-variables)
-5. [Deploy](#5-deploy)
+2. [Get your credentials](#2-get-your-credentials)
+3. [Configure your environment variables](#3-configure-your-environment-variables)
+4. [Deploy](#4-deploy)
 
 ### 1. Create an instance of Watson Assistant
 From the [IBM Cloud Catalog](bluemix.net), choose Watson Conversation, and click create.
 
-### 2. Import the support workspace
-Import the [support workspace](/support/conversation-workspace.json) into your newly created Watson Assistant instance
-
-![Watson Conversation](doc/source/images/7.png)
-
-### 3. Get your credentials
-Navigate to the deploy tab and copy your username, password, and workspace ID
+### 2. Get your credentials
+Navigate to the deploy tab and copy your username and password
 
 ![Watson Conversation](doc/source/images/8.png)
 
-### 4. Configure your environment variables
+### 3. Configure your environment variables
 From within the support folder, edit your .env to include your newly acquired credentials
 
-### 5. Deploy
+### 4. Deploy
 Redeploy the support microservice, the support feature should now be accessible through the portal.
 
 ```
