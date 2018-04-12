@@ -1,0 +1,4 @@
+declared-services:
+  innovate-conversation-service:
+    label: conversation
+    plan: free

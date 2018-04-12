@@ -131,18 +131,8 @@ spec:
               configMapKeyRef:
                 name: "{{  .Chart.Name }}-configmap"
                 key: chatEndpoint
-          - name: WORKSPACE_ID
+          - name: CONVERSATION_BINDING
             valueFrom:
-              configMapKeyRef:
-                name: "{{  .Chart.Name }}-configmap"
-                key: workspaceId
-          - name: CONVERSATION_USERNAME
-            valueFrom:
-              configMapKeyRef:
-                name: "{{  .Chart.Name }}-configmap"
-                key: conversationUsername
-          - name: CONVERSATION_PASSWORD
-            valueFrom:
-              configMapKeyRef:
-                name: "{{  .Chart.Name }}-configmap"
-                key: conversationPassword
+              secretKeyRef:
+                name: "binding-innovate-conversation-service"
+                key: binding

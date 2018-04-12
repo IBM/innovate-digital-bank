@@ -24,6 +24,3 @@ data:
   getTransactionsEndpoint: "/api/transactions/get"
   dropTransactionsEndpoint: "/api/transactions/drop"
   chatEndpoint: "/api/message"
-  workspaceId: "{{ .Values.config.workspaceId }}"
-  conversationUsername: "{{ .Values.config.conversationUsername }}"
-  conversationPassword: "{{ .Values.config.conversationPassword }}"
