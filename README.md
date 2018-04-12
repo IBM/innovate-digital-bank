@@ -77,7 +77,9 @@ You can deploy this application using a [toolchain](https://www.ibm.com/cloud/ga
 
 ## Analyze the results
 
-From your IBM Cloud Dashboard, find your cluster, and click on the Kubernetes dashboard button
+Once all jobs in the delivery pipeline are completed, you'll be able to access the portal on _port 30200_ of your cluster's _worker node public IP address_.
+
+To take a look at the resources now deployed to your Kubernetes cluster, nagivate to the IBM Cloud Dashboard, find your cluster, and click on the Kubernetes dashboard button
 
 ![cluster overview](doc/source/images/14.png)
 
