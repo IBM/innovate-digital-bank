@@ -130,7 +130,7 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: "{{  .Chart.Name }}-configmap"
-                key: chartEndpoint
+                key: chatEndpoint
           - name: WORKSPACE_ID
             valueFrom:
               configMapKeyRef:
