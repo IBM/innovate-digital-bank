@@ -63,7 +63,7 @@ If you want a quick walkthrough of the end result, a video is available [here](h
 
 # Setup
 You have multiple options to setup your own instance:
-* [Deploy to IBM with one-click (automated via toolchain)](#deploy-to-ibm-cloud)
+* [Deploy to IBM Cloud with one-click (automated via toolchain)](#deploy-to-ibm-cloud)
 * [Run it locally](#run-locally)
 * [Deploy to IBM Cloud the hard way (manual, multi-stage)](#deploy-to-ibm-cloud-the-hard-way)
 * [Deploy to IBM Cloud Private](#deploy-to-ibm-cloud-private)
