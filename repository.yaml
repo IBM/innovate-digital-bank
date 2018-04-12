@@ -1,4 +1,4 @@
-id: https://github.com/amalamine/innovate-digital-bank
+id: https://github.com/IBM/innovate-digital-bank
 runtimes:
   - Kubernetes Cluster
 services:

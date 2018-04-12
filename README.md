@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/amalamine/innovate-digital-bank.svg?branch=master)](https://travis-ci.org/amalamine/innovate-digital-bank)
+[![Build Status](https://travis-ci.org/IBM/innovate-digital-bank.svg?branch=master)](https://travis-ci.org/IBM/innovate-digital-bank)
 <!-- ![IBM Cloud Deployments](https://metrics-tracker.mybluemix.net/stats/5fd641e32af04e4adb16f26c46de3587/badge.svg) -->
 
 # Building a Digital Bank with Node.js, Express, MongoDB, & Kubernetes
@@ -73,7 +73,7 @@ You have multiple options to setup your own instance:
 
 You can deploy this application using a [toolchain](https://www.ibm.com/cloud/garage/toolchains/) by clicking on the Deploy button below. Note that you should have a cluster ready before you start. To deploy a new one, find _Containers in Kubernetes Clusters_ under the [IBM Cloud catalog](bluemix.net/catalog) and click create. Allow it some time to deploy.
 
-[![Deploy to IBM Cloud](https://bluemix.net/deploy/button.png)](https://console.bluemix.net/devops/setup/deploy/?repository=https://github.com/amalamine/innovate-digital-bank)
+[![Deploy to IBM Cloud](https://bluemix.net/deploy/button.png)](https://console.bluemix.net/devops/setup/deploy/?repository=https://github.com/IBM/innovate-digital-bank)
 
 # Run Locally
 
@@ -81,7 +81,7 @@ You can deploy this application using a [toolchain](https://www.ibm.com/cloud/ga
 Clone the `innovate-digital-bank` repository locally. In a terminal, run:
 
 ```
-$ git clone https://github.com/amalamine/innovate-digital-bank.git
+$ git clone https://github.com/IBM/innovate-digital-bank.git
 ```
 
 ### 2. Create an Instance of MongoDB
@@ -177,7 +177,7 @@ $ bx plugin install container-registry -r Bluemix
 Clone the `innovate-digital-bank` repository locally. In a terminal, run:
 
 ```
-$ git clone https://github.com/amalamine/innovate-digital-bank.git
+$ git clone https://github.com/IBM/innovate-digital-bank.git
 ```
 ### 3. Login to IBM Cloud
 Both through the [console](https://console.bluemix.net/) and your terminal

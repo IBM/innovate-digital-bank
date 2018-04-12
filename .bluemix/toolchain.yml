@@ -26,7 +26,7 @@ services:
     service_id: hostedgit
     parameters:
       repo_name: 'innovate-bank'
-      repo_url: 'https://github.com/amalamine/innovate-digital-bank'
+      repo_url: 'https://github.com/IBM/innovate-digital-bank'
       type: clone
       has_issues: true
       enable_traceability: true
