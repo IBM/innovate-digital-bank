@@ -487,4 +487,5 @@ This data is collected from the Kubernetes Job in the sample application's yaml 
 Please delete the [Metric Kubernetes Job file](/chart/innovate-bank/templates/metricjob.yaml).
 
 # License
+
 [Apache 2.0](LICENSE)
