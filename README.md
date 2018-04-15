@@ -108,7 +108,7 @@ _[Read more about Deployments](https://kubernetes.io/docs/concepts/workloads/con
 
 #### Pods:
 * *innovate-bank:* created by our app's deployment, pulls the app's docker image from your private container registry on IBM Cloud, and starts all microservices. It's bound to environment variables read from our ConfigMap, some set dynamically before deployment.
-* *innovate-bank-mongodb:* created by MondoDB's deployment, pulls an official MongoDB image from a public repository, makes use of a persistent volume on your cluster.
+* *innovate-bank-mongodb:* created by MongoDB's deployment, pulls an official MongoDB image from a public repository, makes use of a persistent volume on your cluster.
 
 _[Read more about Pods](https://kubernetes.io/docs/concepts/workloads/pods/pod/)_
 
