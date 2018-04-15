@@ -306,7 +306,7 @@ stages:
       export CONV_SERVICE_CHECK=$(bx service show innovate-conversation-service | grep "FAILED")
       echo "Check: $CONV_SERVICE_CHECK"
 
-      if [ "$CONV_SERVICE_CHECK" == "FAILED" ]; then
+      if [ ${CONV_SERVICE_CHECK} == "FAILED" ]; then
         echo "Conversation service does not exist, creating"
         bx service create conversation free innovate-conversation-service
       fi
@@ -410,14 +410,13 @@ stages:
 
       echo "=========================================================="
       echo "Binding conversation service to cluster"
-
-      export CONV_BINDING_CHECK=$(bx cs cluster-service-bind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service | grep "FAILED" )
+      export CONV_BINDING_CHECK=$(bx cs cluster-services ${PIPELINE_KUBERNETES_CLUSTER_NAME} --namespace ${CLUSTER_NAMESPACE} | grep "innovate-conversation-service")
       echo "Check: $CONV_BINDING_CHECK"
 
-      if [ "$CONV_BINDING_CHECK" == "FAILED" ]; then
-        bx cs cluster-service-unbind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service
-        bx cs cluster-service-bind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service
+      if [[ $CONV_BINDING_CHECK == *"innovate-conversation-service"* ]]; then
+        echo "Binding already exists, moving on"
       else
+        echo "Binding does not exist, binding"
         bx cs cluster-service-bind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service
       fi
 
