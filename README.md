@@ -114,7 +114,7 @@ _[Read more about Pods](https://kubernetes.io/docs/concepts/workloads/pods/pod/)
 
 #### Services:
 * *innovate-bank:* exposes the app's deployment through multiple ports, one for each microservice.
-* *innovate-bank-mongodb:* exposes MongoDB's deployment through a set port, to be consumed be all microservices.
+* *innovate-bank-mongodb:* exposes MongoDB's deployment through a specified port, to be consumed be all microservices.
 
 _[Read more about Services](https://kubernetes.io/docs/concepts/services-networking/service/)_
 
