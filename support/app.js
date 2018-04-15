@@ -18,6 +18,7 @@ app.all('/api/message', function (req, res, next) {
 
 let conversationUsername;
 let conversationPassword;
+let conversationUrl;
 
 if (process.env.CONVERSATION_BINDING) {
   console.log(process.env.CONVERSATION_BINDING);
@@ -25,21 +26,24 @@ if (process.env.CONVERSATION_BINDING) {
   if (typeof conversationBinding === "string") conversationBinding = JSON.parse(conversationBinding);
   conversationUsername = conversationBinding.username;
   conversationPassword = conversationBinding.password;
+  conversationUrl = conversationBinding.url;
 }
 else {
   conversationUsername = process.env.CONVERSATION_USERNAME;
   conversationPassword = process.env.CONVERSATION_PASSWORD;
+  conversationUrl = process.env.CONVERSATION_URL;
 }
 
 var conversation = new Conversation({
     version_date: Conversation.VERSION_DATE_2017_04_21,
     username: conversationUsername,
-    password: conversationPassword
+    password: conversationPassword,
+    url: conversationUrl
 });
 
 let workspaceID; // workspaceID will be set when the workspace is created or validated.
 const conversationSetup = new WatsonConversationSetup(conversation);
-const workspaceJson = JSON.parse(fs.readFileSync('conversation-workspace.json'));
+const workspaceJson = JSON.parse(fs.readFileSync('./conversation-workspace.json'));
 const conversationSetupParams = { default_name: 'innovate-support', workspace_json: workspaceJson };
 conversationSetup.setupConversationWorkspace(conversationSetupParams, (err, data) => {
   if (err) {
