@@ -19,4 +19,8 @@ install:
   - "npm -g install npm"
   - "./scripts/install_bx.sh"
 
+before-script:
+  - "sudo apt-get clean"
+  - "sudo apt-get install libc6=2.24-5ubuntu14.2 libc6-dev=2.24-5ubuntu14.2 libc6-i386=2.24-5ubuntu14.2 libc-dev-bin=2.24-5ubuntu14.2 libc-bin=2.24-5ubuntu14.2 libc-l10n-"
+
 script: "npm test"
