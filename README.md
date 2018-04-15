@@ -347,9 +347,11 @@ Finally, navigate to each microservice folder, and run the following command
 $ bx dev deploy
 ```
 
+Once done, you'll be able to access the portal on port _30200_ of your cluster's _public IP address_, which you can find under the overview of your cluster on IBM Cloud.
+
 # Deploy to IBM Cloud Private
 
-If you have an instance of IBM Cloud Private running, you can follow the steps to deploy the app. If you'd like to deploy your own instance of ICP, [you can follow this great writeup](https://github.com/IBM/deploy-ibm-cloud-private)
+If you have an instance of IBM Cloud Private running, you can follow the steps below to deploy the app. If you'd like to deploy your own instance of ICP, [you can follow this great writeup](https://github.com/IBM/deploy-ibm-cloud-private)
 
 1. [Create a persistent volume](#1-create-a-persistent-volume)
 2. [Create a persistent volume claim](#2-create-a-persistent-volume-claim)
@@ -362,12 +364,12 @@ If you have an instance of IBM Cloud Private running, you can follow the steps t
 
 ### 1. Create a persistent volume
 This demo heavily depends on mongo as a session & data store.
-Give it a name and a capacity, choose storage type _**Hostpath**_, and add a _**path parameter**_
+From ICP's menu, click on Storage > Create persistent volume. Give it a name and a capacity, choose storage type _**Hostpath**_, and add a _**path parameter**_
 
 ![Persistent Volume](doc/source/images/1.png)
 
 ### 2. Create a persistent volume claim
-Give it a name and a storage request value
+From ICP's menu, click on storage > create persistent volume claim. Give it a name and a storage request value
 
 ![Persistent Volume Claim](doc/source/images/2.jpg)
 
@@ -405,7 +407,7 @@ $ cp .env.example .env
 
 Finally, edit your .env folder and add your Mongodb connection string
 
-***Repeat those steps for all microservices. In addition to your mongo url, the portal microservice will need the address of your ICP.***
+***Repeat those steps for all microservices. In addition to your mongo url, you may the IP address of your ICP.***
 
 ### 5. Add your ICP's address to your hosts file
 Add an entry to your /etc/hosts file as follows
@@ -448,7 +450,7 @@ The support microservice connects to an instance of Watson Assistant on IBM Clou
 From the [IBM Cloud Catalog](bluemix.net), choose Watson Conversation, and click create.
 
 ### 2. Get your credentials
-Navigate to the deploy tab and copy your username and password
+Navigate to the credentials tab and copy your username and password
 
 ![Watson Conversation](doc/source/images/8.png)
 
