@@ -436,6 +436,8 @@ $ bx dev deploy
 
 _If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/doc/source/images/cli/reference/bluemix_cli/download_cli.html) first_
 
+Once the deployment is successfully completed, you can access the portal on port _30200_ of your _ICP's IP address_.
+
 # (Optional) Adding Support with Watson Assistant
 The support microservice connects to an instance of Watson Assistant on IBM Cloud to simulate a chat with a virtual support agent.
 
