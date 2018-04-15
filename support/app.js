@@ -43,7 +43,7 @@ var conversation = new Conversation({
 
 let workspaceID; // workspaceID will be set when the workspace is created or validated.
 const conversationSetup = new WatsonConversationSetup(conversation);
-const workspaceJson = JSON.parse(fs.readFileSync('./conversation-workspace.json'));
+const workspaceJson = JSON.parse(fs.readFileSync(`${__dirname}/conversation-workspace.json`));
 const conversationSetupParams = { default_name: 'innovate-support', workspace_json: workspaceJson };
 conversationSetup.setupConversationWorkspace(conversationSetupParams, (err, data) => {
   if (err) {
