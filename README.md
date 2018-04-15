@@ -181,6 +181,8 @@ Finally, navigate to each microservice folder, and start it. Make sure you run t
 $ npm start
 ```
 
+You can now visit localhost:3100 to access the portal
+
 # Deploy to IBM Cloud the Hard Way
 > NOTE: This guide requires a paid/upgraded account on IBM Cloud. You **cannot** complete the steps with a free or lite account
 
