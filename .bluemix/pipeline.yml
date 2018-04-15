@@ -414,7 +414,10 @@ stages:
       export CONV_BINDING_CHECK=$(bx cs cluster-service-bind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service | grep "FAILED" )
       echo "Check: $CONV_BINDING_CHECK"
 
-      if [ "$CONV_BINDING_CHECK" != "FAILED" ]; then
+      if [ "$CONV_BINDING_CHECK" == "FAILED" ]; then
+        bx cs cluster-service-unbind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service
+        bx cs cluster-service-bind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service
+      else
         bx cs cluster-service-bind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service
       fi
 
