@@ -14,8 +14,7 @@ addons:
       - debian-sid
     packages:
       - shellcheck
-      - ibc6=2.24-5ubuntu14.2
-
+      
 install:
   - "npm -g install npm"
   - "./scripts/install_bx.sh"
