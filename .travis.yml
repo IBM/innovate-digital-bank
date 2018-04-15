@@ -12,15 +12,14 @@ addons:
   apt:
     sources:
       - debian-sid
-    packages:
-      - shellcheck
-      
+
 install:
   - "npm -g install npm"
   - "./scripts/install_bx.sh"
 
 before-script:
-  - "sudo apt-get clean"
-  - "apt-get update"
+  - "sudo apt-get install cabal-install"
+  - "cabal update"
+  - "cabal install shellcheck"
 
 script: "npm test"
