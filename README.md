@@ -199,7 +199,7 @@ You can now visit localhost:3100 to access the portal
 
 ### 1. Get the tools
 You'll need each of the following pre-requisits:
-* [IBM Cloud Developer Tools CLI](https://console.bluemix.net/doc/source/images/cli/reference/bluemix_cli/get_started.html#getting-started)
+* [IBM Cloud Developer Tools CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html)
 
 * the [Kubernetes CLI](https://kubernetes.io/doc/source/images/user-guide/prereqs/)
 
