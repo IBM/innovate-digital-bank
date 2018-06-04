@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/IBM/innovate-digital-bank.svg?branch=master)](https://travis-ci.org/IBM/innovate-digital-bank)
-![IBM Cloud Deployments](https://metrics-tracker.mybluemix.net/stats/e665458a71cfb4801ac21609f5323e9d/badge.svg)
 
 # Building a Digital Bank with Node.js, Express, MongoDB, & Kubernetes
 
@@ -73,7 +72,7 @@ You have multiple options to setup your own instance:
 
 You can deploy this application using a [toolchain](https://www.ibm.com/cloud/garage/toolchains/) by clicking on the Deploy button below. Note that you should have a cluster ready before you start. To deploy a new one, find _Containers in Kubernetes Clusters_ under the [IBM Cloud catalog](bluemix.net/catalog) and click create. Allow it some time to deploy.
 
-[![Deploy to IBM Cloud](https://metrics-tracker.mybluemix.net/stats/e665458a71cfb4801ac21609f5323e9d/button.svg)](https://bluemix.net/deploy?repository=https://github.com/IBM/innovate-digital-bank)
+[![Deploy to IBM Cloud](https://console.bluemix.net/devops/setup/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/innovate-digital-bank)
 
 ## Analyze the results
 
@@ -478,19 +477,6 @@ $ bx dev deploy
 # Docs
 
 Documentation of all the backend endpoints is available [here](/DOCS.md)
-
-# Privacy Notice
-
-Sample Kubernetes Yaml file that includes this package may be configured to track deployments to [IBM Cloud](https://www.bluemix.net/) and other Kubernetes platforms. The following information is sent to a [Deployment Tracker](https://github.com/IBM/metrics-collector-service) service on each deployment:
-
-* Kubernetes Cluster Provider
-* Kubernetes Cluster ID (Only from IBM Cloud's cluster)
-
-This data is collected from the Kubernetes Job in the sample application's yaml file. This data is used by IBM to track metrics around deployments of sample applications to IBM Cloud to measure the usefulness of our examples so that we can continuously improve the content we offer to you. Only deployments of sample applications that include code to ping the Deployment Tracker service will be tracked.
-
-## Disabling Deployment Tracking
-
-Please delete the [Metric Kubernetes Job file](/chart/innovate-bank/templates/metricjob.yaml).
 
 # License
 
