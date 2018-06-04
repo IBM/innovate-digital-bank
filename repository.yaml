@@ -1,9 +1,0 @@
-id: https://github.com/IBM/innovate-digital-bank
-runtimes:
-  - Kubernetes Cluster
-services:
-  - Compose for MongoDB
-  - Conversation
-event_id: web
-event_organizer: dev-journeys
-language: nodejs
