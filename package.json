@@ -29,7 +29,6 @@
     "express": "^4.15.3",
     "express-session": "^1.15.6",
     "ip": "^1.1.5",
-    "metrics-tracker-client": "^0.2.3",
     "mongoose": "^5.0.0-rc1",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
