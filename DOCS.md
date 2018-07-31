@@ -158,6 +158,15 @@ Example input:
 }
 ```
 
+> Category has to be one of the following: 
+> - groceries
+> - eating_out
+> - transport
+> - bills
+> - expenses
+> - cash
+> - holidays
+
 ##### /api/transactions/get
 
 Description: Retrieves a user's transactions
@@ -202,6 +211,13 @@ Example input:
   date: String
 }
 ```
+
+
+> Category has to be one of the following: 
+> - utilities
+> - home_entertainment
+> - mobile_phone
+> - credit_card
 
 ##### /api/bills/get
 
