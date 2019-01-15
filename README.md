@@ -6,13 +6,13 @@ In this Code Pattern, we will build a dummy digital bank composed of a set of mi
 
 Development of [cloud native apps](https://www.cncf.io/blog/2017/05/15/developing-cloud-native-applications/) that are broken down into a set of [microservices](http://microservices.io/) has been praised and commended as best-practice in software development methodologies. Software stacks like [Kubernetes](https://kubernetes.io/), which enable cloud native computing, have therefore picked up quite a bit of popularity.
 
-It’s a little _(a lot)_ more fun, however, to try build a so-called cloud native app, than to talk about one.
+It’s a little _(a lot)_ more fun, however, to build a so-called cloud native app, than to talk about one.
 
 So here's our attempt:
 
 We’ll take a use-case that has a bit of real-world familiarity to it — A digital bank. Naturally inspired by [Monzo](http://monzo.com/). Let’s call it Innovate.
 
-[A live version deployed on a kubernetes cluster in IBM Cloud is available for you try here](http://ibm.biz/digibank).
+[A live version deployed on a Kubernetes cluster in IBM Cloud is available for you to try here](http://ibm.biz/digibank).
 To test it out, sign up for an account. A process runs periodically to dump randomized transactions and bills for user accounts, so give it a couple of minutes and refresh to see your populated profile.
 
 ![Screens](doc/source/images/screens-1.png)
@@ -32,7 +32,7 @@ When you've completed this Code Pattern, you will understand how to:
 
 When thinking of business capabilities, our imaginary bank will need the following set of microservices:
 
-1. *Portal:* Loads the UI and takes care of user sessions. Relies on all other microservices for core functionality.
+1. *Portal:* Loads the UI and takes care of user sessions and relies on all other microservices for core functionality.
 2. *Authentication:* Handles user profile creation, as well as login & logout.
 3. *Accounts:* Handles creation, management, and retrieval of a user’s banking accounts.
 4. *Transactions:* Handles creation and retrieval of transactions made against users' bank accounts.
@@ -68,7 +68,7 @@ You have multiple options to setup your own instance:
 * [Deploy to IBM Cloud Private](#deploy-to-ibm-cloud-private)
 
 # Deploy to IBM Cloud
-> NOTE: This is an automated setup & deployment to your own kubernetes cluster hosted on IBM Cloud; it packages all 7 microservice as one docker image, one deployment, and one multi-port service. To get a better grasp of the concept, you should follow the steps to configure your cluster and deploy each microservice independently.
+> NOTE: This is an automated setup & deployment to your own Kubernetes cluster hosted on IBM Cloud; it packages all 7 microservice as one docker image, one deployment, and one multi-port service. To get a better grasp of the concept, you should follow the steps to configure your cluster and deploy each microservice independently.
 
 You can deploy this application using a [toolchain](https://www.ibm.com/cloud/garage/toolchains/) by clicking on the Deploy button below. Note that you should have a cluster ready before you start. To deploy a new one, find _Containers in Kubernetes Clusters_ under the [IBM Cloud catalog](bluemix.net/catalog) and click create. Allow it some time to deploy.
 
@@ -156,10 +156,10 @@ $ cp .env.example .env
 
 Finally, edit your **.env** folder and add your Mongodb connection string
 
-***Repeat these steps for all microservices. In addition to your mongo url, most will need the public IP address of your kubernetes cluster, _You can find that under the overview of your cluster on IBM Cloud_.***
+***Repeat these steps for all microservices. In addition to your mongo URL, most will need the public IP address of your Kubernetes cluster, _You can find that under the overview of your cluster on IBM Cloud_.***
 
 ### 4. Configure your environment mode
-When running the app locally without kubernetes, the microservices do not run on the NodePorts specified in our helm chart, so we need to point our portal and userbase microservices to the correct ports.
+When running the app locally without Kubernetes, the microservices do not run on the NodePorts specified in our helm chart, so we need to point our portal and userbase microservices to the correct ports.
 
 If you're running on macOS or any linux-based system, run the following in a terminal from the git repo's directory
 
@@ -183,7 +183,7 @@ $ npm start
 You can now visit `localhost:3100` to access the portal
 
 # Deploy to IBM Cloud the Hard Way
-> NOTE: This guide requires a paid/upgraded account on IBM Cloud. You **cannot** complete the steps with a free or lite account
+> NOTE: This guide requires a paid/upgraded account on IBM Cloud. You **cannot** complete the steps with a free or lite account.
 
 1. [Get the tools](#1-get-the-tools)
 2. [Clone the repo](#2-clone-the-repo)
@@ -197,7 +197,7 @@ You can now visit `localhost:3100` to access the portal
 10. [Deploy](#10-deploy)
 
 ### 1. Get the tools
-You'll need each of the following pre-requisits:
+You'll need each of the following pre-requisites:
 * [IBM Cloud Developer Tools CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/get_started.html)
 
 * the [Kubernetes CLI](https://kubernetes.io/doc/source/images/user-guide/prereqs/)
@@ -321,7 +321,7 @@ $ cp .env.example .env
 
 Finally, edit your .env folder and add your Mongodb connection string
 
-***Repeat these steps for all microservices. In addition to your mongo url, most will need the public IP address of your kubernetes cluster, _You can find that under the overview of your cluster on IBM Cloud_.***
+***Repeat these steps for all microservices. In addition to your mongo URL, most will need the public IP address of your Kubernetes cluster, _You can find that under the overview of your cluster on IBM Cloud_.***
 
 ### 8. Configure kubectl
 
@@ -350,7 +350,7 @@ Once done, you'll be able to access the portal on port _30200_ of your cluster's
 
 # Deploy to IBM Cloud Private
 
-If you have an instance of IBM Cloud Private running, you can follow the steps below to deploy the app. If you'd like to deploy your own instance of ICP, [you can follow this great writeup](https://github.com/IBM/deploy-ibm-cloud-private)
+If you have an instance of IBM Cloud Private running, you can follow the steps below to deploy the app. If you'd like to deploy your own instance of ICP, [you can follow this great writeup](https://github.com/IBM/deploy-ibm-cloud-private).
 
 1. [Create a persistent volume](#1-create-a-persistent-volume)
 2. [Create a persistent volume claim](#2-create-a-persistent-volume-claim)
@@ -480,4 +480,6 @@ Documentation of all the backend endpoints is available [here](/DOCS.md)
 
 # License
 
-[Apache 2.0](LICENSE)
+This code pattern is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the Developer [Certificate of Origin, Version 1.1 (DCO)] (https://developercertificate.org/) and the [Apache Software License, Version 2] (http://www.apache.org/licenses/LICENSE-2.0.txt).
+
+ASL FAQ link: http://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN
