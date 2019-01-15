@@ -225,7 +225,7 @@ $ git clone https://github.com/IBM/innovate-digital-bank.git
 ```
 ### 3. Login to IBM Cloud
 Both through the [console](https://console.bluemix.net/) and your terminal
-> NOTE: If you need to specify the region you want to deploy in, you can do so by adding the `-a` flag followed by the region url.
+> NOTE: If you need to specify the region you want to deploy in, you can do so by adding the `-a` flag followed by the region URL.
 
 ```
 $ bx login
