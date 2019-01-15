@@ -58,7 +58,7 @@ When thinking of business capabilities, our imaginary bank will need the followi
 
 # Watch the Video
 
-If you want a quick walkthrough of the end result, a video is available [here](https://ibm.box.com/s/fgpqiacn9ewaorgp8l97bnrk760s8rx3)
+[![](https://img.youtube.com/vi/1F1EnnMrsZ8/0.jpg)](https://www.youtube.com/watch?v=1F1EnnMrsZ8)
 
 # Setup
 You have multiple options to setup your own instance:
