@@ -142,7 +142,7 @@ Each of the 7 microservices must have a _**.env**_ file that stores all credenti
 
 An example is already provided within each folder. From the directory of each microservice, copy the example file, rename it to _**.env**_, and fill it with the appropriate values.
 
-For example, from within the /innovate folder, navigate into the accounts folder
+For example, from within the **/innovate** folder, navigate into the accounts folder
 
 ```
 $ cd accounts
@@ -154,7 +154,7 @@ Next, copy and rename the _**.env.example**_ folder
 $ cp .env.example .env
 ```
 
-Finally, edit your .env folder and add your Mongodb connection string
+Finally, edit your **.env** folder and add your Mongodb connection string
 
 ***Repeat these steps for all microservices. In addition to your mongo URL, most will need the public IP address of your Kubernetes cluster, _You can find that under the overview of your cluster on IBM Cloud_.***
 
@@ -180,7 +180,7 @@ Finally, navigate to each microservice folder, and start it. Make sure you run t
 $ npm start
 ```
 
-You can now visit localhost:3100 to access the portal
+You can now visit `localhost:3100` to access the portal
 
 # Deploy to IBM Cloud the Hard Way
 > NOTE: This guide requires a paid/upgraded account on IBM Cloud. You **cannot** complete the steps with a free or lite account.
@@ -225,7 +225,7 @@ $ git clone https://github.com/IBM/innovate-digital-bank.git
 ```
 ### 3. Login to IBM Cloud
 Both through the [console](https://console.bluemix.net/) and your terminal
-> NOTE: If you need to specify the region you want to deploy in, you can do so by adding the -a flag followed by the region URL.
+> NOTE: If you need to specify the region you want to deploy in, you can do so by adding the `-a` flag followed by the region URL.
 
 ```
 $ bx login
@@ -257,7 +257,7 @@ Depending on the region you've created your cluster in, your url will be in the 
 registry.<REGION_ABBREVIATION>.bluemix.net/<YOUR_NAMESPACE>/<YOUR_IMAGE_NAME>
 ```
 
-For example, to deploy the accounts microservice to my docker image registry in the US-South region, my deploy_target will be:
+For example, to deploy the accounts microservice to my docker image registry in the US-South region, my **deploy_target** will be:
 
 ```
 registry.ng.bluemix.net/amalamine/innovate-accounts
@@ -277,7 +277,7 @@ $ bx cr namespace-add <NAME>
 
 From the directory of each microservice, replace the deploy target in ***cli-config.yml*** & in ***/chart/innovate-<MICROSERVICE_NAME>/values.yaml*** with the correct one
 
-For example, from within the /innovate folder, navigate into the accounts folder
+For example, from within the **/innovate** folder, navigate into the accounts folder
 
 ```
 $ cd accounts
@@ -307,7 +307,7 @@ Each of the 7 microservices must have a _**.env**_ file that stores all credenti
 
 An example is already provided within each folder. From the directory of each microservice, copy the example file, rename it to _**.env**_, and fill it with the appropriate values.
 
-For example, from within the /innovate folder, navigate into the accounts folder
+For example, from within the **/innovate** folder, navigate into the accounts folder
 
 ```
 $ cd accounts
@@ -392,7 +392,7 @@ Each of the 7 microservices must have a _**.env**_ file.
 
 An example is already provided within each folder. From the directory of each microservice, copy the example file, rename it to _**.env**_, and fill it with the appropriate values.
 
-For example, from within the /innovate folder, navigate into the accounts folder
+For example, from within the **/innovate** folder, navigate into the accounts folder
 
 ```
 $ cd accounts
@@ -404,7 +404,7 @@ Next, copy and rename the _**.env.example**_ folder
 $ cp .env.example .env
 ```
 
-Finally, edit your .env folder and add your Mongodb connection string
+Finally, edit your **.env** folder and add your Mongodb connection string
 
 ***Repeat those steps for all microservices. In addition to your mongo url, you may the IP address of your ICP.***
 
