@@ -166,6 +166,10 @@ in a terminal, run:
 ```
 $ ibmcloud plugin install container-registry -r Bluemix
 ```
+* ibmcloud dev plugin
+```
+ibmcloud plugin install dev -r Bluemix
+```
 ### 2. Clone the repo
 Clone the `innovate-digital-bank` repository locally. In a terminal, run:
 
@@ -369,19 +373,40 @@ Add an entry to your /etc/hosts file as follows
 ```
 
 ### 6. Login to docker
+For Mac users, if you are running ICP locally in vm you would also have to add the cluster info to the insecure registry. To do so go to docker > preference > daemon 
+enable experimental features and add cluster to insecure registries list.
+
+![Docker 1](doc/source/images/docker1.png) ![Docker 2](doc/source/images/docker2.png)
 
 ```
 $ docker login mycluster.icp:8500
 ```
 
-If you are using the vm version of ICP
 
 ### 7. Configure kubectl
-From your ICP's dashboard, copy the kubectl commands under admin > configure client
+From your ICP's dashboard, copy the kubectl commands under `admin` > `configure client`
 
 ![kubectl config](doc/source/images/5.png)
 
-### 8. Deploy
+### 8. Configure cloudctl
+`cloudctl` is IBM Cloud Private cli. 
+To find the CLI for your ICP version, navigate to `menu` > `Command Line Tools` > `Cloud Private CLI` and follow instruction to get `cloudctl` installed.
+![cloudctl config](doc/source/images/cloudctl1.png)
+![cloudctl config](doc/source/images/cloudctl2.png)
+
+Once you have `cloudctl` cli installed, log into **ICP**
+```
+cloudctl login -a https://mycluster.icp:8443 -u admin --skip-ssl-validation
+``` 
+The password for local vm ICP is _admin_
+
+### 9. Helm
+If you don't have helm already, [Install Here](https://docs.helm.sh/using_helm/#install-helm)
+
+```
+helm init
+```
+### 10. Deploy
 Finally, navigate to each microservice, and run the following command
 
 ```
@@ -390,7 +415,7 @@ $ ibmcloud dev deploy
 
 _If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/doc/source/images/cli/reference/bluemix_cli/download_cli.html) first_
 
-Once the deployment is successfully completed, you can access the portal on port _30200_ of your _ICP's IP address_.
+Once the deployment is successfully completed, you can access the portal on port _30060_ of your _ICP's IP address_.
 
 # (Optional) Adding Support with Watson Assistant
 The support microservice connects to an instance of Watson Assistant on IBM Cloud to simulate a chat with a virtual support agent.
@@ -419,6 +444,13 @@ Redeploy the support microservice, the support feature should now be accessible 
 ```
 $ ibmcloud dev deploy
 ```
+
+#Troubleshooting
+
+1. Trouble with IBM Clouc Cli? [Check Here](https://console.bluemix.net/docs/cli/ts_createapps.html#troubleshoot)
+2. IBM Cloud Private common errors and solutions can be found [here](https://www.ibm.com/support/knowledgecenter/en/SS8G7U_18.2.0/com.ibm.app.mgmt.doc/content/trouble_common_deployment_errors.htm)
+3. IBM Cloud Private on local vm not working? Check ICP version, Vagrant version and VirtualBox version carefully. Update them if necessary. If all else fails, `vagrant destroy` and `vagrant up` again to reset the cluster.
+ 
 
 # Learn more
 
