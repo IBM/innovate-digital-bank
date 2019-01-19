@@ -62,60 +62,9 @@ When thinking of business capabilities, our imaginary bank will need the followi
 
 # Setup
 You have multiple options to setup your own instance:
-* [Deploy to IBM Cloud with one-click (automated via toolchain)](#deploy-to-ibm-cloud)
 * [Run it locally](#run-locally)
 * [Deploy to IBM Cloud the hard way (manual, multi-stage)](#deploy-to-ibm-cloud-the-hard-way)
 * [Deploy to IBM Cloud Private](#deploy-to-ibm-cloud-private)
-
-# Deploy to IBM Cloud
-> NOTE: This is an automated setup & deployment to your own Kubernetes cluster hosted on IBM Cloud; it packages all 7 microservice as one docker image, one deployment, and one multi-port service. To get a better grasp of the concept, you should follow the steps to configure your cluster and deploy each microservice independently.
-
-You can deploy this application using a [toolchain](https://www.ibm.com/cloud/garage/toolchains/) by clicking on the Deploy button below. Note that you should have a cluster ready before you start. To deploy a new one, find _Containers in Kubernetes Clusters_ under the [IBM Cloud catalog](bluemix.net/catalog) and click create. Allow it some time to deploy.
-
-[![Deploy to IBM Cloud](https://console.bluemix.net/devops/setup/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/innovate-digital-bank)
-
-## Analyze the results
-
-Once all jobs in the delivery pipeline are completed, you'll be able to access the portal on _port 30200_ of your cluster's _worker node public IP address_.
-
-To take a look at the resources now deployed to your Kubernetes cluster, navigate to the IBM Cloud Dashboard, find your cluster, and click on the Kubernetes dashboard button
-
-![cluster overview](doc/source/images/14.png)
-
-Once your Kubernetes dashboard has launched, switch to the correct namespace and observe the resources deployed to your cluster. You should have the following provisioned:
-
-#### Persistent Volumes:
-* *innovate-bank-mongodb:* a hostPath volume which mounts a directory from the host node’s filesystem into our pod, in which we can store all the data our digital bank requires to operate.
-
-_[Read more about Persistent Volumes](https://kubernetes.io/docs/concepts/storage/volumes/)_
-
-#### Persistent Volume Claims:
-* *innovate-bank-mongodb:* requests persistent storage for our pods. Kubernetes uses the claim to look up its bound persistent volume. The volume is then exposed to the pod.
-
-_[Read more about Persistent Volume Claims](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)_
-
-#### ConfigMaps:
-* *innovate-bank:* allows us to decouple configuration artifacts from image content to keep containerized applications portable. We use it to store data our app will need to run, like MongoDB's connection string, and backend endpoint paths.
-
-_[Read more about ConfigMaps](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)_
-
-#### Deployments:
-* *innovate-bank:* describes the desired state of our app, creates and manages pods, used to take care of self-healing, restarts, updates, and rollbacks.
-* *innovate-bank-mongodb:* describes the desired state of the MongoDB instance running in our cluster.
-
-_[Read more about Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/)_
-
-#### Pods:
-* *innovate-bank:* created by our app's deployment, pulls the app's docker image from your private container registry on IBM Cloud, and starts all microservices. It's bound to environment variables read from our ConfigMap, some set dynamically before deployment.
-* *innovate-bank-mongodb:* created by MongoDB's deployment, pulls an official MongoDB image from a public repository, makes use of a persistent volume on your cluster.
-
-_[Read more about Pods](https://kubernetes.io/docs/concepts/workloads/pods/pod/)_
-
-#### Services:
-* *innovate-bank:* exposes the app's deployment through multiple ports, one for each microservice.
-* *innovate-bank-mongodb:* exposes MongoDB's deployment through a specified port, to be consumed be all microservices.
-
-_[Read more about Services](https://kubernetes.io/docs/concepts/services-networking/service/)_
 
 # Run Locally
 
@@ -207,7 +156,7 @@ You'll need each of the following pre-requisites:
 once you've downloaded the IBM Cloud Developer Tools CLI, in a terminal, run:
 
 ```
-$ bx plugin install container-service -r Bluemix
+$ ibmcloud plugin install container-service -r Bluemix
 ```
 
 * the container registry plugin
@@ -215,7 +164,7 @@ $ bx plugin install container-service -r Bluemix
 in a terminal, run:
 
 ```
-$ bx plugin install container-registry -r Bluemix
+$ ibmcloud plugin install container-registry -r Bluemix
 ```
 ### 2. Clone the repo
 Clone the `innovate-digital-bank` repository locally. In a terminal, run:
@@ -228,7 +177,7 @@ Both through the [console](https://console.bluemix.net/) and your terminal
 > NOTE: If you need to specify the region you want to deploy in, you can do so by adding the `-a` flag followed by the region URL.
 
 ```
-$ bx login
+$ ibmcloud login
 ```
 
 ### 4. Create a cluster
@@ -266,13 +215,13 @@ registry.ng.bluemix.net/amalamine/innovate-accounts
 If you need to get your namespace, run:
 
 ```
-$ bx cr namespace-list
+$ ibmcloud cr namespace-list
 ```
 
 You can also add a new namespace by running:
 
 ```
-$ bx cr namespace-add <NAME>
+$ ibmcloud cr namespace-add <NAME>
 ```
 
 From the directory of each microservice, replace the deploy target in ***cli-config.yml*** & in ***/chart/innovate-<MICROSERVICE_NAME>/values.yaml*** with the correct one
@@ -328,12 +277,13 @@ Finally, edit your .env folder and add your Mongodb connection string
 Run the following command:
 
 ```
-$ bx cs cluster-config <YOUR_CLUSTER_NAME>
+$ ibmcloud cs cluster-config <YOUR_CLUSTER_NAME>
 ```
 
 Then copy the output and paste it in your terminal
 
 ### 9. Initialize helm
+If you dont have helm installed [Install Here](https://docs.helm.sh/using_helm/#install-helm)
 
 ```
 $ helm init
@@ -343,10 +293,15 @@ $ helm init
 Finally, navigate to each microservice folder, and run the following command
 
 ```
-$ bx dev deploy
+$ ibmcloud dev deploy
 ```
 
-Once done, you'll be able to access the portal on port _30200_ of your cluster's _public IP address_, which you can find under the overview of your cluster on IBM Cloud.
+Once done, you'll be able to access the portal on port _30060_ of your cluster's _public IP address_, which you can find under the overview of your cluster on IBM Cloud.
+Or if you are logged in `ibmcloud` cli, you can find your public ip of your worker node by
+
+```
+$ ibmcloud cs workers <name-of-cluster>
+```
 
 # Deploy to IBM Cloud Private
 
@@ -365,19 +320,17 @@ If you have an instance of IBM Cloud Private running, you can follow the steps b
 This demo heavily depends on mongo as a session & data store.
 From ICP's menu, click on Storage > Create persistent volume. Give it a name and a capacity, choose storage type _**Hostpath**_, and add a _**path parameter**_
 
-![Persistent Volume](doc/source/images/1.png)
+[More details here](./creating-pv.md)
 
 ### 2. Create a persistent volume claim
 From ICP's menu, click on storage > create persistent volume claim. Give it a name and a storage request value
 
-![Persistent Volume Claim](doc/source/images/2.jpg)
+[More details here](./creating-pvc.md)
 
 ### 3. Create an instance of MongoDB
 From the catalog, choose MongoDb. Give it a **_name_**, specify the **_existing volume claim name_**, and give it a *_password_*
 
-![Mongo](doc/source/images/3.jpg)
-
-![Mongo](doc/source/images/4.jpg)
+[More details here](./mongo-db.md)
 
 ***Get your mongo connection string; Almost all your microservices need it; keep it safe!***
 
@@ -421,6 +374,8 @@ Add an entry to your /etc/hosts file as follows
 $ docker login mycluster.icp:8500
 ```
 
+If you are using the vm version of ICP
+
 ### 7. Configure kubectl
 From your ICP's dashboard, copy the kubectl commands under admin > configure client
 
@@ -430,7 +385,7 @@ From your ICP's dashboard, copy the kubectl commands under admin > configure cli
 Finally, navigate to each microservice, and run the following command
 
 ```
-$ bx dev deploy
+$ ibmcloud dev deploy
 ```
 
 _If you don't have the IBM Cloud Developer Tools CLI installed, get it [here](https://console.bluemix.net/doc/source/images/cli/reference/bluemix_cli/download_cli.html) first_
@@ -462,14 +417,14 @@ From within the support folder, edit your .env to include your newly acquired cr
 Redeploy the support microservice, the support feature should now be accessible through the portal.
 
 ```
-$ bx dev deploy
+$ ibmcloud dev deploy
 ```
 
 # Learn more
 
 * **Artificial Intelligence Code Patterns**: Enjoyed this Code Pattern? Check out our other [AI Code Patterns](https://developer.ibm.com/code/technologies/artificial-intelligence/).
 * **Data Analytics Code Patterns**: Enjoyed this Code Pattern? Check out our other [Data Analytics Code Patterns](https://developer.ibm.com/code/technologies/data-science/)
-* **AI and Data Code Pattern Playlist**: Bookmark our [playlist](https://www.youtube.com/playlist?list=PLzUbsvIyrNfknNewObx5N7uGZ5FKH0Fde) with all of our Code Pattern videos
+* **AI and Data Code Pattern Playlist**: Bookmark our [playlist](https://www.youtube.com/playlist?list=PLzUbsvIyrNfknNewOibmcloud5N7uGZ5FKH0Fde) with all of our Code Pattern videos
 * **With Watson**: Want to take your Watson app to the next level? Looking to utilize Watson Brand assets? [Join the With Watson program](https://www.ibm.com/watson/with-watson/) to leverage exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
 * **Data Science Experience**: Master the art of data science with IBM's [Data Science Experience](https://datascience.ibm.com/)
 * **Kubernetes on IBM Cloud**: Deliver your apps with the combined the power of [Kubernetes and Docker on IBM Cloud](https://www.ibm.com/cloud-computing/bluemix/containers)
