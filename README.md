@@ -373,7 +373,7 @@ Add an entry to your /etc/hosts file as follows
 ```
 
 ### 6. Login to docker
-For Mac users, if you are running ICP locally in vm you would also have to add the cluster info to the insecure registry. To do so go to docker > preference > daemon 
+For Mac users, if you are running ICP locally in VM you would also have to add the cluster info to the insecure registry. To do so go to docker > preference > daemon 
 enable experimental features and add cluster to insecure registries list.
 
 ![Docker 1](doc/source/images/docker1.png) ![Docker 2](doc/source/images/docker2.png)
@@ -398,7 +398,7 @@ Once you have `cloudctl` cli installed, log into **ICP**
 ```
 cloudctl login -a https://mycluster.icp:8443 -u admin --skip-ssl-validation
 ``` 
-The password for local vm ICP is _admin_
+The password for local VM ICP is _admin_
 
 ### 9. Helm
 If you don't have helm already, [Install Here](https://docs.helm.sh/using_helm/#install-helm)
@@ -449,7 +449,7 @@ $ ibmcloud dev deploy
 
 1. Trouble with IBM Cloud CLI? [Check Here](https://console.bluemix.net/docs/cli/ts_createapps.html#troubleshoot)
 2. IBM Cloud Private common errors and solutions can be found [here](https://www.ibm.com/support/knowledgecenter/en/SS8G7U_18.2.0/com.ibm.app.mgmt.doc/content/trouble_common_deployment_errors.htm)
-3. IBM Cloud Private on local vm not working? Check ICP version, Vagrant version and VirtualBox version carefully. Update them if necessary. If all else fails, `vagrant destroy` and `vagrant up` again to reset the cluster.
+3. IBM Cloud Private on local VM not working? Check ICP version, Vagrant version and VirtualBox version carefully. Update them if necessary. If all else fails, `vagrant destroy` and `vagrant up` again to reset the cluster.
  
 
 # Learn more
