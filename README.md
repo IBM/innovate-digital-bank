@@ -447,7 +447,7 @@ $ ibmcloud dev deploy
 
 # Troubleshooting
 
-1. Trouble with IBM Clouc Cli? [Check Here](https://console.bluemix.net/docs/cli/ts_createapps.html#troubleshoot)
+1. Trouble with IBM Cloud CLI? [Check Here](https://console.bluemix.net/docs/cli/ts_createapps.html#troubleshoot)
 2. IBM Cloud Private common errors and solutions can be found [here](https://www.ibm.com/support/knowledgecenter/en/SS8G7U_18.2.0/com.ibm.app.mgmt.doc/content/trouble_common_deployment_errors.htm)
 3. IBM Cloud Private on local vm not working? Check ICP version, Vagrant version and VirtualBox version carefully. Update them if necessary. If all else fails, `vagrant destroy` and `vagrant up` again to reset the cluster.
  
