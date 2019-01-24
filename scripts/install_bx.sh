@@ -14,6 +14,6 @@ echo "Installing Developer Tools"
 curl -sL https://ibm.biz/idt-installer | bash
 
 echo "Configuring bx to disable version check"
-bx config --check-version=false
+ibmcloud config --check-version=false
 echo "Checking bx version"
-bx --version
+ibmcloud --version
