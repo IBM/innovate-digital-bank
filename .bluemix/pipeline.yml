@@ -1,4 +1,4 @@
-ibmcloud---
+---
 stages:
 - name: BUILD
   inputs:
