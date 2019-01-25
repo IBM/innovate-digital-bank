@@ -16,7 +16,7 @@ livenessProbe:
 service:
   name: Node
   type: NodePort
-  servicePort: 4200
+  servicePort: 4100
   serviceNodePort: 30050
 hpa:
   enabled: false
