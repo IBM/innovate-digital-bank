@@ -1,4 +1,4 @@
----
+ibmcloud---
 stages:
 - name: BUILD
   inputs:
@@ -70,18 +70,18 @@ stages:
 
       echo "=========================================================="
       echo "CHECKING REGISTRY current plan and quota"
-      bx cr plan
-      bx cr quota
-      echo "If needed, discard older images using: bx cr image-rm"
+      ibmcloud cr plan
+      ibmcloud cr quota
+      echo "If needed, discard older images using: ibmcloud cr image-rm"
 
       echo "Current content of image registry"
-      bx cr images
+      ibmcloud cr images
 
       echo "Checking registry namespace: ${REGISTRY_NAMESPACE}"
-      NS=$( bx cr namespaces | grep ${REGISTRY_NAMESPACE} ||: )
+      NS=$( ibmcloud cr namespaces | grep ${REGISTRY_NAMESPACE} ||: )
       if [ -z "${NS}" ]; then
           echo "Registry namespace ${REGISTRY_NAMESPACE} not found, creating it."
-          bx cr namespace-add ${REGISTRY_NAMESPACE}
+          ibmcloud cr namespace-add ${REGISTRY_NAMESPACE}
           echo "Registry namespace ${REGISTRY_NAMESPACE} created."
       else
           echo "Registry namespace ${REGISTRY_NAMESPACE} found."
@@ -118,26 +118,26 @@ stages:
       # https://console.bluemix.net/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
 
       # To review or change build options use:
-      # bx cr build --help
+      # ibmcloud cr build --help
 
       echo -e "Existing images in registry"
-      bx cr images
+      ibmcloud cr images
 
       echo "=========================================================="
       echo -e "BUILDING CONTAINER IMAGE: ${IMAGE_NAME}:${BUILD_NUMBER}"
       set -x
-      bx cr build -t ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER} .
+      ibmcloud cr build -t ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER} .
       set +x
-      bx cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}
+      ibmcloud cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${BUILD_NUMBER}
 
-      # When 'bx' commands are in the pipeline job config directly, the image URL will automatically be passed
+      # When 'ibmcloud' commands are in the pipeline job config directly, the image URL will automatically be passed
       # along with the build result as env variable PIPELINE_IMAGE_URL to any subsequent job consuming this build result.
       # When the job is sourc'ing an external shell script, or to pass a different image URL than the one inferred by the pipeline,
       # please uncomment and modify the environment variable the following line.
       export PIPELINE_IMAGE_URL="$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER"
       echo "TODO - remove once no longer needed to unlock VA job ^^^^"
 
-      bx cr images
+      ibmcloud cr images
 
       echo "=========================================================="
       echo "COPYING ARTIFACTS needed for deployment and testing (in particular build.properties)"
@@ -215,13 +215,13 @@ stages:
       # or learn more about the available environment variables at:
       # https://console.bluemix.net/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
 
-      bx cr images
+      ibmcloud cr images
       PIPELINE_IMAGE_URL=$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER
       echo -e "Checking vulnerabilities in image: ${PIPELINE_IMAGE_URL}"
       for ITER in {1..30}
       do
         set +e
-        STATUS=$( bx cr va -e -o json ${PIPELINE_IMAGE_URL} | jq '.[0].status' )
+        STATUS=$( ibmcloud cr va -e -o json ${PIPELINE_IMAGE_URL} | jq '.[0].status' )
         set -e
         if [[ ${STATUS} == *OK* ]]; then
           break
@@ -232,9 +232,9 @@ stages:
         sleep 10
       done
       set +e
-      bx cr va ${PIPELINE_IMAGE_URL}
+      ibmcloud cr va ${PIPELINE_IMAGE_URL}
       set -e
-      [[ $(bx cr va -e -o json ${PIPELINE_IMAGE_URL} | jq '.[0].status') == *OK* ]] || { echo "ERROR: The vulnerability scan was not successful, check the OUTPUT of the command and try again."; exit 1; }
+      [[ $(ibmcloud cr va -e -o json ${PIPELINE_IMAGE_URL} | jq '.[0].status') == *OK* ]] || { echo "ERROR: The vulnerability scan was not successful, check the OUTPUT of the command and try again."; exit 1; }
 - name: PROD
   inputs:
   - type: job
@@ -285,7 +285,7 @@ stages:
       #Check cluster availability
       echo "=========================================================="
       echo "CHECKING CLUSTER readiness and namespace existence"
-      IP_ADDR=$(bx cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | awk '{ print $2 }')
+      IP_ADDR=$(ibmcloud cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | awk '{ print $2 }')
       if [ -z "${IP_ADDR}" ]; then
         echo -e "${PIPELINE_KUBERNETES_CLUSTER_NAME} not created or workers not ready"
         exit 1
@@ -302,17 +302,17 @@ stages:
 
       echo "Checking if conversation service exists"
 
-      echo "1" | echo "\n" | echo "1" | bx target --cf
-      export CONV_SERVICE_CHECK=$(bx service show innovate-conversation-service | grep "FAILED")
+      echo "1" | echo "\n" | echo "1" | ibmcloud target --cf
+      export CONV_SERVICE_CHECK=$(ibmcloud service show innovate-conversation-service | grep "FAILED")
       echo "Check: $CONV_SERVICE_CHECK"
 
       if [ ${CONV_SERVICE_CHECK} == "FAILED" ]; then
         echo "Conversation service does not exist, creating"
-        bx service create conversation free innovate-conversation-service
+        ibmcloud service create conversation free innovate-conversation-service
       fi
 
       # Grant access to private image registry from namespace $CLUSTER_NAMESPACE
-      # reference https://console.bluemix.net/docs/containers/cs_cluster.html#bx_registry_other
+      # reference https://console.bluemix.net/docs/containers/cs_cluster.html#ibmcloud_registry_other
       echo "=========================================================="
       echo -e "CONFIGURING ACCESS to private image registry from namespace ${CLUSTER_NAMESPACE}"
       IMAGE_PULL_SECRET_NAME="ibmcloud-toolchain-${PIPELINE_TOOLCHAIN_ID}-${REGISTRY_URL}"
@@ -410,19 +410,19 @@ stages:
 
       echo "=========================================================="
       echo "Binding conversation service to cluster"
-      export CONV_BINDING_CHECK=$(bx cs cluster-services ${PIPELINE_KUBERNETES_CLUSTER_NAME} --namespace ${CLUSTER_NAMESPACE} | grep "innovate-conversation-service")
+      export CONV_BINDING_CHECK=$(ibmcloud cs cluster-services ${PIPELINE_KUBERNETES_CLUSTER_NAME} --namespace ${CLUSTER_NAMESPACE} | grep "innovate-conversation-service")
       echo "Check: $CONV_BINDING_CHECK"
 
       if [[ $CONV_BINDING_CHECK == *"innovate-conversation-service"* ]]; then
         echo "Binding already exists, moving on"
       else
         echo "Binding does not exist, binding"
-        bx cs cluster-service-bind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service
+        ibmcloud cs cluster-service-bind ${PIPELINE_KUBERNETES_CLUSTER_NAME} ${CLUSTER_NAMESPACE} innovate-conversation-service
       fi
 
       echo "=========================================================="
       echo "DEPLOYING HELM chart"
-      IP_ADDR=$(bx cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | awk '{ print $2 }')
+      IP_ADDR=$(ibmcloud cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | awk '{ print $2 }')
       IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
       IMAGE_PULL_SECRET_NAME="ibmcloud-toolchain-${PIPELINE_TOOLCHAIN_ID}-${REGISTRY_URL}"
 
@@ -507,7 +507,7 @@ stages:
       # kubectl describe pods --selector app=${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
 
       echo "=========================================================="
-      IP_ADDR=$(bx cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | head -n 1 | awk '{ print $2 }')
+      IP_ADDR=$(ibmcloud cs workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | head -n 1 | awk '{ print $2 }')
       PORT=30200
       export MONGO_URL=mongodb://mongo:mongo1234@${IP_ADDR}:30443/admin
       echo "Mongo connection string: ${MONGO_URL}"
