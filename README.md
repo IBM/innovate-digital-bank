@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/IBM/innovate-digital-bank.svg?branch=master)](https://travis-ci.org/IBM/innovate-digital-bank)
 
-# Building a Digital Bank with Node.js, Express, MongoDB, & Kubernetes
+# Building a Digital Bank with Node.js, Express, MongoDB, Kubernetes & RedHat OpenShift
 
 In this code pattern, we will build a dummy digital bank composed of a set of microservices that communicate with each other. We'll be using Node.js, Express, MongoDB, and the IBM Cloud Container Service.
 
@@ -28,7 +28,7 @@ To test it out, sign up for an account. A process runs periodically to dump rand
 1. [Watch the Video](#Watch-the-Video)
 1. [Setup](#Setup)
     * [Run it locally](#run-locally)
-    * [Deploy to IBM Cloud on Red Hat OpenShift (manual, multi-stage)](#deploy-to-ibm-cloud-on-red-hat-openshift)
+    * [Deploy to IBM Cloud on Red Hat OpenShift](#deploy-to-ibm-cloud-on-red-hat-openshift)
 1. [Troubleshooting](#troubleshooting)
 1. [Learn more](#Learn-more)
 1. [Docs](#Docs)
@@ -60,6 +60,7 @@ When thinking of business capabilities, our imaginary bank will need the followi
 
 * [IBM Cloud Kubernetes Service](https://console.bluemix.net/docs/containers/): IBM Cloud Kubernetes Service manages highly available apps inside Docker containers and Kubernetes clusters on the IBM Cloud. Users have the option of provisioning either a "vanilla" kubernetes cluster on an Openshift cluster.
 * [Watson Assistant](https://www.ibm.com/cloud/watson-assistant/): Create a chatbot with a program that conducts a conversation via auditory or textual methods.
+* [Red Hat OpenShift](https://cloud.ibm.com/kubernetes/catalog/create?platformType=openshift): With Red Hat OpenShift on IBM Cloud, OpenShift developers have a fast and secure way to containerize and deploy enterprise workloads in Kubernetes clusters.
 
 ## Featured technologies
 
@@ -309,6 +310,37 @@ Or if you are logged in `ibmcloud` cli, you can find your public ip of your work
 
 ```bash
 $ ibmcloud ks workers <name-of-cluster>
+```
+
+## (Optional) Adding Support with Watson Assistant
+
+The *Support* microservice connects to an instance of Watson Assistant on IBM Cloud to simulate a chat with a virtual support agent. *This is an optional step.* You only need to continue if you'd like to enable the *Support* feature in the app.
+
+1. [Create an instance of Watson Assistant](#1-create-an-instance-of-watson-assistant)
+2. [Get your credentials](#2-get-your-credentials)
+3. [Configure your environment variables](#3-configure-your-environment-variables)
+4. [Deploy](#4-deploy)
+
+### 1. Create an instance of Watson Assistant
+
+From the [IBM Cloud Catalog](https://cloud.ibm.com/login), choose Watson Assistant, and click *Create*.
+
+### 2. Get your credentials
+
+Navigate to the *Credentials* tab and copy your credentials.
+
+![Watson Conversation](doc/source/images/8.png)
+
+### 3. Configure your environment variables
+
+From within the support folder, edit your `.env` to include your newly acquired credentials.
+
+### 4. Deploy
+
+Re-deploy the *Support* microservice, the support feature should now be accessible through the portal.
+
+```bash
+$ ibmcloud dev deploy
 ```
 
 ## Troubleshooting
