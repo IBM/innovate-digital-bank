@@ -274,7 +274,7 @@ Finally, edit your .env folder and add your Mongodb connection string
 Run the following command:
 
 ```bash
-$ ibmcloud cs cluster-config <YOUR_CLUSTER_NAME>
+$ ibmcloud ks cluster config -c <YOUR_CLUSTER_NAME> --output json
 ```
 
 Then copy the output and paste it in your terminal
