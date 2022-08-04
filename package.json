@@ -29,7 +29,7 @@
     "express": "^4.15.3",
     "express-session": "^1.15.6",
     "ip": "^1.1.5",
-    "mongoose": "^5.0.0-rc1",
+    "mongoose": "^5.7.5",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "strong-supervisor": "^6.2.0",
