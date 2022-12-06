@@ -19,9 +19,9 @@
     "idt:install": "node idt.js install"
   },
   "dependencies": {
-    "body-parser": "^1.17.2",
+    "body-parser": "^1.20.1",
     "dotenv": "^2.0.0",
-    "express": "^4.15.3",
+    "express": "^4.18.2",
     "jslint": "^0.12.0",
     "mongoose": "^5.0.0-rc1",
     "request": "^2.83.0",
