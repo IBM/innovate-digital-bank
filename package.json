@@ -26,7 +26,7 @@
     "date_format": "^0.1.1",
     "dateformat": "^3.0.2",
     "dotenv": "^2.0.0",
-    "express": "^4.15.3",
+    "express": "^4.17.3",
     "express-session": "^1.15.6",
     "ip": "^1.1.5",
     "mongoose": "^5.0.0-rc1",
